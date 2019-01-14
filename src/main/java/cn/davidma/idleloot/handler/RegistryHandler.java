@@ -1,7 +1,7 @@
 package cn.davidma.idleloot.handler;
 
 import cn.davidma.idleloot.Main;
-import cn.davidma.idleloot.items.StandardItemBase;
+import cn.davidma.idleloot.item.template.StandardItemBase;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
