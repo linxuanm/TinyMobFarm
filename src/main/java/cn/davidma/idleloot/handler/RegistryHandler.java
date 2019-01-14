@@ -13,6 +13,7 @@ public class RegistryHandler {
 	
 	@SubscribeEvent
 	public static void onItemRegistry(RegistryEvent.Register<Item> event) {
+		ItemManager.instantiateAllItems();
 		Item[] modItems = new Item[ItemManager.items.size()];
 		modItems = ItemManager.items.toArray(modItems);
 		event.getRegistry().registerAll(modItems);
