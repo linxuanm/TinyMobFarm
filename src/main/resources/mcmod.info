@@ -1,16 +1,13 @@
-[
-{
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
+[{
+  "modid": "idleloot",
+  "name": "Idle Loot",
+  "description": "Adds loot generators that generate mob loot passively.",
+  "version": "1.0.0",
+  "mcversion": "1.12.2",
+  "url": "https://github.com/davidmaamoaix/IdleLoot/",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["David Ma"],
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
-}
-]
+}]
