@@ -28,7 +28,7 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 	
 	@Override
 	public boolean hasEffect(ItemStack item) {
-		NBTTagCompound nbt = NBTTagHelper.getNBT(item);
+		NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(item);
 		return NBTTagHelper.keyValueEquals(nbt, "shiny", true);
 	}
 	

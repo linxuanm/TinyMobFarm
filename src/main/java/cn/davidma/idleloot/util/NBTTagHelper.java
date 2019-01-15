@@ -4,13 +4,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NBTTagHelper {
+	
+	// All NBT tags are set under the BASE tag for simplicity.
 
-	public static NBTTagCompound getNBT(ItemStack stack) {
+	public static final String BASE = "idleLoot";
+	
+	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		
 		// Yes, OCD is a thing.
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) nbt = new NBTTagCompound();
+		NBTTagCompound base = stack.getTagCompound();
+		if (base == null) base = new NBTTagCompound();
+		NBTTagCompound nbt = getAttr(base, BASE);
 		return nbt;
+	}
+	
+	public static void setEssentialNBT(ItemStack stack, NBTTagCompound nbt) {
+		NBTTagCompound base = stack.getTagCompound();
+		if (base == null) base = new NBTTagCompound();
+		base.setTag(BASE, nbt);
+		stack.setTagCompound(base);
+	}
+	
+	public static NBTTagCompound getAttr(NBTTagCompound nbt, String key) {
+		NBTTagCompound out = nbt.getCompoundTag(key);
+		if (out == null) out = new NBTTagCompound();
+		return out;
 	}
 	
 	public static boolean containsMob(NBTTagCompound nbt) {
