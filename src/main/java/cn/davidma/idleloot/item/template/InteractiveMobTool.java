@@ -1,16 +1,18 @@
 package cn.davidma.idleloot.item.template;
 
 import cn.davidma.idleloot.util.Msg;
+import cn.davidma.idleloot.util.NBTTagHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public abstract class InteractiveMobTool extends StandardItemBase {
 
 	protected abstract String[] verb(); // [0]: present tense; [1]: past tense.
-	protected abstract boolean interactEntity(ItemStack item, EntityPlayer player, EntityLivingBase mob);
+	protected abstract boolean interactEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob);
 	protected abstract boolean interactBlock();
 	
 	protected boolean shiny;
@@ -26,11 +28,12 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 	
 	@Override
 	public boolean hasEffect(ItemStack item) {
-		return shiny;
+		NBTTagCompound nbt = NBTTagHelper.getNBT(item);
+		return NBTTagHelper.keyValueEquals(nbt, "shiny", true);
 	}
 	
 	@Override
-	public boolean itemInteractionForEntity(ItemStack item, EntityPlayer player, EntityLivingBase mob, EnumHand hand) {
+	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob, EnumHand hand) {
 		
 		// Check.
 		if (mob.world.isRemote) return true;
@@ -49,9 +52,9 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 			return false;
 		}
 		
-		boolean result = interactEntity(item, player, mob);
+		boolean result = interactEntity(stack, player, mob);
 		if (result && damageItem[0]) {
-			item.damageItem(1, player);
+			stack.damageItem(1, player);
 		}
 		return result;
 	}
