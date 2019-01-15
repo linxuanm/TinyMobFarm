@@ -113,7 +113,7 @@ public class Lasso extends InteractiveMobTool {
 			double mobHealth = nbt.getDouble("mobHealth");
 			double mobMaxHealth = nbt.getDouble("mobMaxHealth");
 			
-			tooltip.add("Type: " + mobName);
+			tooltip.add("Mob: " + mobName);
 			tooltip.add("Health: " + mobHealth + "/" + mobMaxHealth);
 		}
 	}
