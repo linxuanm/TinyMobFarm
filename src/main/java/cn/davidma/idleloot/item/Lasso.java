@@ -2,6 +2,7 @@ package cn.davidma.idleloot.item;
 
 import cn.davidma.idleloot.item.template.InteractiveMobTool;
 import cn.davidma.idleloot.reference.IdleLootConfig;
+import cn.davidma.idleloot.util.Msg;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,17 +14,20 @@ public class Lasso extends InteractiveMobTool {
 		super(name);
 		setMaxDamage(IdleLootConfig.LASSO_DURABILITY);
 	}
-	
+
 	@Override
-	public boolean itemInteractionForEntity(ItemStack item, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
-		
-		// Check.
-		if (!target.isEntityAlive()) return false;
-		if (target.world.isRemote) return true;
-		
-		target.setDead();
-		System.out.println(target.getName());
-		// item.damageItem(1, player);
+	protected String[] verb() {
+		return new String[] {"capture", "captured"};
+	}
+
+	@Override
+	protected boolean interactEntity(EntityPlayer player, EntityLivingBase mob) {
 		return true;
+	}
+
+	@Override
+	protected boolean interactBlock() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
