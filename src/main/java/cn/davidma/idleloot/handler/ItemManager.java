@@ -3,6 +3,7 @@ package cn.davidma.idleloot.handler;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.davidma.idleloot.item.Lasso;
 import cn.davidma.idleloot.item.template.InteractiveMobTool;
 import cn.davidma.idleloot.item.template.StandardItemBase;
 
