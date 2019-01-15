@@ -10,15 +10,18 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 public abstract class InteractiveMobTool extends StandardItemBase {
 
 	protected abstract String[] verb(); // [0]: present tense; [1]: past tense.
-	protected abstract boolean interactEntity(EntityPlayer player, EntityLivingBase mob);
+	protected abstract boolean interactEntity(ItemStack item, EntityPlayer player, EntityLivingBase mob);
 	protected abstract boolean interactBlock();
 	
 	protected boolean shiny;
+	private boolean[] damageItem;
 	
-	public InteractiveMobTool(String name) {
+	public InteractiveMobTool(String name, int maxDamage, boolean[] damageItem) {
 		super(name);
-		setMaxStackSize(1);
 		shiny = false;
+		setMaxStackSize(1);
+		setMaxDamage(maxDamage);
+		this.damageItem = damageItem; // [0]: mob; [1]: block.
 	}
 	
 	@Override
@@ -46,8 +49,8 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 			return false;
 		}
 		
-		boolean result = interactEntity(player, mob);
-		if (result) {
+		boolean result = interactEntity(item, player, mob);
+		if (result && damageItem[0]) {
 			item.damageItem(1, player);
 		}
 		return result;

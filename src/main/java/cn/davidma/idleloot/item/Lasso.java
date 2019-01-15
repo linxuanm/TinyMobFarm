@@ -11,8 +11,7 @@ import net.minecraft.util.EnumHand;
 public class Lasso extends InteractiveMobTool {
 
 	public Lasso(String name) {
-		super(name);
-		setMaxDamage(IdleLootConfig.LASSO_DURABILITY);
+		super(name, IdleLootConfig.LASSO_DURABILITY, new boolean[] {false, true});
 	}
 
 	@Override
@@ -21,13 +20,13 @@ public class Lasso extends InteractiveMobTool {
 	}
 
 	@Override
-	protected boolean interactEntity(EntityPlayer player, EntityLivingBase mob) {
-		return true;
+	protected boolean interactEntity(ItemStack item, EntityPlayer player, EntityLivingBase mob) {
+		
+		//NBT time!
 	}
 
 	@Override
 	protected boolean interactBlock() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
