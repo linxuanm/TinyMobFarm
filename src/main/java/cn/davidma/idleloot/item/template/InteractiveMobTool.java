@@ -6,14 +6,18 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public abstract class InteractiveMobTool extends StandardItemBase {
 
 	protected abstract String[] verb(); // [0]: present tense; [1]: past tense.
 	protected abstract boolean interactEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob);
-	protected abstract boolean interactBlock();
+	protected abstract boolean interactBlock(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side);
 	
 	protected boolean shiny;
 	private boolean[] damageItem;
@@ -58,4 +62,24 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 		}
 		return result;
 	}
+	
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float x, float y, float z) {
+		
+		// Check.
+		if (world.isRemote) return EnumActionResult.SUCCESS;
+		
+		// Get ItemStack.
+		ItemStack stack = player.inventory.getCurrentItem();
+		
+		// Check again.
+		if (!player.canPlayerEdit(pos.offset(side), side, stack)) return EnumActionResult.FAIL;
+		
+		boolean result = interactBlock(stack, player, world, pos, side);
+		if (result && damageItem[1]) {
+			stack.damageItem(1, player);
+		}
+		return result ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+	}
+	
 }
