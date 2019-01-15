@@ -6,13 +6,13 @@ import java.util.List;
 import cn.davidma.idleloot.item.Lasso;
 import cn.davidma.idleloot.item.template.InteractiveMobTool;
 import cn.davidma.idleloot.item.template.StandardItemBase;
+import net.minecraft.item.Item;
 
 public class ItemManager {
 	
-	public static List<StandardItemBase> items;
+	public static List<Item> items = new ArrayList<Item>();
 	
 	public static void instantiateAllItems() {
-		items = new ArrayList<StandardItemBase>();
-		items.add(new Lasso("lasso"));
+		new Lasso("lasso");
 	}
 }
