@@ -2,44 +2,39 @@ package cn.davidma.idleloot.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import scala.collection.mutable.Stack;
 
 public class GeneratorTileEntity extends TileEntity implements IInventory, ITickable {
 
 	private NBTTagCompound entityNBT;
 	private int currProgress, totalProgress;
 	
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		nbt.setTag("entityInfo", entityNBT);
-		return nbt;
-	}
-	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		entityNBT = nbt.getCompoundTag("entityInfo");
-	}
+	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
+	private String name;
 
 	@Override
 	public String getName() {
+		if (hasCustomName()) return name;
 		return "container.generator";
-		
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		return false;
+		return !name.isEmpty() && name != null;
 	}
 	
 	@Override
 	public ITextComponent getDisplayName() {
+		if (hasCustomName()) return new TextComponentString(getName());
 		return new TextComponentTranslation(getName());
 	}
 
@@ -51,44 +46,51 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.inventory.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		for (ItemStack i: inventory) {
+			if (!i.isEmpty()) return true;
+		}
 		return false;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return inventory.get(index);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		// TODO Auto-generated method stub
-		return null;
+		return ItemStackHelper.getAndSplit(inventory, index, count);
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return ItemStackHelper.getAndRemove(inventory, index);
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		// TODO Auto-generated method stub
+		ItemStack prev = getStackInSlot(index);
+		if (!stack.isEmpty() && prev.isEmpty()) inventory.set(index, stack);
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
 		
+	}
+	
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		return null;
 	}
 
 	@Override
 	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
