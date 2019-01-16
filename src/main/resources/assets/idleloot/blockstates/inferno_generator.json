@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:multi-layer",
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [{
+			"custom": {
+				"base": "idleloot:inferno_generator#base",
+				"Solid": "idleloot:inferno_generator#base",
+				"Cutout": "idleloot:inferno_generator#glass"
+			}
+		}],
+		"base": [{
+			"model": "idleloot:inferno_generator"
+		}],
+		"glass": [{
+			"model": "idleloot:glass_panel"
+		}],
+		"inventory": [{
+			"custom": {
+				"base": "idleloot:inferno_generator#base",
+				"Solid": "idleloot:inferno_generator#base",
+				"Cutout": "idleloot:inferno_generator#glass"
+			}
+		}]
+	}
+}

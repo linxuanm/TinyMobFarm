@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:multi-layer",
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [{
+			"custom": {
+				"base": "idleloot:gold_generator#base",
+				"Solid": "idleloot:gold_generator#base",
+				"Cutout": "idleloot:gold_generator#glass"
+			}
+		}],
+		"base": [{
+			"model": "idleloot:gold_generator"
+		}],
+		"glass": [{
+			"model": "idleloot:glass_panel"
+		}],
+		"inventory": [{
+			"custom": {
+				"base": "idleloot:gold_generator#base",
+				"Solid": "idleloot:gold_generator#base",
+				"Cutout": "idleloot:gold_generator#glass"
+			}
+		}]
+	}
+}

@@ -14,8 +14,12 @@ public class StandardItemBase extends Item implements Registrable {
 		this.name = name;
 		setUnlocalizedName(this.name);
 		setRegistryName(this.name);
-		//setCreativeTab(CreativeTabs.MISC);
 		CollectionsManager.items.add(this);
+		setCreativeTab(CollectionsManager.tab);
+	}
+	
+	public String getAssignedName() {
+		return name;
 	}
 
 	@Override

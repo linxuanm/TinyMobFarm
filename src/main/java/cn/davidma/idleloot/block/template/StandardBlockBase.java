@@ -15,9 +15,9 @@ public class StandardBlockBase extends Block implements Registrable {
 		super(material);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		//setCreativeTab(CreativeTabs.MISC);
 		CollectionsManager.blocks.add(this);
 		CollectionsManager.items.add(new ItemBlock(this).setRegistryName(name));
+		setCreativeTab(CollectionsManager.tab);
 	}
 	
 	@Override

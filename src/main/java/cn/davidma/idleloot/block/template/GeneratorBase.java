@@ -16,8 +16,8 @@ public class GeneratorBase extends StandardBlockBase {
 		setHardness(hard);
 		setHarvestLevel(harv, harvLvl);
 		
-		setResistance(30.0F);
-		//setLightOpacity(1);
+		setResistance(300.0F);
+		setLightOpacity(1);
 	}
 
 	@Override
