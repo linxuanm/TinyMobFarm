@@ -1,8 +1,7 @@
-package cn.davidma.idleloot.block;
+package cn.davidma.idleloot.block.template;
 
 import cn.davidma.idleloot.Main;
-import cn.davidma.idleloot.handler.BlockManager;
-import cn.davidma.idleloot.handler.ItemManager;
+import cn.davidma.idleloot.handler.CollectionsManager;
 import cn.davidma.idleloot.item.template.StandardItemBase;
 import cn.davidma.idleloot.util.Registrable;
 import net.minecraft.block.Block;
@@ -17,8 +16,8 @@ public class StandardBlockBase extends Block implements Registrable {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		//setCreativeTab(CreativeTabs.MISC);
-		BlockManager.blocks.add(this);
-		ItemManager.items.add(new ItemBlock(this).setRegistryName(name));
+		CollectionsManager.blocks.add(this);
+		CollectionsManager.items.add(new ItemBlock(this).setRegistryName(name));
 	}
 	
 	@Override

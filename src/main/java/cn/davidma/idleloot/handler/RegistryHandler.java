@@ -1,7 +1,7 @@
 package cn.davidma.idleloot.handler;
 
 import cn.davidma.idleloot.Main;
-import cn.davidma.idleloot.block.StandardBlockBase;
+import cn.davidma.idleloot.block.template.StandardBlockBase;
 import cn.davidma.idleloot.item.template.StandardItemBase;
 import cn.davidma.idleloot.util.Registrable;
 import net.minecraft.block.Block;
@@ -16,26 +16,26 @@ public class RegistryHandler {
 	
 	@SubscribeEvent
 	public static void onItemRegistry(RegistryEvent.Register<Item> event) {
-		ItemManager.instantiateAllItems();
-		Item[] modItems = new Item[ItemManager.items.size()];
-		modItems = ItemManager.items.toArray(modItems);
+		CollectionsManager.instantiateAllItems();
+		Item[] modItems = new Item[CollectionsManager.items.size()];
+		modItems = CollectionsManager.items.toArray(modItems);
 		event.getRegistry().registerAll(modItems);
 	}
 	
 	@SubscribeEvent
 	public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
-		BlockManager.instantiateAllBlocks();
-		Block[] modBlocks = new Block[BlockManager.blocks.size()];
-		modBlocks = BlockManager.blocks.toArray(modBlocks);
+		CollectionsManager.instantiateAllBlocks();
+		Block[] modBlocks = new Block[CollectionsManager.blocks.size()];
+		modBlocks = CollectionsManager.blocks.toArray(modBlocks);
 		event.getRegistry().registerAll(modBlocks);
 	}
 	
 	@SubscribeEvent
 	public static void onModelRegistry(ModelRegistryEvent event) {
-		for (Item i: ItemManager.items) {
+		for (Item i: CollectionsManager.items) {
 			if (i instanceof Registrable) ((Registrable) i).registerModels();
 		}
-		for (Block i: BlockManager.blocks) {
+		for (Block i: CollectionsManager.blocks) {
 			if (i instanceof Registrable) ((Registrable) i).registerModels();
 		}
 	}

@@ -1,7 +1,22 @@
 {
-    "variants": {
-        "normal": {
-            "model": "idleloot:wood_generator"
-        }
-    }
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:multi-layer",
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [{
+			"custom": {
+				"base": "idleloot:wood_generator#base",
+				"Solid": "idleloot:wood_generator#base",
+				"Cutout": "idleloot:wood_generator#glass"
+			}
+		}],
+		"base": [{
+			"model": "idleloot:wood_generator"
+		}],
+		"glass": [{
+			"model": "idleloot:glass_panel"
+		}]
+	}
 }
