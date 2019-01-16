@@ -1,1 +1,9 @@
 item.lasso.name=Lasso
+tile.wood_generator.name=Wooden Loot Generator
+tile.stone_generator.name=Stone Loot Generator
+tile.iron_generator.name=Iron Loot Generator
+tile.gold_generator.name=Golden Loot Generator
+tile.diamond_generator.name=Diamond Loot Generator
+tile.emerald_generator.name=Emerald Loot Generator
+tile.inferno_generator.name=Inferno Loot Generator
+tile.ultimate_generator.name=Ultimate Loot Generator

@@ -17,6 +17,13 @@
 		}],
 		"glass": [{
 			"model": "idleloot:glass_panel"
+		}],
+		"inventory": [{
+			"custom": {
+				"base": "idleloot:wood_generator#base",
+				"Solid": "idleloot:wood_generator#base",
+				"Cutout": "idleloot:wood_generator#glass"
+			}
 		}]
 	}
 }
