@@ -113,8 +113,11 @@ public class Lasso extends InteractiveMobTool {
 			double mobHealth = nbt.getDouble("mobHealth");
 			double mobMaxHealth = nbt.getDouble("mobMaxHealth");
 			
+			tooltip.add("Right click on block to release mob.");
 			tooltip.add("Mob: " + mobName);
 			tooltip.add("Health: " + mobHealth + "/" + mobMaxHealth);
+		} else {
+			tooltip.add("Right click on mob to capture");
 		}
 	}
 }

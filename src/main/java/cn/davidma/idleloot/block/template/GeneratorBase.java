@@ -25,8 +25,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GeneratorBase extends StandardBlockBase implements ITileEntityProvider {
 	
-	private static final AxisAlignedBB TOP_BOX = new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375);
-	private static final AxisAlignedBB BASE_BOX = new AxisAlignedBB(0, 0, 0, 1, 0.125, 1);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375);
+	private static final AxisAlignedBB COLLISION_BOX = new AxisAlignedBB(0.125, 0, 0.125, 0.875, 0.8125, 0.875);
 
 	public GeneratorBase(String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
 		super(name, mat);
@@ -44,18 +44,23 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 	}
 	
 	@Override
+	public boolean isFullCube(IBlockState bs) {
+		return false;
+	}
+	
+	@Override
 	public boolean isOpaqueCube(IBlockState bs) {
 		return false;
 	}
 	
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState bs, IBlockAccess source, BlockPos pos) {
-		return TOP_BOX.union(BASE_BOX);
+		return BOUNDING_BOX;
 	}
 	
 	@Override
 	public void addCollisionBoxToList(IBlockState bs, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity, boolean isActualState) {
-		super.addCollisionBoxToList(pos, entityBox, collidingBoxes, TOP_BOX.union(BASE_BOX));
+		super.addCollisionBoxToList(pos, entityBox, collidingBoxes, COLLISION_BOX);
 	}
 	
 	@Override
@@ -73,7 +78,7 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 		if (world.isRemote) return true;
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof GeneratorTileEntity) {
-			GeneratorTileEntity tile = (GeneratorTileEntity) tileEntity;
+			GeneratorTileEntity generatorTileEntity = (GeneratorTileEntity) tileEntity;
 			Msg.tellPlayer(player, "Click!");
 		}
 		return true;

@@ -8,3 +8,4 @@ tile.emerald_generator.name=Emerald Loot Generator
 tile.inferno_generator.name=Inferno Loot Generator
 tile.ultimate_generator.name=Ultimate Loot Generator
 itemGroup.idleloot=Idle Loot
+container.generator=Generator
