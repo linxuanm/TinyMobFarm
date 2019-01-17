@@ -63,7 +63,7 @@ public class Info {
 			out.put(i, out.get(i) + 1);
 		}
 		for (int key: out.keySet()) {
-			out.put(key, (int) ((double) (out.get(key) / choices.length) * 100));
+			out.put(key, (int) (((double) out.get(key) / (double) choices.length) * 100));
 		}
 		return out;
 	}
@@ -73,7 +73,7 @@ public class Info {
 	}
 	
 	private static String getTip(int chance, int durability) {
-		if (durability == 0) return String.format("	- %d%% chance to loss no durability", chance);
-		return String.format("\t- %d%% chance to lose %d durability", chance, durability);
+		if (durability == 0) return String.format("e- %d%% chance to loss no durability", chance);
+		return String.format("- %d%% chance to lose %d durability", chance, durability);
 	}
 }

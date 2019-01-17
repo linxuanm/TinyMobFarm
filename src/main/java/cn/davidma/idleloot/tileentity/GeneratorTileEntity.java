@@ -2,6 +2,8 @@ package cn.davidma.idleloot.tileentity;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import cn.davidma.idleloot.reference.IdleLootConfig;
 import cn.davidma.idleloot.reference.Info;
 import cn.davidma.idleloot.util.NBTTagHelper;
@@ -10,6 +12,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -90,9 +94,25 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 				ItemStack stack = this.getStackInSlot(0);
 				stack.attemptDamageItem(Info.DURABILITY_COST_FROM_GENERATOR_ID(this.id, rand), rand, null);
 				
+				world.notifyBlockUpdate(this.pos, world.getBlockState(this.pos), this.world.getBlockState(this.pos), 2);
 				this.markDirty();
 			}
 		}
+	}
+	
+	@Override
+	public void handleUpdateTag(NBTTagCompound nbt) {
+		this.readFromNBT(nbt);
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+		this.readFromNBT(packet.getNbtCompound());
 	}
 
 	@Override
