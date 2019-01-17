@@ -3,6 +3,7 @@ package cn.davidma.idleloot.block.template;
 import cn.davidma.idleloot.Main;
 import cn.davidma.idleloot.handler.CollectionsManager;
 import cn.davidma.idleloot.item.template.StandardItemBase;
+import cn.davidma.idleloot.item.template.TooltipItemBlock;
 import cn.davidma.idleloot.util.Registrable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -17,6 +18,15 @@ public class StandardBlockBase extends Block implements Registrable {
 		setRegistryName(name);
 		CollectionsManager.blocks.add(this);
 		CollectionsManager.items.add(new ItemBlock(this).setRegistryName(name));
+		setCreativeTab(CollectionsManager.tab);
+	}
+	
+	public StandardBlockBase(String name, Material material, int id) {
+		super(material);
+		setUnlocalizedName(name);
+		setRegistryName(name);
+		CollectionsManager.blocks.add(this);
+		CollectionsManager.items.add(new TooltipItemBlock(this, id).setRegistryName(name));
 		setCreativeTab(CollectionsManager.tab);
 	}
 	

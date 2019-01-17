@@ -1,6 +1,9 @@
 package cn.davidma.idleloot.tileentity;
 
+import java.util.Random;
+
 import cn.davidma.idleloot.reference.IdleLootConfig;
+import cn.davidma.idleloot.reference.Info;
 import cn.davidma.idleloot.util.NBTTagHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -81,6 +84,12 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 			if (currProgress >= totalProgress) {
 				currProgress = 0;
 				pushLoot();
+				
+				// Damage the lasso.
+				Random rand = new Random();
+				ItemStack stack = this.getStackInSlot(0);
+				stack.attemptDamageItem(Info.DURABILITY_COST_FROM_GENERATOR_ID(this.id, rand), rand, null);
+				
 				this.markDirty();
 			}
 		}

@@ -39,7 +39,7 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 	private NonNullList<ItemStack> drops;
 
 	public GeneratorBase(int id, String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
-		super(name, mat);
+		super(name, mat, id);
 		
 		// Name and id.
 		this.id = id;
