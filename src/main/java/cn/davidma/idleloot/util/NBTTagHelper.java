@@ -7,7 +7,13 @@ public class NBTTagHelper {
 	
 	// All NBT tags are set under the BASE tag for simplicity.
 
+	// Item tags.
 	public static final String BASE = "idleLoot";
+	
+	// TileEntity tags;
+	public static final String CURR_PROGRESS_TAG = "currProgress";
+	public static final String TOTAL_PROGRESS_TAG = "totalProgress";
+	public static final String CUSTOM_NAME_TAG = "customName";
 	
 	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		

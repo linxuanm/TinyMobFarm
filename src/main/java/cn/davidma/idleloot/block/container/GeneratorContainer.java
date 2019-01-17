@@ -4,7 +4,10 @@ import cn.davidma.idleloot.tileentity.GeneratorTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GeneratorContainer extends Container {
 
@@ -27,9 +30,32 @@ public class GeneratorContainer extends Container {
 			}
 		}
 	}
+	
+	@Override
+	public void addListener(IContainerListener listener) {
+		super.addListener(listener);
+		listener.sendAllWindowProperties(this, tileEntity);
+	}
+	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (IContainerListener i: listeners) {
+			if (currProgress != tileEntity.getField(0)) i.sendWindowProperty(this, 0, tileEntity.getField(0));
+			if (totalProgress != tileEntity.getField(1)) i.sendWindowProperty(this, 1, tileEntity.getField(1));
+		}
+		currProgress = tileEntity.getField(0);
+		totalProgress = tileEntity.getField(1);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void updateProgressBar(int id, int data) {
+		tileEntity.setField(id, data);
+	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return false;
+		return tileEntity.isUsableByPlayer(player);
 	}
 }

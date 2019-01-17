@@ -1,5 +1,6 @@
 package cn.davidma.idleloot.tileentity;
 
+import cn.davidma.idleloot.util.NBTTagHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -20,11 +21,19 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 	
 	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 	private String name;
+	
+	public void pushLoot() {
+		
+	}
 
 	@Override
 	public String getName() {
 		if (hasCustomName()) return name;
 		return "container.generator";
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -40,8 +49,14 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		if (world.isRemote) return;
 		
+		currProgress++;
+		if (currProgress >= totalProgress) {
+			currProgress = 0;
+			pushLoot();
+			markDirty();
+		}
 	}
 
 	@Override
@@ -80,12 +95,23 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		
+		super.readFromNBT(nbt);
+		inventory = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
+		ItemStackHelper.loadAllItems(nbt, inventory);
+		if (nbt.hasKey(NBTTagHelper.CUSTOM_NAME_TAG)) setName(nbt.getString(NBTTagHelper.CUSTOM_NAME_TAG));
+		currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
+		totalProgress = nbt.getInteger(NBTTagHelper.TOTAL_PROGRESS_TAG);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		return null;
+		super.writeToNBT(nbt);
+		if (hasCustomName()) nbt.setString(NBTTagHelper.CUSTOM_NAME_TAG, name);
+		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, currProgress);
+		nbt.setInteger(NBTTagHelper.TOTAL_PROGRESS_TAG, totalProgress);
+		ItemStackHelper.saveAllItems(nbt, inventory);
+		
+		return nbt;
 	}
 
 	@Override
@@ -95,49 +121,44 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void openInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		// TODO Auto-generated method stub
-		return false;
+		return NBTTagHelper.containsMob(NBTTagHelper.getEssentialNBT(stack));
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (id == 0) return currProgress;
+		return totalProgress;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
+		if (id == 0) currProgress = value;
+		else totalProgress = value;
 		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.inventory.clear();
 	}
 }
