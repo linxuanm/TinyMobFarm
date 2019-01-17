@@ -22,8 +22,17 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 	private String name;
 	
+	public GeneratorTileEntity(String name) {
+		this.name = name;
+	}
+	
 	public void pushLoot() {
 		
+	}
+	
+	public boolean working() {
+		ItemStack stack =this.getStackInSlot(0);
+		return !stack.isEmpty() && NBTTagHelper.containsMob(NBTTagHelper.getEssentialNBT(stack));
 	}
 
 	@Override
@@ -38,7 +47,7 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 
 	@Override
 	public boolean hasCustomName() {
-		return !name.isEmpty() && name != null;
+		return name != null && !name.isEmpty();
 	}
 	
 	@Override
@@ -51,11 +60,13 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 	public void update() {
 		if (world.isRemote) return;
 		
-		currProgress++;
-		if (currProgress >= totalProgress) {
-			currProgress = 0;
-			pushLoot();
-			markDirty();
+		if (this.working()) {
+			currProgress++;
+			if (currProgress >= totalProgress) {
+				currProgress = 0;
+				pushLoot();
+				markDirty();
+			}
 		}
 	}
 

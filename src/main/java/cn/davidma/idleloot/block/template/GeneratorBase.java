@@ -2,6 +2,8 @@ package cn.davidma.idleloot.block.template;
 
 import java.util.List;
 
+import cn.davidma.idleloot.Main;
+import cn.davidma.idleloot.handler.CollectionsManager;
 import cn.davidma.idleloot.tileentity.GeneratorTileEntity;
 import cn.davidma.idleloot.util.Msg;
 import net.minecraft.block.ITileEntityProvider;
@@ -27,9 +29,19 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 	
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375);
 	private static final AxisAlignedBB COLLISION_BOX = new AxisAlignedBB(0.125, 0, 0.125, 0.875, 0.8125, 0.875);
+	
+	private int id;
+	private String name;
 
-	public GeneratorBase(String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
+	public GeneratorBase(int id, String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
 		super(name, mat);
+		
+		// Name and id.
+		this.id = id;
+		String tmp = name.replace("_generator", " Loot Generator").replace("wood", "wooden").replace("gold", "golden");
+		tmp = tmp.substring(0, 1).toUpperCase() + tmp.substring(1);
+		this.name = tmp;
+		
 		setSoundType(sound);
 		setHardness(hard);
 		setHarvestLevel(harv, harvLvl);
@@ -70,7 +82,12 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new GeneratorTileEntity();
+		return new GeneratorTileEntity(name);
+	}
+	
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
 	}
 	
 	@Override
@@ -79,7 +96,7 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof GeneratorTileEntity) {
 			GeneratorTileEntity generatorTileEntity = (GeneratorTileEntity) tileEntity;
-			Msg.tellPlayer(player, "Click!");
+			player.openGui(Main.instance, CollectionsManager.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;
 	}

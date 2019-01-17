@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GeneratorGUI extends GuiContainer{
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Info.MOD_ID + ":textures/gui/generatorGUI.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Info.MOD_ID+":textures/gui/generator_gui.png");
 	private InventoryPlayer player;
 	private GeneratorTileEntity tileEntity;
 	
@@ -33,10 +33,15 @@ public class GeneratorGUI extends GuiContainer{
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		if (this.tileEntity.working()) {
+			this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 60, 176, 0, progressScale(80), 5);
+		}
 	}
 	
-	private int progressLeft(int pixels) {
-		return this.tileEntity.getField(0) * pixels / this.tileEntity.getField(1);
+	private int progressScale(int pixels) {
+		int total = this.tileEntity.getField(1);
+		if (total == 0) return 0;
+		return this.tileEntity.getField(0) * pixels / total;
 	}
 
 }

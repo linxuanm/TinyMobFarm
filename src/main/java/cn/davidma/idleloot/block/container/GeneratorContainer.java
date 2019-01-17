@@ -6,6 +6,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -46,6 +47,40 @@ public class GeneratorContainer extends Container {
 		}
 		currProgress = tileEntity.getField(0);
 		totalProgress = tileEntity.getField(1);
+	}
+	
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
+		ItemStack stack = ItemStack.EMPTY;
+		Slot slot = (Slot) this.inventorySlots.get(slotId);
+		if (slot == null || !slot.getHasStack()) return ItemStack.EMPTY;
+		
+		ItemStack slotStack = slot.getStack();
+		stack = slotStack.copy();
+		
+		if (slotId == 0) {
+			
+			// Send item from slot to inventory.
+			if (!this.mergeItemStack(slotStack, 1, 37, true)) return ItemStack.EMPTY;
+			slot.onSlotChange(slotStack, stack);	
+			
+		} else {
+			
+			// Send item from inventory to slot.
+			if (!this.mergeItemStack(slotStack, 0, 1, false)) return ItemStack.EMPTY;
+		}
+		
+		// Cleanup check.
+		if (slotStack.isEmpty()) {
+			slot.putStack(ItemStack.EMPTY);
+		} else {
+			slot.onSlotChanged();
+		}
+		
+		if (slotStack.getCount() == stack.getCount()) return ItemStack.EMPTY;
+		slot.onTake(player, slotStack);
+		
+		return stack;
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -41,6 +41,10 @@ public class NBTTagHelper {
 		return keyValueEquals(nbt, "containsMob", true);
 	}
 	
+	public static boolean containsMob(ItemStack stack) {
+		return containsMob(stack);
+	}
+	
 	public static boolean keyValueEquals(NBTTagCompound nbt, String key, int value) {
 		return nbt != null && nbt.hasKey(key) && nbt.getInteger(key) == value;
 	}

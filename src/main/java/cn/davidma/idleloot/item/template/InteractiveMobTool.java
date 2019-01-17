@@ -56,7 +56,7 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 			return false;
 		}
 		
-		boolean result = interactEntity(stack, player, mob);
+		boolean result = this.interactEntity(stack, player, mob);
 		if (result && damageItem[0]) {
 			stack.damageItem(1, player);
 		}
@@ -75,7 +75,7 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 		// Check again.
 		if (!player.canPlayerEdit(pos.offset(side), side, stack)) return EnumActionResult.FAIL;
 		
-		boolean result = interactBlock(stack, player, world, pos, side);
+		boolean result = this.interactBlock(stack, player, world, pos, side);
 		if (result && damageItem[1]) {
 			stack.damageItem(1, player);
 		}
