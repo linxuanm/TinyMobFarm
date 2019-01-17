@@ -40,7 +40,7 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 		setName(name);
 		this.id = id;
 		this.currProgress = 0;
-		this.totalProgress = IdleLootConfig.GENERATOR_SPEED[id] * 20;
+		this.totalProgress = (int) (IdleLootConfig.GENERATOR_SPEED[id] * 20);
 	}
 	
 	public void pushLoot() {
@@ -93,6 +93,7 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 				Random rand = new Random();
 				ItemStack stack = this.getStackInSlot(0);
 				stack.attemptDamageItem(Info.DURABILITY_COST_FROM_GENERATOR_ID(this.id, rand), rand, null);
+				if (stack.getItemDamage() > stack.getMaxDamage()) this.inventory.clear();
 				
 				world.notifyBlockUpdate(this.pos, world.getBlockState(this.pos), this.world.getBlockState(this.pos), 2);
 				this.markDirty();
@@ -100,14 +101,10 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 		}
 	}
 	
+	@Nullable
 	@Override
-	public void handleUpdateTag(NBTTagCompound nbt) {
-		this.readFromNBT(nbt);
-	}
-	
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.getPos(), this.getBlockMetadata(), this.writeToNBT(new NBTTagCompound()));
 	}
 	
 	@Override

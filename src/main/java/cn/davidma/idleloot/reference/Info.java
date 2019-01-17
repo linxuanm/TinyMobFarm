@@ -73,7 +73,7 @@ public class Info {
 	}
 	
 	private static String getTip(int chance, int durability) {
-		if (durability == 0) return String.format("e- %d%% chance to loss no durability", chance);
+		if (durability == 0) return String.format("- %d%% chance to loss no durability", chance);
 		return String.format("- %d%% chance to lose %d durability", chance, durability);
 	}
 }

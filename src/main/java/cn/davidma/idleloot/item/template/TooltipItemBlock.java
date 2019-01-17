@@ -29,7 +29,7 @@ public class TooltipItemBlock extends ItemBlock {
 				tooltip.add(i);
 			}
 		} else {
-			tooltip.add("Hold " + (TextFormatting.ITALIC + "<SHIFT>") + " for stats.");
+			tooltip.add("Hold " + (TextFormatting.ITALIC + "<SHIFT>") + (TextFormatting.GRAY + " for stats."));
 		}
 	}
 }
