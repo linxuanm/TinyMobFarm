@@ -12,8 +12,8 @@ public class NBTTagHelper {
 	
 	// TileEntity tags;
 	public static final String CURR_PROGRESS_TAG = "currProgress";
-	public static final String TOTAL_PROGRESS_TAG = "totalProgress";
 	public static final String CUSTOM_NAME_TAG = "customName";
+	public static final String ID_TAG = "generatorId";
 	
 	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		

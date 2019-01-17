@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.davidma.idleloot.Main;
 import cn.davidma.idleloot.handler.CollectionsManager;
+import cn.davidma.idleloot.reference.Info;
 import cn.davidma.idleloot.tileentity.GeneratorTileEntity;
 import cn.davidma.idleloot.util.Msg;
 import net.minecraft.block.BlockContainer;
@@ -104,8 +105,10 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new GeneratorTileEntity(name);
+	public TileEntity createNewTileEntity(World world, int meta) {
+		GeneratorTileEntity te = new GeneratorTileEntity();
+		te.init(name, id);
+		return te;
 	}
 	
 	@Override
@@ -119,7 +122,7 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof GeneratorTileEntity) {
 			GeneratorTileEntity generatorTileEntity = (GeneratorTileEntity) tileEntity;
-			player.openGui(Main.instance, CollectionsManager.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+			player.openGui(Main.instance, Info.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;
 	}

@@ -26,16 +26,25 @@ public class GeneratorGUI extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String name = this.tileEntity.getDisplayName().getFormattedText();
 		this.fontRenderer.drawString(name, xSize/2 - this.fontRenderer.getStringWidth(name)/2, 8, 4210752);
+		if (this.tileEntity.working()) {
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			this.mc.getTextureManager().bindTexture(TEXTURE);
+			this.drawTexturedModalRect(48, 60, 176, 5, 80, 5);
+			this.drawTexturedModalRect(48, 60, 176, 0, progressScale(80), 5);
+		} else {
+			String text = "Insert a lasso to activate";
+			int x = xSize / 2 - this.fontRenderer.getStringWidth(text) / 2;
+			int y = 60;
+			this.fontRenderer.drawString(text, x, 59, 16733525);
+		}
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		this.drawDefaultBackground();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		if (this.tileEntity.working()) {
-			this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 60, 176, 0, progressScale(80), 5);
-		}
 	}
 	
 	private int progressScale(int pixels) {

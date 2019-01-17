@@ -1,5 +1,6 @@
 package cn.davidma.idleloot.tileentity;
 
+import cn.davidma.idleloot.reference.IdleLootConfig;
 import cn.davidma.idleloot.util.NBTTagHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -21,10 +22,18 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 	private int currProgress, totalProgress;
 	
 	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
-	private String name;
+	private String name = "Generator";
+	private int id = 0;
 	
-	public GeneratorTileEntity(String name) {
-		this.name = name;
+	public GeneratorTileEntity() {
+		super();
+	}
+	
+	public void init(String name, int id) {
+		setName(name);
+		this.id = id;
+		this.currProgress = 0;
+		this.totalProgress = IdleLootConfig.GENERATOR_SPEED[id] * 20;
 	}
 	
 	public void pushLoot() {
@@ -37,7 +46,9 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 	
 	public boolean working() {
 		ItemStack stack = this.getStackInSlot(0);
-		return !stack.isEmpty() && NBTTagHelper.containsMob(stack);
+		boolean work = !stack.isEmpty() && NBTTagHelper.containsMob(stack);
+		if (!work) this.currProgress = 0;
+		return work;
 	}
 	
 	@Override
@@ -70,7 +81,7 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 			if (currProgress >= totalProgress) {
 				currProgress = 0;
 				pushLoot();
-				markDirty();
+				this.markDirty();
 			}
 		}
 	}
@@ -115,18 +126,19 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 		inventory = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(nbt, inventory);
 		if (nbt.hasKey(NBTTagHelper.CUSTOM_NAME_TAG)) setName(nbt.getString(NBTTagHelper.CUSTOM_NAME_TAG));
+		int inId = nbt.getInteger(NBTTagHelper.ID_TAG);
 		currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
-		totalProgress = nbt.getInteger(NBTTagHelper.TOTAL_PROGRESS_TAG);
+		
+		this.init(this.getName(), inId);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		if (hasCustomName()) nbt.setString(NBTTagHelper.CUSTOM_NAME_TAG, name);
-		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, currProgress);
-		nbt.setInteger(NBTTagHelper.TOTAL_PROGRESS_TAG, totalProgress);
-		ItemStackHelper.saveAllItems(nbt, inventory);
-		
+		if (hasCustomName()) nbt.setString(NBTTagHelper.CUSTOM_NAME_TAG, this.name);
+		nbt.setInteger(NBTTagHelper.ID_TAG, this.id);
+		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
+		ItemStackHelper.saveAllItems(nbt, this.inventory);
 		return nbt;
 	}
 

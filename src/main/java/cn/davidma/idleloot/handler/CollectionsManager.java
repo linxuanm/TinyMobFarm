@@ -16,8 +16,6 @@ import net.minecraft.item.Item;
 
 public class CollectionsManager {
 	
-	public static final int GENERATOR_GUI = 1;
-	
 	public static IdleLootCreativeTab tab = new IdleLootCreativeTab();
 	public static List<Item> items = new ArrayList<Item>();
 	public static List<Block> blocks = new ArrayList<Block>();
