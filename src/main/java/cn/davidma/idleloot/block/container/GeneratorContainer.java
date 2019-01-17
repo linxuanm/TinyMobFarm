@@ -71,7 +71,7 @@ public class GeneratorContainer extends Container {
 		}
 		
 		// Cleanup check.
-		if (slotStack.isEmpty()) {
+		if (slotStack.isEmpty() || slotStack.getCount() == 0) {
 			slot.putStack(ItemStack.EMPTY);
 		} else {
 			slot.onSlotChanged();

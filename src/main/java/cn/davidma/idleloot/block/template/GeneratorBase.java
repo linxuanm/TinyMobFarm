@@ -1,11 +1,13 @@
 package cn.davidma.idleloot.block.template;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.davidma.idleloot.Main;
 import cn.davidma.idleloot.handler.CollectionsManager;
 import cn.davidma.idleloot.tileentity.GeneratorTileEntity;
 import cn.davidma.idleloot.util.Msg;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -18,6 +20,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -32,6 +35,7 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 	
 	private int id;
 	private String name;
+	private NonNullList<ItemStack> drops;
 
 	public GeneratorBase(int id, String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
 		super(name, mat);
@@ -49,7 +53,26 @@ public class GeneratorBase extends StandardBlockBase implements ITileEntityProvi
 		setResistance(300.0F);
 		setLightOpacity(1);
 	}
-
+	
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		drops = NonNullList.<ItemStack>create();
+		
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof GeneratorTileEntity) {
+			((GeneratorTileEntity) te).addDropsToList(drops);
+		}
+		super.breakBlock(world, pos, state);
+	}
+	
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		super.getDrops(drops, world, pos, state, fortune);
+		for (ItemStack i: this.drops) {
+			drops.add(i);
+		}
+	}
+	
 	@Override
 	public boolean isFullBlock(IBlockState bs) {
 		return false;

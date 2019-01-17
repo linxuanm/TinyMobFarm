@@ -42,7 +42,7 @@ public class NBTTagHelper {
 	}
 	
 	public static boolean containsMob(ItemStack stack) {
-		return containsMob(stack);
+		return containsMob(getEssentialNBT(stack));
 	}
 	
 	public static boolean keyValueEquals(NBTTagCompound nbt, String key, int value) {

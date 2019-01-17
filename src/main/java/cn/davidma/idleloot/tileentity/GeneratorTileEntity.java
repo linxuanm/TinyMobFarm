@@ -12,6 +12,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import scala.collection.mutable.Stack;
 
 public class GeneratorTileEntity extends TileEntity implements IInventory, ITickable {
@@ -30,11 +31,15 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 		
 	}
 	
-	public boolean working() {
-		ItemStack stack =this.getStackInSlot(0);
-		return !stack.isEmpty() && NBTTagHelper.containsMob(NBTTagHelper.getEssentialNBT(stack));
+	public void addDropsToList(NonNullList<ItemStack> drops) {
+		for(ItemStack i: inventory) drops.add(i);
 	}
-
+	
+	public boolean working() {
+		ItemStack stack = this.getStackInSlot(0);
+		return !stack.isEmpty() && NBTTagHelper.containsMob(stack);
+	}
+	
 	@Override
 	public String getName() {
 		if (hasCustomName()) return name;
@@ -147,7 +152,7 @@ public class GeneratorTileEntity extends TileEntity implements IInventory, ITick
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return NBTTagHelper.containsMob(NBTTagHelper.getEssentialNBT(stack));
+		return NBTTagHelper.containsMob(stack);
 	}
 
 	@Override
