@@ -1,5 +1,5 @@
 {
-	"parent": "tinymobfarm:block/generator_preset",
+	"parent": "tinymobfarm:block/farm_preset",
 	"textures": {
 		"particle": "tinymobfarm:blocks/ultimate",
 		"material": "tinymobfarm:blocks/ultimate"

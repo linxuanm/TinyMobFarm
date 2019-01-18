@@ -1,5 +1,7 @@
 package cn.davidma.tinymobfarm.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -7,7 +9,10 @@ import javax.annotation.Nullable;
 import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
 import cn.davidma.tinymobfarm.reference.Info;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -15,12 +20,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import scala.collection.mutable.Stack;
 
 public class MobFarmTileEntity extends TileEntity implements IInventory, ITickable {
@@ -43,8 +53,57 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		this.totalProgress = (int) (TinyMobFarmConfig.GENERATOR_SPEED[id] * 20);
 	}
 	
-	public void pushLoot() {
+	public void pushItemsToInv(List<ItemStack> items) {
 		
+		// Double check (XD).
+		if (this.world.isRemote) return;
+		
+		EnumFacing[] facing = {
+			EnumFacing.DOWN,
+			EnumFacing.UP,
+			EnumFacing.WEST,
+			EnumFacing.EAST,
+			EnumFacing.NORTH,
+			EnumFacing.SOUTH
+		};
+		
+		// [xOffset, yOffset, xOffset, facingIndex]
+		int[][] pos = {
+			{0, 1, 0, 0},
+			{0, -1, 0, 1},
+			{0, 0, 1, 2},
+			{0, 0, -1, 3},
+			{1, 0, 0, 4},
+			{-1, 0, 0, 5}
+		};
+		
+		// Iterate through adjacent inventories.
+		for (int[] i: pos) {
+			TileEntity adjacent = this.world.getTileEntity(this.getPos().add(new BlockPos(i[0], i[1], i[2])));
+				
+			// Grab the IItemHandler and do stuff with it.
+			IItemHandler inv = adjacent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing[i[3]]);
+			for (int j = 0; j < inv.getSlots(); j++) {
+				
+				// Just cheking.
+				if (items.isEmpty()) return;
+				
+				ItemStack stack = inv.insertItem(j, items.get(0), false);
+				items.remove(0);
+				
+				// Add remainder to list.
+				if (stack != null && !stack.isEmpty()) items.add(stack);
+				
+				adjacent.markDirty();
+			}
+		}
+		
+		// Chuck 'em into da world!
+		BlockPos here = this.getPos();
+		for (ItemStack i: items) {
+			EntityItem biu = new EntityItem(this.world, here.getX(), here.getY(), here.getZ(), i);
+			this.world.spawnEntity(biu);
+		}
 	}
 	
 	public void addDropsToList(NonNullList<ItemStack> drops) {
@@ -87,7 +146,11 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 			currProgress++;
 			if (currProgress >= totalProgress) {
 				currProgress = 0;
-				pushLoot();
+				
+				// Push items to inventory.
+				List<ItemStack> loots = new ArrayList<ItemStack>();
+				loots.add(new ItemStack(Items.PORKCHOP));
+				pushItemsToInv(loots);
 				
 				// Damage the lasso.
 				Random rand = new Random();
