@@ -20,6 +20,7 @@ public class TinyMobFarmCreativeTab extends CreativeTabs {
 	@Override
 	public ItemStack getTabIconItem() {
 		for (Item i: CollectionsManager.items) {
+			System.out.println(i.getUnlocalizedName());
 			if (i.getUnlocalizedName().equals("tile.iron_farm")) return new ItemStack(i);
 		}
 		return new ItemStack(Items.ROTTEN_FLESH);

@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"glass": "idleloot:blocks/glass"
+		"glass": "tinymobfarm:blocks/glass"
 	},
 	"elements": [
 		{

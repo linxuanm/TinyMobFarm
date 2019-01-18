@@ -7,22 +7,22 @@
 	"variants": {
 		"normal": [{
 			"custom": {
-				"base": "idleloot:inferno_generator#base",
-				"Solid": "idleloot:inferno_generator#base",
-				"Cutout": "idleloot:inferno_generator#glass"
+				"base": "tinymobfarm:inferno_generator#base",
+				"Solid": "tinymobfarm:inferno_generator#base",
+				"Cutout": "tinymobfarm:inferno_generator#glass"
 			}
 		}],
 		"base": [{
-			"model": "idleloot:inferno_generator"
+			"model": "tinymobfarm:inferno_generator"
 		}],
 		"glass": [{
-			"model": "idleloot:glass_panel"
+			"model": "tinymobfarm:glass_panel"
 		}],
 		"inventory": [{
 			"custom": {
-				"base": "idleloot:inferno_generator#base",
-				"Solid": "idleloot:inferno_generator#base",
-				"Cutout": "idleloot:inferno_generator#glass"
+				"base": "tinymobfarm:inferno_generator#base",
+				"Solid": "tinymobfarm:inferno_generator#base",
+				"Cutout": "tinymobfarm:inferno_generator#glass"
 			}
 		}]
 	}

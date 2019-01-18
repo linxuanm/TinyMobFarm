@@ -1,7 +1,7 @@
 {
-	"parent": "idleloot:block/generator_preset",
+	"parent": "tinymobfarm:block/generator_preset",
 	"textures": {
-		"particle": "idleloot:blocks/diamond",
-		"material": "idleloot:blocks/diamond"
+		"particle": "tinymobfarm:blocks/diamond",
+		"material": "tinymobfarm:blocks/diamond"
 	}
 }

@@ -7,22 +7,22 @@
 	"variants": {
 		"normal": [{
 			"custom": {
-				"base": "idleloot:gold_generator#base",
-				"Solid": "idleloot:gold_generator#base",
-				"Cutout": "idleloot:gold_generator#glass"
+				"base": "tinymobfarm:gold_generator#base",
+				"Solid": "tinymobfarm:gold_generator#base",
+				"Cutout": "tinymobfarm:gold_generator#glass"
 			}
 		}],
 		"base": [{
-			"model": "idleloot:gold_generator"
+			"model": "tinymobfarm:gold_generator"
 		}],
 		"glass": [{
-			"model": "idleloot:glass_panel"
+			"model": "tinymobfarm:glass_panel"
 		}],
 		"inventory": [{
 			"custom": {
-				"base": "idleloot:gold_generator#base",
-				"Solid": "idleloot:gold_generator#base",
-				"Cutout": "idleloot:gold_generator#glass"
+				"base": "tinymobfarm:gold_generator#base",
+				"Solid": "tinymobfarm:gold_generator#base",
+				"Cutout": "tinymobfarm:gold_generator#glass"
 			}
 		}]
 	}

@@ -7,22 +7,22 @@
 	"variants": {
 		"normal": [{
 			"custom": {
-				"base": "idleloot:wood_generator#base",
-				"Solid": "idleloot:wood_generator#base",
-				"Cutout": "idleloot:wood_generator#glass"
+				"base": "tinymobfarm:wood_generator#base",
+				"Solid": "tinymobfarm:wood_generator#base",
+				"Cutout": "tinymobfarm:wood_generator#glass"
 			}
 		}],
 		"base": [{
-			"model": "idleloot:wood_generator"
+			"model": "tinymobfarm:wood_generator"
 		}],
 		"glass": [{
-			"model": "idleloot:glass_panel"
+			"model": "tinymobfarm:glass_panel"
 		}],
 		"inventory": [{
 			"custom": {
-				"base": "idleloot:wood_generator#base",
-				"Solid": "idleloot:wood_generator#base",
-				"Cutout": "idleloot:wood_generator#glass"
+				"base": "tinymobfarm:wood_generator#base",
+				"Solid": "tinymobfarm:wood_generator#base",
+				"Cutout": "tinymobfarm:wood_generator#glass"
 			}
 		}]
 	}
