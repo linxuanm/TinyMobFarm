@@ -133,10 +133,14 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	public boolean working() {
-		ItemStack stack = this.getStackInSlot(0);
-		boolean work = !stack.isEmpty() && NBTTagHelper.containsMob(stack);
+		boolean work = this.hasLasso() && !this.redstoneOn();
 		if (!work) this.currProgress = 0;
 		return work;
+	}
+	
+	public boolean hasLasso() {
+		ItemStack stack = this.getStackInSlot(0);
+		return !stack.isEmpty() && NBTTagHelper.containsMob(stack);
 	}
 	
 	@Override
@@ -199,6 +203,16 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		this.readFromNBT(packet.getNbtCompound());
 	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+	
+	@Override
+	public void handleUpdateTag(NBTTagCompound nbt) {
+		this.readFromNBT(nbt);
+	}
 
 	@Override
 	public int getSizeInventory() {
@@ -254,6 +268,10 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
 		ItemStackHelper.saveAllItems(nbt, this.inventory);
 		return nbt;
+	}
+	
+	public boolean redstoneOn() {
+		return false;
 	}
 
 	@Override
