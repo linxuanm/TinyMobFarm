@@ -1,2 +1,2 @@
-# IdleLoot
-A Minecraft Mod that adds loot generators that generates mob drops passively.
+# TinyMobFarm
+A Minecraft Mod that adds single block mob farms that generates mob drops passively.
