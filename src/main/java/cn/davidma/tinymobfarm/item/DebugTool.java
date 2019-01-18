@@ -1,8 +1,12 @@
 package cn.davidma.tinymobfarm.item;
 
+import java.util.List;
+import java.util.Random;
+
 import cn.davidma.tinymobfarm.item.template.InteractiveMobTool;
 import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.Msg;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +15,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 
 public class DebugTool extends InteractiveMobTool {
 
@@ -26,8 +33,26 @@ public class DebugTool extends InteractiveMobTool {
 	@Override
 	protected boolean interactEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob) {
 		if (mob instanceof EntityLiving) {
-			ResourceLocation loc = LootTableHelper.getLootTable((EntityLiving) mob);
-			Msg.tellPlayer(player, loc.toString());
+			ResourceLocation location = LootTableHelper.getLootTableLocation((EntityLiving) mob);
+			if (location == null) {
+				Msg.tellPlayer(player, "Cannot retrieve loot table location for this mob.");
+				return false;
+			}
+			List<ItemStack> loots = LootTableHelper.genLoots(location, mob.world);
+			if (loots == null) {
+				Msg.tellPlayer(player, "Cannot generate possible loots for this mob.");
+				return false;
+			}
+			if (loots.isEmpty()) {
+				Msg.tellPlayer(player, "Nothing dropped");
+			} else {
+				for (ItemStack lootStack: loots) {
+					String info = String.format("%d x %s", lootStack.getCount(), lootStack.getDisplayName());
+					int meta = lootStack.getMetadata();
+					if (meta != 0) info += String.format(", Metadata: %d", meta);
+					Msg.tellPlayer(player, info);
+				}
+			}
 		}
 		return true;
 	}
@@ -40,5 +65,11 @@ public class DebugTool extends InteractiveMobTool {
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return true;
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add("Right click on mob to see its drops.");
+		tooltip.add("(Simulated probability)");
 	}
 }

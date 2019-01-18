@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
 import cn.davidma.tinymobfarm.reference.Info;
+import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,11 +25,13 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import scala.collection.mutable.Stack;
@@ -86,20 +89,35 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 			IItemHandler inv = adjacent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing[i[3]]);
 			if (inv == null) continue;
 			
-			// Iterate through inventory.
-			for (int j = 0; j < inv.getSlots(); j++) {
+			// markDirt flag.
+			boolean dirty = false;
+			
+			// Prioritize slots with the same item.
+			for (int insert = 0; insert < 2; insert++) {
+				for (int j = 0; j < inv.getSlots(); j++) {
 				
-				// Just cheking.
-				if (items.isEmpty()) return;
+					while (items.contains(ItemStack.EMPTY)) items.remove(ItemStack.EMPTY);
+					// Just checking.
+					if (items.isEmpty()) return;
 				
-				ItemStack stack = inv.insertItem(j, items.get(0), false);
-				items.remove(0);
-				
-				// Add remainder to list.
-				if (stack != null && !stack.isEmpty()) items.add(stack);
-				
-				adjacent.markDirty();
+					for (int k = 0; k < items.size(); k++) {
+					
+						// Check for same item.
+						ItemStack tmp = inv.insertItem(j, items.get(k), true);
+						// Can insert.
+						if (tmp.getCount() != items.get(k).getCount() && (!(inv.getStackInSlot(j).getCount() == 0) || insert == 1)) {
+							ItemStack stack = inv.insertItem(j, items.get(k), false);
+							items.set(k, ItemStack.EMPTY);
+						
+							// Add remainder to list.
+							if (stack != null && !stack.isEmpty()) items.set(k, stack);
+							
+							dirty = true;
+						}
+					}
+				}
 			}
+			if (dirty) adjacent.markDirty();
 		}
 		
 		// Chuck 'em into da world!
@@ -152,13 +170,16 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 				currProgress = 0;
 				
 				// Push items to inventory.
-				List<ItemStack> loots = new ArrayList<ItemStack>();
-				loots.add(new ItemStack(Items.COOKED_BEEF));
+				ItemStack stack = this.getStackInSlot(0);
+				NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(stack);
+				String locationStr = nbt.getString(NBTTagHelper.LOOT_TABLE_LOCATION);
+				if (locationStr == null || locationStr.isEmpty()) return;
+				ResourceLocation location = new ResourceLocation(locationStr);
+				List<ItemStack> loots = LootTableHelper.genLoots(location, this.world);
 				pushItemsToInv(loots);
 				
 				// Damage the lasso.
 				Random rand = new Random();
-				ItemStack stack = this.getStackInSlot(0);
 				stack.attemptDamageItem(Info.DURABILITY_COST_FROM_FARM_ID(this.id, rand), rand, null);
 				if (stack.getItemDamage() > stack.getMaxDamage()) this.inventory.clear();
 				

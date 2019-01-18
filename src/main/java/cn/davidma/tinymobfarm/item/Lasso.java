@@ -1,9 +1,11 @@
 package cn.davidma.tinymobfarm.item;
 
 import java.util.List;
+import java.util.Random;
 
 import cn.davidma.tinymobfarm.item.template.InteractiveMobTool;
 import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
+import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.block.state.IBlockState;
@@ -19,8 +21,12 @@ import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 
 public class Lasso extends InteractiveMobTool {
 
@@ -51,16 +57,24 @@ public class Lasso extends InteractiveMobTool {
 			return false;
 		}
 		
-		// Mob Info.
+		// Mob loot.
+		ResourceLocation location = LootTableHelper.getLootTableLocation((EntityLiving) mob);
+		if (location == null) {
+			Msg.tellPlayer(player, "Cannot retrieve loot table location for this mob.");
+			return false;
+		}
+		nbt.setString(NBTTagHelper.LOOT_TABLE_LOCATION, location.toString());
+		
+		// Mob info.
 		double mobHealth = (double) Math.round(mob.getHealth() * 10) / 10;
-		nbt.setTag("entityInfo", entityNBT);
-		nbt.setDouble("mobHealth", mobHealth);
-		nbt.setDouble("mobMaxHealth", mob.getMaxHealth());
-		nbt.setString("mobName", mob.getName());
+		nbt.setTag(NBTTagHelper.ENTITY_INFO, entityNBT);
+		nbt.setDouble(NBTTagHelper.MOB_HEALTH, mobHealth);
+		nbt.setDouble(NBTTagHelper.MOB_MAX_HEALTH, mob.getMaxHealth());
+		nbt.setString(NBTTagHelper.MOB_NAME, mob.getName());
 		
 		// State change.
-		nbt.setBoolean("shiny", true);
-		nbt.setBoolean("containsMob", true);
+		nbt.setBoolean(NBTTagHelper.SHINY, true);
+		nbt.setBoolean(NBTTagHelper.CONTAINS_MOB, true);
 		
 		// Finish him!
 		mob.setDead();
@@ -81,7 +95,7 @@ public class Lasso extends InteractiveMobTool {
 		
 		// Don't question my naming convention.
 		IBlockState bs = world.getBlockState(pos);
-		NBTTagCompound entityNBT = nbt.getCompoundTag("entityInfo");
+		NBTTagCompound entityNBT = nbt.getCompoundTag(NBTTagHelper.ENTITY_INFO);
 		
 		// General entity info.
 		NBTTagList tags = new NBTTagList();

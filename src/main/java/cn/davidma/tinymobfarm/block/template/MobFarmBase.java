@@ -56,6 +56,17 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	}
 	
 	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState bs, EntityPlayer player, EnumHand hand, EnumFacing side, float x, float y, float z) {
+		if (world.isRemote) return true;
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity instanceof MobFarmTileEntity) {
+			MobFarmTileEntity generatorTileEntity = (MobFarmTileEntity) tileEntity;
+			player.openGui(Main.instance, Info.FARM_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+		}
+		return true;
+	}
+	
+	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		drops = NonNullList.<ItemStack>create();
 		
@@ -72,6 +83,11 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 		for (ItemStack i: this.drops) {
 			drops.add(i);
 		}
+	}
+	
+	@Override
+	public boolean canConnectRedstone(IBlockState bs, IBlockAccess world, BlockPos pos, EnumFacing side) {
+		return true;
 	}
 	
 	@Override
@@ -113,17 +129,6 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
-		return true;
-	}
-	
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState bs, EntityPlayer player, EnumHand hand, EnumFacing side, float x, float y, float z) {
-		if (world.isRemote) return true;
-		TileEntity tileEntity = world.getTileEntity(pos);
-		if (tileEntity instanceof MobFarmTileEntity) {
-			MobFarmTileEntity generatorTileEntity = (MobFarmTileEntity) tileEntity;
-			player.openGui(Main.instance, Info.FARM_GUI, world, pos.getX(), pos.getY(), pos.getZ());
-		}
 		return true;
 	}
 }

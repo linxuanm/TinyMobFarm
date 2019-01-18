@@ -9,6 +9,13 @@ public class NBTTagHelper {
 
 	// Item tags.
 	public static final String BASE = "tinymobfarm";
+	public static final String ENTITY_INFO = "entityInfo";
+	public static final String MOB_HEALTH = "mobHealth";
+	public static final String MOB_MAX_HEALTH = "mobMaxHealth";
+	public static final String MOB_NAME = "mobName";
+	public static final String SHINY = "shiny";
+	public static final String CONTAINS_MOB = "containsMob";
+	public static final String LOOT_TABLE_LOCATION = "lootTableLocation";
 	
 	// TileEntity tags;
 	public static final String CURR_PROGRESS_TAG = "currProgress";
