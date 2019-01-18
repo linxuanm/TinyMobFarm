@@ -43,7 +43,7 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 		
 		// Name and id.
 		this.id = id;
-		String tmp = name.replace("_generator", " Loot Generator").replace("wood", "wooden").replace("gold", "golden");
+		String tmp = name.replace("_farm", " Mob Farm").replace("wood", "wooden").replace("gold", "golden");
 		tmp = tmp.substring(0, 1).toUpperCase() + tmp.substring(1);
 		this.name = tmp;
 		
