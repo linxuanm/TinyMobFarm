@@ -153,7 +153,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 				
 				// Push items to inventory.
 				List<ItemStack> loots = new ArrayList<ItemStack>();
-				loots.add(new ItemStack(Items.PORKCHOP));
+				loots.add(new ItemStack(Items.COOKED_BEEF));
 				pushItemsToInv(loots);
 				
 				// Damage the lasso.

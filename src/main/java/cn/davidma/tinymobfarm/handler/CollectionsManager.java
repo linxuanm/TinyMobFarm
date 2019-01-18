@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.davidma.tinymobfarm.block.template.MobFarmBase;
+import cn.davidma.tinymobfarm.item.DebugTool;
 import cn.davidma.tinymobfarm.item.Lasso;
 import cn.davidma.tinymobfarm.item.template.InteractiveMobTool;
 import cn.davidma.tinymobfarm.item.template.StandardItemBase;
@@ -26,6 +27,7 @@ public class CollectionsManager {
 	
 	public static void instantiateAllItems() {
 		new Lasso("lasso");
+		new DebugTool("debugging_tool");
 	}
 
 	public static void instantiateAllBlocks() {

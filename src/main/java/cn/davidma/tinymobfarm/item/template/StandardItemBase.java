@@ -15,6 +15,9 @@ public class StandardItemBase extends Item implements Registrable {
 		setUnlocalizedName(this.name);
 		setRegistryName(this.name);
 		CollectionsManager.items.add(this);
+		
+		if (name.equals("debugging_tool")) return;
+		
 		setCreativeTab(CollectionsManager.tab);
 	}
 	

@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,8 @@ public class Lasso extends InteractiveMobTool {
 
 	@Override
 	protected boolean interactEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob) {
+		
+		if (!(mob instanceof EntityLiving)) return false;
 		
 		//NBT time!
 		NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(stack);
