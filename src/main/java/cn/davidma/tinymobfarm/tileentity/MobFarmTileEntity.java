@@ -80,9 +80,13 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		// Iterate through adjacent inventories.
 		for (int[] i: pos) {
 			TileEntity adjacent = this.world.getTileEntity(this.getPos().add(new BlockPos(i[0], i[1], i[2])));
+			if (adjacent == null) continue;
 				
 			// Grab the IItemHandler and do stuff with it.
 			IItemHandler inv = adjacent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing[i[3]]);
+			if (inv == null) continue;
+			
+			// Iterate through inventory.
 			for (int j = 0; j < inv.getSlots(); j++) {
 				
 				// Just cheking.
@@ -101,7 +105,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		// Chuck 'em into da world!
 		BlockPos here = this.getPos();
 		for (ItemStack i: items) {
-			EntityItem biu = new EntityItem(this.world, here.getX(), here.getY(), here.getZ(), i);
+			EntityItem biu = new EntityItem(this.world, here.getX() + 0.5D, here.getY() + 1, here.getZ() + 0.5D, i);
 			this.world.spawnEntity(biu);
 		}
 	}

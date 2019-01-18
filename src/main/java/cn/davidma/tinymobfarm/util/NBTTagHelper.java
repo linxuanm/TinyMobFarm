@@ -8,12 +8,12 @@ public class NBTTagHelper {
 	// All NBT tags are set under the BASE tag for simplicity.
 
 	// Item tags.
-	public static final String BASE = "idleLoot";
+	public static final String BASE = "tinymobfarm";
 	
 	// TileEntity tags;
 	public static final String CURR_PROGRESS_TAG = "currProgress";
 	public static final String CUSTOM_NAME_TAG = "customName";
-	public static final String ID_TAG = "generatorId";
+	public static final String ID_TAG = "mobfarmId";
 	
 	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		
