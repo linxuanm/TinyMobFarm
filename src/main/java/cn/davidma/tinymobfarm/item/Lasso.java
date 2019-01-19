@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -71,6 +72,7 @@ public class Lasso extends InteractiveMobTool {
 		nbt.setDouble(NBTTagHelper.MOB_HEALTH, mobHealth);
 		nbt.setDouble(NBTTagHelper.MOB_MAX_HEALTH, mob.getMaxHealth());
 		nbt.setString(NBTTagHelper.MOB_NAME, mob.getName());
+		nbt.setBoolean(NBTTagHelper.IS_HOSTILE, mob.isCreatureType(EnumCreatureType.MONSTER, false));
 		
 		// State change.
 		nbt.setBoolean(NBTTagHelper.SHINY, true);
@@ -133,6 +135,7 @@ public class Lasso extends InteractiveMobTool {
 			tooltip.add("Right click on block to release mob.");
 			tooltip.add("Mob: " + mobName);
 			tooltip.add("Health: " + mobHealth + "/" + mobMaxHealth);
+			if (NBTTagHelper.isHostile(nbt)) tooltip.add("Mob is hostile.");
 		} else {
 			tooltip.add("Right click on mob to capture");
 		}

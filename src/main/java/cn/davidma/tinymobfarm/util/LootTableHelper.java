@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class LootTableHelper {
@@ -41,6 +43,8 @@ public class LootTableHelper {
 	public static List<ItemStack> genLoots(ResourceLocation location, World world) {
 		LootTable loottable = world.getLootTableManager().getLootTableFromLocation(location);
 		LootContext.Builder lootContext = (new LootContext.Builder((WorldServer) world));
+		FakePlayer daniel = FakePlayerHelper.getPlayer((WorldServer) world);
+		lootContext.withPlayer(daniel);
 		List<ItemStack> loots = loottable.generateLootForPools(new Random(), lootContext.build());
 		
 		return loots;

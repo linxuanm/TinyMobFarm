@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.util.text.TextFormatting;
+
 public class Info {
 	public static final String MOD_ID = "tinymobfarm";
 	public static final String NAME = "Tiny Mob Farm";
@@ -17,9 +19,11 @@ public class Info {
 	
 	public static final int FARM_GUI = 1;
 	
+	public static final int LOWEST_ID_FOR_HOSTILE_SPAWNING = 2;
+	
 	private static final int[][] STATS = {
+		{2, 3, 3},
 		{1, 2, 3},
-		{1, 2, 2},
 		{1, 2},
 		{1, 1, 2},
 		{1},
@@ -47,6 +51,9 @@ public class Info {
 		List<String> tooltip = new ArrayList<String>();
 		
 		for (String i: setup) tooltip.add(i);
+		
+		// whether mob farm can spawn hostile mob.
+		if (id < LOWEST_ID_FOR_HOSTILE_SPAWNING) tooltip.add(0, TextFormatting.RED + "Cannot farm hostile mobs.");
 		
 		Map<Integer, Integer> chances = getChances(STATS[id]);
 		for (int key: chances.keySet()) {

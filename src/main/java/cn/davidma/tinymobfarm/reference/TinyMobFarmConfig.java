@@ -16,5 +16,5 @@ public class TinyMobFarmConfig {
 		"Smaler rate value -> faster speed.",
 		"(1. wood; 2. stone ... 8. ultimate)"})
 	@Name("Generator Rate")
-	public static double[] GENERATOR_SPEED = new double[] {50, 40, 30, 20, 12, 5, 1.5, 0.25};
+	public static double[] GENERATOR_SPEED = new double[] {50, 40, 30, 20, 10, 5, 2.5, 0.75};
 }

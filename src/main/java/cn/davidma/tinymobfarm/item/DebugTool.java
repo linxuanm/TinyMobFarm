@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -32,6 +33,10 @@ public class DebugTool extends InteractiveMobTool {
 
 	@Override
 	protected boolean interactEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob) {
+		if (player.isSneaking()) {
+			mob.attackEntityFrom(DamageSource.causePlayerDamage(player), 32768); // Insta-kill.
+			return true;
+		}
 		if (mob instanceof EntityLiving) {
 			ResourceLocation location = LootTableHelper.getLootTableLocation((EntityLiving) mob);
 			if (location == null) {

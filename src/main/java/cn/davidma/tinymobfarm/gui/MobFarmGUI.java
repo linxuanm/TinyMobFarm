@@ -33,6 +33,15 @@ public class MobFarmGUI extends GuiContainer{
 			this.drawTexturedModalRect(48, 60, 176, 0, progressScale(80), 5);
 		} else {
 			String text = this.tileEntity.hasLasso() ? "Disabled by redstone" : "Insert a lasso to activate";
+			if (this.tileEntity.hasLasso()) {
+				if (this.tileEntity.hasHostileMob() && this.tileEntity.getId() < Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) {
+					text = "This mob need higher farm tiers.";
+				} else {
+					text = "Disabled by redstone";
+				}
+			} else {
+				text = "Insert a lasso to activate";
+			}
 			int x = xSize / 2 - this.fontRenderer.getStringWidth(text) / 2;
 			int y = 60;
 			this.fontRenderer.drawString(text, x, 59, 16733525);

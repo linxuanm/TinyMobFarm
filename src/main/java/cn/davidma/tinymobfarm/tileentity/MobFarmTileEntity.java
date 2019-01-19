@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 
 import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
 import cn.davidma.tinymobfarm.reference.Info;
+import cn.davidma.tinymobfarm.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.util.LootTableHelper;
+import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +33,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -133,14 +136,24 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	public boolean working() {
-		boolean work = this.hasLasso() && !this.redstoneOn();
+		boolean work = this.hasLasso() &&
+			!this.redstoneOn() &&
+			(!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING);
 		if (!work) this.currProgress = 0;
 		return work;
 	}
 	
+	public boolean hasHostileMob() {
+		return this.hasLasso() && NBTTagHelper.isHostile(this.getLasso());
+	}
+	
 	public boolean hasLasso() {
-		ItemStack stack = this.getStackInSlot(0);
+		ItemStack stack = this.getLasso();
 		return !stack.isEmpty() && NBTTagHelper.containsMob(stack);
+	}
+	
+	public ItemStack getLasso() {
+		return this.getStackInSlot(0);
 	}
 	
 	@Override
@@ -184,8 +197,8 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 				
 				// Damage the lasso.
 				Random rand = new Random();
-				stack.attemptDamageItem(Info.DURABILITY_COST_FROM_FARM_ID(this.id, rand), rand, null);
-				if (stack.getItemDamage() > stack.getMaxDamage()) this.inventory.clear();
+				int amount = Info.DURABILITY_COST_FROM_FARM_ID(this.id, rand);
+				stack.damageItem(amount, FakePlayerHelper.getPlayer((WorldServer) this.world));
 				
 				world.notifyBlockUpdate(this.pos, world.getBlockState(this.pos), this.world.getBlockState(this.pos), 2);
 				this.markDirty();
@@ -309,7 +322,6 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	public void setField(int id, int value) {
 		if (id == 0) currProgress = value;
 		else totalProgress = value;
-		
 	}
 
 	@Override
@@ -320,5 +332,9 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	@Override
 	public void clear() {
 		this.inventory.clear();
+	}
+	
+	public int getId() {
+		return id;
 	}
 }

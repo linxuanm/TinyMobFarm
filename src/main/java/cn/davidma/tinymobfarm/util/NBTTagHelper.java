@@ -15,6 +15,7 @@ public class NBTTagHelper {
 	public static final String MOB_NAME = "mobName";
 	public static final String SHINY = "shiny";
 	public static final String CONTAINS_MOB = "containsMob";
+	public static final String IS_HOSTILE = "isHostile";
 	public static final String LOOT_TABLE_LOCATION = "lootTableLocation";
 	
 	// TileEntity tags;
@@ -45,11 +46,19 @@ public class NBTTagHelper {
 	}
 	
 	public static boolean containsMob(NBTTagCompound nbt) {
-		return keyValueEquals(nbt, "containsMob", true);
+		return keyValueEquals(nbt, CONTAINS_MOB, true);
 	}
 	
 	public static boolean containsMob(ItemStack stack) {
 		return containsMob(getEssentialNBT(stack));
+	}
+	
+	public static boolean isHostile(NBTTagCompound nbt) {
+		return keyValueEquals(nbt, IS_HOSTILE, true);
+	}
+	
+	public static boolean isHostile(ItemStack stack) {
+		return isHostile(getEssentialNBT(stack));
 	}
 	
 	public static boolean keyValueEquals(NBTTagCompound nbt, String key, int value) {
