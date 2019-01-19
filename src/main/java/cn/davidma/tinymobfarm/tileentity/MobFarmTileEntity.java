@@ -136,13 +136,25 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	public boolean working() {
-		boolean work = this.hasLasso() && (!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING);
+		boolean work = this.hasLasso() &&
+			(!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) &&
+			!this.getPower();
 		if (!work) this.currProgress = 0;
 		return work;
 	}
 	
+	public boolean getPower() {
+		return this.world.isBlockPowered(this.pos);
+	}
+	
 	public boolean hasHostileMob() {
 		return this.hasLasso() && NBTTagHelper.isHostile(this.getLasso());
+	}
+	
+	public String getMobName() {
+		NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(this.getLasso());
+		String mobName = nbt.getString(NBTTagHelper.MOB_NAME);
+		return mobName;
 	}
 	
 	public boolean hasLasso() {

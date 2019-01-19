@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class MobFarmGUI extends GuiContainer{
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Info.MOD_ID+":textures/gui/generator_gui.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Info.MOD_ID+":textures/gui/farm_gui.png");
 	private InventoryPlayer player;
 	private MobFarmTileEntity tileEntity;
 	
@@ -24,6 +24,7 @@ public class MobFarmGUI extends GuiContainer{
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		this.drawTip(mouseX, mouseY);
 		String name = this.tileEntity.getDisplayName().getFormattedText();
 		this.fontRenderer.drawString(name, xSize/2 - this.fontRenderer.getStringWidth(name)/2, 8, 4210752);
 		if (this.tileEntity.working()) {
@@ -37,7 +38,7 @@ public class MobFarmGUI extends GuiContainer{
 				if (this.tileEntity.hasHostileMob() && this.tileEntity.getId() < Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) {
 					text = "This mob need higher farm tiers.";
 				} else {
-					text = "Disabled by redstone";
+					text = "Disabled by redstone.";
 				}
 			} else {
 				text = "Insert a lasso to activate";
@@ -53,6 +54,10 @@ public class MobFarmGUI extends GuiContainer{
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+	}
+	
+	private void drawTip(int mouseX, int mouseY) {
+		
 	}
 	
 	@Override

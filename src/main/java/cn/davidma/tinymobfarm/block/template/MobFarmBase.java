@@ -26,6 +26,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,7 +39,6 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	
 	private int id;
 	private String name;
-	private boolean powered;
 	private NonNullList<ItemStack> drops;
 
 	public MobFarmBase(int id, String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
@@ -61,6 +61,8 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState bs, EntityPlayer player, EnumHand hand, EnumFacing side, float x, float y, float z) {
 		if (world.isRemote) return true;
+		// Msg.tellPlayer(player, "Turn mob farm off with redstone.");
+		// Msg.tellPlayer(player, "Items are ejected to adjacent containers.");
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof MobFarmTileEntity) {
 			MobFarmTileEntity generatorTileEntity = (MobFarmTileEntity) tileEntity;

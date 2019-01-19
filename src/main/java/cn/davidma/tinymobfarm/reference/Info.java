@@ -43,7 +43,6 @@ public class Info {
 		// Terrible formatting but meh.
 		String[] setup = {
 			"Generates loot every " + TinyMobFarmConfig.GENERATOR_SPEED[id] + " seconds.",
-			"Items are ejected to adjacent containers.",
 			"Lasso durability loss per generation cycle:",
 		};
 		
