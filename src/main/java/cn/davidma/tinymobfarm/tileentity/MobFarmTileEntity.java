@@ -12,6 +12,7 @@ import cn.davidma.tinymobfarm.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -25,6 +26,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -192,6 +194,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		if (world.isRemote) return;
 		
 		if (this.working()) {
+			((WorldServer) this.world).spawnParticle(EnumParticleTypes.PORTAL, this.pos.getX() + 0.5D, this.pos.getY(), this.pos.getZ() + 0.5D, 3, 0.15D, 0, 0.15D, 0, null);
 			currProgress++;
 			if (currProgress >= totalProgress) {
 				currProgress = 0;
