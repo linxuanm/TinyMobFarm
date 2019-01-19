@@ -136,9 +136,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	public boolean working() {
-		boolean work = this.hasLasso() &&
-			!this.redstoneOn() &&
-			(!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING);
+		boolean work = this.hasLasso() && (!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING);
 		if (!work) this.currProgress = 0;
 		return work;
 	}
@@ -281,10 +279,6 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
 		ItemStackHelper.saveAllItems(nbt, this.inventory);
 		return nbt;
-	}
-	
-	public boolean redstoneOn() {
-		return false;
 	}
 
 	@Override

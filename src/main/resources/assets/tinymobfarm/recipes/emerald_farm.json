@@ -10,16 +10,16 @@
 			"item": "tinymobfarm:diamond_farm"
 		}],
 		"M": [{
-			"item": "minecraft:nether_star"
+			"item": "minecraft:ghast_tear"
 		}],
 		"C": [{
-			"item": "minecraft:dragon_breath"
+			"item": "minecraft:nether_star"
 		}],
 		"S": [{
-			"item": "minecraft:chorus_flower"
+			"item": "minecraft:emerald_block"
 		}]
 	},
 	"result": {
-		"item": "tinymobfarm:inferno_farm"
+		"item": "tinymobfarm:emerald_farm"
 	}
 }

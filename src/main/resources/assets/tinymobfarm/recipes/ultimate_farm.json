@@ -13,7 +13,8 @@
 			"item": "minecraft:dragon_breath"
 		}],
 		"C": [{
-			"item": "minecraft:minecraft:purple_shulker_box"
+			"item": "minecraft:purple_shulker_box",
+			"data": 0
 		}],
 		"S": [{
 			"item": "minecraft:elytra"

@@ -27,7 +27,7 @@ public class CollectionsManager {
 	
 	public static void instantiateAllItems() {
 		new Lasso("lasso");
-		new DebugTool("debugging_tool");
+		// new DebugTool("debugging_tool");
 	}
 
 	public static void instantiateAllBlocks() {

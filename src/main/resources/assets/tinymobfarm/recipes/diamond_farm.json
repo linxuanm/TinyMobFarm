@@ -10,10 +10,10 @@
 			"item": "tinymobfarm:gold_farm"
 		}],
 		"M": [{
-			"item": "minecraft:golden_apple"
+			"item": "minecraft:ender_eye"
 		}],
 		"C": [{
-			"item": "minecraft:nether_star"
+			"item": "minecraft:ghast_tear"
 		}],
 		"S": [{
 			"item": "minecraft:diamond_block"

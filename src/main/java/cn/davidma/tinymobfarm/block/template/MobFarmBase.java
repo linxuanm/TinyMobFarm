@@ -2,12 +2,14 @@ package cn.davidma.tinymobfarm.block.template;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cn.davidma.tinymobfarm.Main;
 import cn.davidma.tinymobfarm.handler.CollectionsManager;
 import cn.davidma.tinymobfarm.reference.Info;
 import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
 import cn.davidma.tinymobfarm.util.Msg;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -36,6 +38,7 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	
 	private int id;
 	private String name;
+	private boolean powered;
 	private NonNullList<ItemStack> drops;
 
 	public MobFarmBase(int id, String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
@@ -83,11 +86,6 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 		for (ItemStack i: this.drops) {
 			drops.add(i);
 		}
-	}
-	
-	@Override
-	public boolean canConnectRedstone(IBlockState bs, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return true;
 	}
 	
 	@Override
