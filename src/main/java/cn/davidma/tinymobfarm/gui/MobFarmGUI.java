@@ -1,5 +1,8 @@
 package cn.davidma.tinymobfarm.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.davidma.tinymobfarm.block.container.MobFarmContainer;
 import cn.davidma.tinymobfarm.reference.Info;
 import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
@@ -24,7 +27,6 @@ public class MobFarmGUI extends GuiContainer{
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.drawTip(mouseX, mouseY);
 		String name = this.tileEntity.getDisplayName().getFormattedText();
 		this.fontRenderer.drawString(name, xSize/2 - this.fontRenderer.getStringWidth(name)/2, 8, 4210752);
 		if (this.tileEntity.working()) {
@@ -54,10 +56,34 @@ public class MobFarmGUI extends GuiContainer{
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		this.drawTip(mouseX, mouseY);
 	}
 	
 	private void drawTip(int mouseX, int mouseY) {
-		
+		int btnX = this.guiLeft + 2, btnY = this.guiTop + 2, width = 8, height = 8;
+		boolean active = mouseX > btnX && mouseY > btnY && mouseX <= btnX+width && mouseY <= btnY+height;
+		if (active) {
+			// Nope, no list.addAll()
+			List<String> info = new ArrayList<String>();
+			
+			String mobName = this.tileEntity.getMobName();
+			if (mobName != null && !mobName.isEmpty()) {
+				info.add(String.format("Current mob type: %s.", mobName));
+				info.add("");
+			}
+			info.add("Disable with redstone.");
+			info.add("");
+			info.add("Items are ejected to");
+			info.add("adjacent containers.");
+			int predictX, maxLen = 0;
+			for (String i: info) {
+				int textWidth = this.fontRenderer.getStringWidth(i);
+				if (textWidth > maxLen) maxLen = textWidth;
+			}
+			predictX = this.guiLeft - (maxLen + 17);
+			int xPos = predictX >= -10 ? predictX : this.guiLeft;
+			this.drawHoveringText(info, xPos, this.getGuiTop(), this.fontRenderer);
+		}
 	}
 	
 	@Override
