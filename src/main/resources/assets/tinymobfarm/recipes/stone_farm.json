@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC",
+		"BMB",
+		"CSC"
+	],
+	"key": {
+		"B": [{
+			"item": "tinymobfarm:wood_farm"
+		}],
+		"M": [{
+			"item": "minecraft:bookshelf"
+		}],
+		"C": [{
+			"item": "minecraft:stonebrick"
+		}],
+		"S": [{
+			"item": "minecraft:obsidian"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:stone_farm"
+	}
+}

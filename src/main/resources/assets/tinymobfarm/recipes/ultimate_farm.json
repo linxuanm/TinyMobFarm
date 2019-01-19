@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC",
+		"BMB",
+		"CSC"
+	],
+	"key": {
+		"B": [{
+			"item": "tinymobfarm:inferno_farm"
+		}],
+		"M": [{
+			"item": "minecraft:dragon_breath"
+		}],
+		"C": [{
+			"item": "minecraft:minecraft:purple_shulker_box"
+		}],
+		"S": [{
+			"item": "minecraft:elytra"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:ultimate_farm"
+	}
+}
