@@ -52,6 +52,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 	private String name = "Generator";
 	private EntityLiving mob;
+	private int dir = 0;
 	private int id = 0;
 	
 	public MobFarmTileEntity() {
@@ -375,5 +376,13 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	
 	public int getId() {
 		return id;
+	}
+
+	public void setDir(int dir) {
+		this.dir = dir;
+	}
+	
+	public int getDir() {
+		return this.dir;
 	}
 }

@@ -32,7 +32,7 @@ public class MobFarmTESR extends TileEntitySpecialRenderer<MobFarmTileEntity> {
 		GL11.glTranslated(x + 0.5, y + 0.125, z + 0.5);
 		double scale = TinyMobFarmConfig.MOB_MODEL_SCALE;
 		GL11.glScaled(scale / maxLen, scale / maxLen, scale / maxLen);
-		GL11.glRotated(90, 0, 1, 0);
+		GL11.glRotated((te.getDir() * -90 + 180), 0, 1, 0);
 		
 		Minecraft.getMinecraft().getRenderManager().renderEntity(mob, 0F, 0F, 0F, 0F, 0, false);
 		

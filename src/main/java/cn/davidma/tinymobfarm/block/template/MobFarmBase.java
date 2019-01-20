@@ -11,11 +11,15 @@ import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
 import cn.davidma.tinymobfarm.util.Msg;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -56,13 +60,12 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 		
 		setResistance(300.0F);
 		setLightOpacity(1);
+		
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState bs, EntityPlayer player, EnumHand hand, EnumFacing side, float x, float y, float z) {
 		if (world.isRemote) return true;
-		// Msg.tellPlayer(player, "Turn mob farm off with redstone.");
-		// Msg.tellPlayer(player, "Items are ejected to adjacent containers.");
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof MobFarmTileEntity) {
 			MobFarmTileEntity generatorTileEntity = (MobFarmTileEntity) tileEntity;
@@ -87,6 +90,18 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 		super.getDrops(drops, world, pos, state, fortune);
 		for (ItemStack i: this.drops) {
 			drops.add(i);
+		}
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState bs, EntityLivingBase player, ItemStack stack) {
+		
+		// Nope, not using blockstates for direction, no way.
+		super.onBlockPlacedBy(world, pos, bs, player, stack);
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity == null) return;
+		if (tileEntity instanceof MobFarmTileEntity) {
+			((MobFarmTileEntity) tileEntity).setDir(player.getHorizontalFacing().getHorizontalIndex());
 		}
 	}
 	
@@ -130,5 +145,10 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return true;
+	}
+	
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 }
