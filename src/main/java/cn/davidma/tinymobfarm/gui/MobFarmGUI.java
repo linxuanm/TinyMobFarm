@@ -82,8 +82,7 @@ public class MobFarmGUI extends GuiContainer{
 				if (textWidth > maxLen) maxLen = textWidth;
 			}
 			predictX = this.guiLeft - (maxLen + 17);
-			int xPos = predictX >= -10 ? predictX : this.guiLeft;
-			this.drawHoveringText(info, xPos, this.getGuiTop(), this.fontRenderer);
+			this.drawHoveringText(info, predictX, this.getGuiTop(), this.fontRenderer);
 		}
 	}
 	
