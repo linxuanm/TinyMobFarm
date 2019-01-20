@@ -17,4 +17,12 @@ public class TinyMobFarmConfig {
 		"(1. wood; 2. stone ... 8. ultimate)"})
 	@Name("Generator Rate")
 	public static double[] GENERATOR_SPEED = new double[] {50, 40, 30, 20, 10, 5, 2.5, 0.5};
+	
+	@Comment("Set to true to disable mob models in mob farms (you monster).")
+	@Name("I'm a Terrible Person")
+	public static boolean DISABLE_MOB_MODEL = false;
+	
+	@Comment("The scale of mob models (DON'T TOUCH).")
+	@Name("Model Scale")
+	public static double MOB_MODEL_SCALE = 0.5;
 }

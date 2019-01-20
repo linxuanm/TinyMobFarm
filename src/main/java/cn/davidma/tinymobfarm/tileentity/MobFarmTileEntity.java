@@ -13,6 +13,9 @@ import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -48,6 +51,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	
 	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 	private String name = "Generator";
+	private EntityLiving mob;
 	private int id = 0;
 	
 	public MobFarmTileEntity() {
@@ -145,6 +149,31 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		return work;
 	}
 	
+	public EntityLiving getMob() {
+		return this.mob;
+	}
+	
+	private void updateModel() {
+		if (this.hasLasso()) {
+			NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(this.getLasso());
+			String lassoMobName = nbt.getString(NBTTagHelper.MOB_NAME);
+			
+			// Should never happen.
+			if (lassoMobName == null || lassoMobName.isEmpty()) return;
+			
+			if (this.mob == null || !lassoMobName.equals(this.mob.getName())) {
+				NBTTagCompound entityNBT = nbt.getCompoundTag(NBTTagHelper.ENTITY_INFO);
+				entityNBT.setInteger("Dimension", world.provider.getDimension());
+				entityNBT.removeTag("Pos");
+				Entity newMob = EntityList.createEntityFromNBT(entityNBT, world);
+				if (newMob == null || !(newMob instanceof EntityLiving)) return;
+				this.mob = (EntityLiving) newMob;
+			}
+		} else {
+			this.mob = null;
+		}
+	}
+	
 	public boolean getPower() {
 		return this.world.isBlockPowered(this.pos);
 	}
@@ -191,6 +220,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 
 	@Override
 	public void update() {
+		updateModel();
 		if (world.isRemote) return;
 		
 		if (this.working()) {
