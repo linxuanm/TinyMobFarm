@@ -68,7 +68,7 @@ public class MobFarmGUI extends GuiContainer{
 			
 			String mobName = this.tileEntity.getMobName();
 			if (mobName != null && !mobName.isEmpty()) {
-				info.add(String.format("Current mob type: %s.", mobName));
+				info.add(String.format("Mob: %s.", mobName));
 				info.add("");
 			}
 			info.add("Disable with redstone.");
