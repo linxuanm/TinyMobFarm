@@ -25,7 +25,7 @@ tooltip.release_mob.key=Right click on block to release mob.
 tooltip.mob_name.key=Mob: %s
 tooltip.health.key=Health: %d/%d
 tooltip.hostile.key=Mob is hostile
-tooltip.hostile.key=Right click on mob to capture
+tooltip.capture.key=Right click on mob to capture
 
 error.dying_mob.key=Cannot %s a dying mob.
 error.boss.key=Only non-boss mobs can be %s.

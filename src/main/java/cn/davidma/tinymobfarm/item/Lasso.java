@@ -138,7 +138,7 @@ public class Lasso extends InteractiveMobTool {
 			tooltip.add(I18n.format("tooltip.health.key", mobHealth, mobMaxHealth));
 			if (NBTTagHelper.isHostile(nbt)) tooltip.add(I18n.format("tooltip.hostile.key"));
 		} else {
-			tooltip.add(I18n.format(I18n.format("tooltip.capture.key")));
+			tooltip.add(I18n.format("tooltip.capture.key"));
 		}
 	}
 }

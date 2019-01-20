@@ -25,7 +25,7 @@ tooltip.release_mob.key=对方块右键来放出生物
 tooltip.mob_name.key=生物种类：%s
 tooltip.health.key=生物血量：%d/%d
 tooltip.hostile.key=生物具有攻击性
-tooltip.hostile.key=对生物右键来捕捉生物
+tooltip.capture.key=对生物右键来捕捉生物
 
 error.dying_mob.key=无法%s一个死去的生物。
 error.boss.key=Boss类生物无法%s。

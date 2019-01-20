@@ -30,7 +30,7 @@ public class TooltipItemBlock extends ItemBlock {
 				tooltip.add(i);
 			}
 		} else {
-			tooltip.add(I18n.format("tooltip.shift.key", TextFormatting.ITALIC, TextFormatting.RESET));
+			tooltip.add(I18n.format("tooltip.shift.key", TextFormatting.ITALIC, TextFormatting.GRAY));
 		}
 	}
 }
