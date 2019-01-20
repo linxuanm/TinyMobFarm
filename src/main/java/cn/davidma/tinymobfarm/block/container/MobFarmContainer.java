@@ -7,6 +7,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -68,6 +70,7 @@ public class MobFarmContainer extends Container {
 			
 			// Send item from inventory to slot.
 			if (!this.mergeItemStack(slotStack, 0, 1, false)) return ItemStack.EMPTY;
+			
 		}
 		
 		// Cleanup check.

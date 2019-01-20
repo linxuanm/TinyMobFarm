@@ -1,5 +1,6 @@
 package cn.davidma.tinymobfarm.item.template;
 
+import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,6 +55,13 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 			// Mob is a boss.
 			Msg.tellPlayer(player, "Only non-boss mobs can be " + verb()[1] + ".");
 			return false;
+		}
+		
+		for (String i: TinyMobFarmConfig.MOB_BLACKLIST) {
+			if (mob.getName().toLowerCase().equals(i.toLowerCase())) {
+				Msg.tellPlayer(player, "This mob is blacklisted.");
+				return false;
+			}
 		}
 		
 		boolean result = this.interactEntity(stack, player, mob);
