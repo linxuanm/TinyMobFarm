@@ -8,6 +8,7 @@ import cn.davidma.tinymobfarm.reference.Info;
 import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -35,15 +36,15 @@ public class MobFarmGUI extends GuiContainer{
 			this.drawTexturedModalRect(48, 60, 176, 5, 80, 5);
 			this.drawTexturedModalRect(48, 60, 176, 0, progressScale(80), 5);
 		} else {
-			String text = this.tileEntity.hasLasso() ? "Disabled by redstone" : "Insert a lasso to activate";
+			String text;
 			if (this.tileEntity.hasLasso()) {
 				if (this.tileEntity.hasHostileMob() && this.tileEntity.getId() < Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) {
-					text = "This mob need higher farm tiers.";
+					text = I18n.format("gui.higher_tier.key");
 				} else {
-					text = "Disabled by redstone.";
+					text = I18n.format("gui.redstone_disable.key");
 				}
 			} else {
-				text = "Insert a lasso to activate";
+				text = I18n.format("gui.no_lasso.key");
 			}
 			int x = xSize / 2 - this.fontRenderer.getStringWidth(text) / 2;
 			int y = 60;
@@ -68,13 +69,13 @@ public class MobFarmGUI extends GuiContainer{
 			
 			String mobName = this.tileEntity.getMobName();
 			if (mobName != null && !mobName.isEmpty()) {
-				info.add(String.format("Mob: %s.", mobName));
+				info.add(I18n.format("gui.mob_name.key", mobName));
 				info.add("");
 			}
-			info.add("Disable with redstone.");
+			info.add(I18n.format("tip.redstone.key"));
 			info.add("");
-			info.add("Items are ejected to");
-			info.add("adjacent containers.");
+			info.add(I18n.format("tip.eject_par1.key"));
+			info.add(I18n.format("tip.eject_par2.key"));
 			int predictX, maxLen = 0;
 			for (String i: info) {
 				int textWidth = this.fontRenderer.getStringWidth(i);

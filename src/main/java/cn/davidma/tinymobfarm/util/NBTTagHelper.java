@@ -22,6 +22,7 @@ public class NBTTagHelper {
 	public static final String CURR_PROGRESS_TAG = "currProgress";
 	public static final String CUSTOM_NAME_TAG = "customName";
 	public static final String ID_TAG = "mobfarmId";
+	public static final String FACING = "facing";
 	
 	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		

@@ -3,6 +3,7 @@ package cn.davidma.tinymobfarm.item.template;
 import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -46,14 +47,14 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 		if (!mob.isEntityAlive()) {
 			
 			// Mob is dying.
-			Msg.tellPlayer(player, "Cannot " + verb()[0] + " a dying mob.");
+			Msg.tellPlayer(player, I18n.format("error.dying_mob.key", verb()[0]));
 			return false;
 		}
 		
 		if (!mob.isNonBoss()) {
 			
 			// Mob is a boss.
-			Msg.tellPlayer(player, "Only non-boss mobs can be " + verb()[1] + ".");
+			Msg.tellPlayer(player, I18n.format("error.boss.key", verb()[1]));
 			return false;
 		}
 		

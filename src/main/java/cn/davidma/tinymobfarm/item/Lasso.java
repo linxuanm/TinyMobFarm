@@ -9,6 +9,7 @@ import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -37,7 +38,7 @@ public class Lasso extends InteractiveMobTool {
 
 	@Override
 	protected String[] verb() {
-		return new String[] {"capture", "captured"};
+		return new String[] {I18n.format("join.capture.key"), I18n.format("join.captured.key")};
 	}
 
 	@Override
@@ -54,14 +55,14 @@ public class Lasso extends InteractiveMobTool {
 		// Instantiates entity NBT tag.
 		NBTTagCompound entityNBT = new NBTTagCompound();
 		if (!mob.writeToNBTAtomically(entityNBT)) {
-			Msg.tellPlayer(player, "Cannot capture mob (invalid NBT).");
+			Msg.tellPlayer(player, I18n.format("error.nbt_error.key"));
 			return false;
 		}
 		
 		// Mob loot.
 		ResourceLocation location = LootTableHelper.getLootTableLocation((EntityLiving) mob);
 		if (location == null) {
-			Msg.tellPlayer(player, "Cannot retrieve loot table location for this mob.");
+			Msg.tellPlayer(player, I18n.format("error.loot_table_error"));
 			return false;
 		}
 		nbt.setString(NBTTagHelper.LOOT_TABLE_LOCATION, location.toString());
@@ -132,12 +133,12 @@ public class Lasso extends InteractiveMobTool {
 			double mobHealth = nbt.getDouble("mobHealth");
 			double mobMaxHealth = nbt.getDouble("mobMaxHealth");
 			
-			tooltip.add("Right click on block to release mob.");
-			tooltip.add("Mob: " + mobName);
-			tooltip.add("Health: " + mobHealth + "/" + mobMaxHealth);
-			if (NBTTagHelper.isHostile(nbt)) tooltip.add("Mob is hostile.");
+			tooltip.add(I18n.format("tooltip.release_mob.key"));
+			tooltip.add(I18n.format("tooltip.mob_name.key", mobName));
+			tooltip.add(I18n.format("tooltip.health.key", mobHealth, mobMaxHealth));
+			if (NBTTagHelper.isHostile(nbt)) tooltip.add(I18n.format("tooltip.hostile.key"));
 		} else {
-			tooltip.add("Right click on mob to capture");
+			tooltip.add(I18n.format(I18n.format("tooltip.capture.key")));
 		}
 	}
 }

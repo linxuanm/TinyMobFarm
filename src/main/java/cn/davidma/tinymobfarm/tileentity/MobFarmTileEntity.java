@@ -313,6 +313,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		if (nbt.hasKey(NBTTagHelper.CUSTOM_NAME_TAG)) setName(nbt.getString(NBTTagHelper.CUSTOM_NAME_TAG));
 		int inId = nbt.getInteger(NBTTagHelper.ID_TAG);
 		currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
+		this.dir = nbt.getInteger(NBTTagHelper.FACING);
 		
 		this.init(this.getName(), inId);
 	}
@@ -323,6 +324,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		if (hasCustomName()) nbt.setString(NBTTagHelper.CUSTOM_NAME_TAG, this.name);
 		nbt.setInteger(NBTTagHelper.ID_TAG, this.id);
 		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
+		nbt.setInteger(NBTTagHelper.FACING, this.dir);
 		ItemStackHelper.saveAllItems(nbt, this.inventory);
 		return nbt;
 	}

@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
 
 public class Info {
 	public static final String MOD_ID = "tinymobfarm";
 	public static final String NAME = "Tiny Mob Farm";
-	public static final String VERSION = "1.0.0";
+	public static final String VERSION = "1.0.1";
 	public static final String MC_VERSIONS = "[1.12.2]";
 	public static final String CLIENT_PROXY = "cn.davidma.tinymobfarm.proxy.ClientProxy";
 	public static final String COMMON_PROXY = "cn.davidma.tinymobfarm.proxy.CommonProxy";
@@ -42,8 +43,8 @@ public class Info {
 		
 		// Terrible formatting but meh.
 		String[] setup = {
-			"Generates loot every " + TinyMobFarmConfig.GENERATOR_SPEED[id] + " seconds.",
-			"Lasso durability loss per generation cycle:",
+			I18n.format("tooltip.rate.key", TinyMobFarmConfig.GENERATOR_SPEED[id]),
+			I18n.format("tooltip.output_adjacent.key"),
 		};
 		
 		// To circumvent abstract list (OCD).
@@ -52,7 +53,9 @@ public class Info {
 		for (String i: setup) tooltip.add(i);
 		
 		// whether mob farm can spawn hostile mob.
-		if (id < LOWEST_ID_FOR_HOSTILE_SPAWNING) tooltip.add(0, TextFormatting.RED + "Cannot farm hostile mobs.");
+		if (id < LOWEST_ID_FOR_HOSTILE_SPAWNING) {
+			tooltip.add(0, TextFormatting.RED + I18n.format("tooltip.no_hostile.key"));
+		}
 		
 		Map<Integer, Integer> chances = getChances(STATS[id]);
 		for (int key: chances.keySet()) {
@@ -79,7 +82,7 @@ public class Info {
 	}
 	
 	private static String getTip(int chance, int durability) {
-		if (durability == 0) return String.format("- %d%% chance to loss no durability", chance);
-		return String.format("- %d%% chance to lose %d durability", chance, durability);
+		if (durability == 0) return I18n.format("tooltip.no_durability.key", chance);
+		return I18n.format("tooltip.default_durability.key", chance, durability);
 	}
 }
