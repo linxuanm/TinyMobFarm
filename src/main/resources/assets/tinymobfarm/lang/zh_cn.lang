@@ -14,6 +14,7 @@ itemGroup.tinymobfarm=迷你刷怪场
 
 container.mobfarm=刷怪场
 
+tooltip.shift.key=按%s<SHIFT>%s键来查看信息
 tooltip.rate.key=每%d秒生成一次战利品。
 tooltip.output_adjacent.key=每次对套索的损害:
 tooltip.no_hostile.key=无法刷具有攻击性的生物。
@@ -31,7 +32,7 @@ error.boss.key=Boss类生物无法%s。
 error.nbt_error.key=无法捕捉该生物。
 error.loot_table_error=无法捕捉该生物。
 
-tip.redstone.key=提供红石信号以关闭刷怪场。
+tip.redstone.key=用红石信号关闭刷怪场。
 tip.eject_par1.key=刷怪场生产的物品会被
 tip.eject_par2.key=加入到相邻的箱子里。
 tip.mob_name.key=生物种类：%s。

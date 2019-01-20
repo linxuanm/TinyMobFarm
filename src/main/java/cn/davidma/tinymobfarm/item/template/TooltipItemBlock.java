@@ -5,6 +5,7 @@ import java.util.List;
 import cn.davidma.tinymobfarm.reference.Info;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,7 @@ public class TooltipItemBlock extends ItemBlock {
 				tooltip.add(i);
 			}
 		} else {
-			tooltip.add("Hold " + (TextFormatting.ITALIC + "<SHIFT>") + (TextFormatting.GRAY + " for stats"));
+			tooltip.add(I18n.format("tooltip.shift.key", TextFormatting.ITALIC, TextFormatting.RESET));
 		}
 	}
 }

@@ -14,6 +14,7 @@ itemGroup.tinymobfarm=Tiny Mob Farm
 
 container.mobfarm=Mob Farm
 
+tooltip.shift.key=Hold %s<SHIFT>%s for stats
 tooltip.rate.key=Generates loot every %d seconds.
 tooltip.output_adjacent.key=Lasso durability loss per generation cycle:
 tooltip.no_hostile.key=Cannot farm hostile mobs.
