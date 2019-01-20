@@ -69,7 +69,7 @@ public class MobFarmGUI extends GuiContainer{
 			
 			String mobName = this.tileEntity.getMobName();
 			if (mobName != null && !mobName.isEmpty()) {
-				info.add(I18n.format("gui.mob_name.key", mobName));
+				info.add(I18n.format("tip.mob_name.key", mobName));
 				info.add("");
 			}
 			info.add(I18n.format("tip.redstone.key"));
