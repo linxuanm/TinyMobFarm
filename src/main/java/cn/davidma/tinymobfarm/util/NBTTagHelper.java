@@ -23,6 +23,7 @@ public class NBTTagHelper {
 	public static final String CUSTOM_NAME_TAG = "customName";
 	public static final String ID_TAG = "mobfarmId";
 	public static final String FACING = "facing";
+	public static final String HAS_LASSO = "hasLasso";
 	
 	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		

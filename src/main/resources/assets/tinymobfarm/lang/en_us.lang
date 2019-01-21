@@ -29,8 +29,8 @@ tooltip.capture.key=Right click on mob to capture
 
 error.dying_mob.key=Cannot %s a dying mob.
 error.boss.key=Only non-boss mobs can be %s.
-error.nbt_error.key=Cannot capture mob (invalid NBT).
-error.loot_table_error=Cannot retrieve loot table location for this mob.
+error.cannot.key=Cannot capture this mob.
+error.blacklist.key=This mob is blacklisted.
 
 tip.redstone.key=Disable with redstone.
 tip.eject_par1.key=Items are ejected to
@@ -42,4 +42,4 @@ gui.redstone_disable.key=Disabled by redstone.
 gui.no_lasso.key=Insert a lasso to activate
 
 join.capture.key=capture
-join.capture.key=captured
+join.captured.key=captured

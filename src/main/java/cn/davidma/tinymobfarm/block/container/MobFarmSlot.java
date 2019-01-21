@@ -5,9 +5,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class MoobFarmSlot extends Slot {
+public class MobFarmSlot extends Slot {
 
-	public MoobFarmSlot(IInventory inventory, int index, int x, int y) {
+	public MobFarmSlot(IInventory inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 	}
 

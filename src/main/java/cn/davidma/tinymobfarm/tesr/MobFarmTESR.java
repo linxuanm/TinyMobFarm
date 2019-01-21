@@ -14,13 +14,17 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class MobFarmTESR extends TileEntitySpecialRenderer<MobFarmTileEntity> {
 	
 	@Override
 	public void render(MobFarmTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
 		if (TinyMobFarmConfig.DISABLE_MOB_MODEL) return;
+		if (!te.hasLasso()) return;
 		
 		World world = te.getWorld();
 		EntityLiving mob = te.getMob();

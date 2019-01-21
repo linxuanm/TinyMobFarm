@@ -44,7 +44,10 @@ public class Lasso extends InteractiveMobTool {
 	@Override
 	protected boolean interactEntity(ItemStack stack, EntityPlayer player, EntityLivingBase mob) {
 		
-		if (!(mob instanceof EntityLiving)) return false;
+		if (!(mob instanceof EntityLiving)) {
+			Msg.tellPlayer(player, I18n.format("error.cannot.key"));
+			return false;
+		}
 		
 		//NBT time!
 		NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(stack);
@@ -55,14 +58,14 @@ public class Lasso extends InteractiveMobTool {
 		// Instantiates entity NBT tag.
 		NBTTagCompound entityNBT = new NBTTagCompound();
 		if (!mob.writeToNBTAtomically(entityNBT)) {
-			Msg.tellPlayer(player, I18n.format("error.nbt_error.key"));
+			Msg.tellPlayer(player, I18n.format("error.cannot.key"));
 			return false;
 		}
 		
 		// Mob loot.
 		ResourceLocation location = LootTableHelper.getLootTableLocation((EntityLiving) mob);
 		if (location == null) {
-			Msg.tellPlayer(player, I18n.format("error.loot_table_error"));
+			Msg.tellPlayer(player, I18n.format("error.cannot.key"));
 			return false;
 		}
 		nbt.setString(NBTTagHelper.LOOT_TABLE_LOCATION, location.toString());

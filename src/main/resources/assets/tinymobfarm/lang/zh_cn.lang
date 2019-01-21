@@ -29,8 +29,8 @@ tooltip.capture.key=对生物右键来捕捉生物
 
 error.dying_mob.key=无法%s一个死去的生物。
 error.boss.key=Boss类生物无法%s。
-error.nbt_error.key=无法捕捉该生物。
-error.loot_table_error=无法捕捉该生物。
+error.cannot.key=无法捕捉该生物。
+error.blacklist.key=该生物在黑名单里。
 
 tip.redstone.key=用红石信号关闭刷怪场。
 tip.eject_par1.key=刷怪场生产的物品会被
@@ -42,4 +42,4 @@ gui.redstone_disable.key=接收到红石信号，已关闭
 gui.no_lasso.key=请放入装着生物的套索
 
 join.capture.key=捕捉
-join.capture.key=被捕捉
+join.captured.key=被捕捉

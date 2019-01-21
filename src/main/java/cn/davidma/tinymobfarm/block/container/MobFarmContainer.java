@@ -19,7 +19,7 @@ public class MobFarmContainer extends Container {
 	
 	public MobFarmContainer(InventoryPlayer player, MobFarmTileEntity tileEntity) {
 		this.tileEntity = tileEntity;
-		addSlotToContainer(new MoobFarmSlot(tileEntity, 0, 80, 25));
+		addSlotToContainer(new MobFarmSlot(tileEntity, 0, 80, 25));
 		
 		// Player hotbar slots.
 		for (int i = 0; i < 9; i++) {

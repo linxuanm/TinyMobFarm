@@ -60,7 +60,7 @@ public abstract class InteractiveMobTool extends StandardItemBase {
 		
 		for (String i: TinyMobFarmConfig.MOB_BLACKLIST) {
 			if (mob.getName().toLowerCase().equals(i.toLowerCase())) {
-				Msg.tellPlayer(player, "This mob is blacklisted.");
+				Msg.tellPlayer(player, "error.blacklist.key");
 				return false;
 			}
 		}
