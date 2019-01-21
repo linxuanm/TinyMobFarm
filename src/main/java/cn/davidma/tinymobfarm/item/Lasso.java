@@ -87,6 +87,12 @@ public class Lasso extends InteractiveMobTool {
 		
 		NBTTagHelper.setEssentialNBT(stack, nbt);
 		
+		if (player.isCreative()) {
+			ItemStack newLasso = new ItemStack(this);
+			NBTTagHelper.setEssentialNBT(newLasso, nbt);
+			player.addItemStackToInventory(newLasso);
+		}
+		
 		return true;
 	}
 
