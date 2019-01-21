@@ -93,6 +93,7 @@ public class Lasso extends InteractiveMobTool {
 			player.addItemStackToInventory(newLasso);
 		}
 		
+		player.inventory.markDirty();
 		return true;
 	}
 
@@ -126,11 +127,13 @@ public class Lasso extends InteractiveMobTool {
 		if (mob != null) world.spawnEntity(mob);
 		
 		// Final changes.
-		NBTTagCompound base = stack.getTagCompound();
-		base.removeTag(NBTTagHelper.BASE);
-		stack.setTagCompound(base);
-		player.inventory.markDirty();
+		if (!player.isCreative()) {
+			NBTTagCompound base = stack.getTagCompound();
+			base.removeTag(NBTTagHelper.BASE);
+			stack.setTagCompound(base);
+		}
 		
+		player.inventory.markDirty();
 		return true;
 	}
 	
