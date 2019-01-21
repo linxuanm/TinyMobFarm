@@ -12,6 +12,7 @@ import cn.davidma.tinymobfarm.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.util.LootTableHelper;
 import cn.davidma.tinymobfarm.util.Msg;
 import cn.davidma.tinymobfarm.util.NBTTagHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -143,6 +144,8 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	public boolean working() {
+		// if (this.world.isRemote) System.out.println("Client: " + this.hasLasso());
+		// else System.out.println("Server: " + this.hasLasso());
 		boolean work = this.hasLasso() &&
 			(!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) &&
 			!this.getPower();
@@ -155,6 +158,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	private void updateModel() {
+		if (!world.isRemote) return;
 		if (this.hasLasso()) {
 			NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(this.getLasso());
 			String lassoMobName = nbt.getString(NBTTagHelper.MOB_NAME);
@@ -244,8 +248,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 				int amount = Info.DURABILITY_COST_FROM_FARM_ID(this.id, rand);
 				stack.damageItem(amount, FakePlayerHelper.getPlayer((WorldServer) this.world));
 				
-				world.notifyBlockUpdate(this.pos, world.getBlockState(this.pos), this.world.getBlockState(this.pos), 2);
-				this.markDirty();
+				this.sendUpdate();
 			}
 		}
 	}
@@ -314,7 +317,10 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		int inId = nbt.getInteger(NBTTagHelper.ID_TAG);
 		currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
 		this.dir = nbt.getInteger(NBTTagHelper.FACING);
-		
+		this.totalProgress = nbt.getInteger(NBTTagHelper.TOTAL_PROGRESS_TAG);
+		if (this.totalProgress == 0) {
+			this.totalProgress = (int) (TinyMobFarmConfig.GENERATOR_SPEED[id] * 20);
+		}
 		this.init(this.getName(), inId);
 	}
 	
@@ -325,8 +331,17 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		nbt.setInteger(NBTTagHelper.ID_TAG, this.id);
 		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
 		nbt.setInteger(NBTTagHelper.FACING, this.dir);
+		nbt.setInteger(NBTTagHelper.TOTAL_PROGRESS_TAG, this.totalProgress);
 		ItemStackHelper.saveAllItems(nbt, this.inventory);
 		return nbt;
+	}
+	
+	public void sendUpdate() {
+		this.world.markBlockRangeForRenderUpdate(pos, pos);
+		IBlockState tmp = this.world.getBlockState(this.pos);
+		this.world.notifyBlockUpdate(pos, tmp, tmp, 3);
+		this.world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
+		markDirty();
 	}
 
 	@Override

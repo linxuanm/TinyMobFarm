@@ -49,6 +49,7 @@ public class MobFarmContainer extends Container {
 		}
 		currProgress = tileEntity.getField(0);
 		totalProgress = tileEntity.getField(1);
+		this.tileEntity.update();
 	}
 	
 	@Override
@@ -83,6 +84,7 @@ public class MobFarmContainer extends Container {
 		if (slotStack.getCount() == stack.getCount()) return ItemStack.EMPTY;
 		slot.onTake(player, slotStack);
 		
+		this.tileEntity.update();
 		return stack;
 	}
 	
