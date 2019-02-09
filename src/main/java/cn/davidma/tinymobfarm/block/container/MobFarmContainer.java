@@ -8,99 +8,73 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class MobFarmContainer extends Container {
 
-	private MobFarmTileEntity tileEntity;
-	private int currProgress, totalProgress;
-	
-	public MobFarmContainer(InventoryPlayer player, MobFarmTileEntity tileEntity) {
-		this.tileEntity = tileEntity;
-		addSlotToContainer(new MobFarmSlot(tileEntity, 0, 80, 25));
+	public MobFarmContainer(InventoryPlayer playerInv, MobFarmTileEntity tileEntity) {
+		IItemHandler inventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		addSlotToContainer(new MobFarmSlot(inventory, 0, 80, 25) {
+			@Override
+			public void onSlotChanged() {
+				tileEntity.markDirty();
+			}
+		});
 		
 		// Player hotbar slots.
 		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(player, i, i*18 + 8, 142));
+			addSlotToContainer(new Slot(playerInv, i, i*18 + 8, 142));
 		}
 		
 		// PLayer inventory slots.
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 3; j++) {
-				addSlotToContainer(new Slot(player, i + j*9 + 9, i*18 + 8, j*18 + 84));
+				addSlotToContainer(new Slot(playerInv, i + j*9 + 9, i*18 + 8, j*18 + 84));
 			}
 		}
 	}
 	
 	@Override
-	public void addListener(IContainerListener listener) {
-		super.addListener(listener);
-		listener.sendAllWindowProperties(this, tileEntity);
-	}
-	
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		for (IContainerListener i: listeners) {
-			if (currProgress != tileEntity.getField(0)) i.sendWindowProperty(this, 0, tileEntity.getField(0));
-			if (totalProgress != tileEntity.getField(1)) i.sendWindowProperty(this, 1, tileEntity.getField(1));
-		}
-		currProgress = tileEntity.getField(0);
-		totalProgress = tileEntity.getField(1);
-		this.tileEntity.update();
-	}
-	
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
-		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = (Slot) this.inventorySlots.get(slotId);
-		if (slot == null || !slot.getHasStack()) return ItemStack.EMPTY;
-		
-		ItemStack slotStack = slot.getStack();
-		stack = slotStack.copy();
-		
-		if (slotId == 0) {
-			
-			// Send item from slot to inventory.
-			if (!this.mergeItemStack(slotStack, 1, 37, true)) return ItemStack.EMPTY;
-			slot.onSlotChange(slotStack, stack);	
-			
-		} else {
-			
-			// Send item from inventory to slot.
-			if (!this.mergeItemStack(slotStack, 0, 1, false)) return ItemStack.EMPTY;
-			
-		}
-		
-		// Cleanup check.
-		if (slotStack.isEmpty() || slotStack.getCount() == 0) {
-			slot.putStack(ItemStack.EMPTY);
-		} else {
-			slot.onSlotChanged();
-		}
-		
-		if (slotStack.getCount() == stack.getCount()) return ItemStack.EMPTY;
-		slot.onTake(player, slotStack);
-		
-		if (this.inventorySlots.get(0).getStack().isEmpty()) {
-			Msg.tellPlayer(player, "Empty");
-		}
-		
-		this.tileEntity.update();
-		return stack;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void updateProgressBar(int id, int data) {
-		tileEntity.setField(id, data);
+	public boolean canInteractWith(EntityPlayer playerIn) {
+		return true;
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer player) {
-		return tileEntity.isUsableByPlayer(player);
+	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = inventorySlots.get(index);
+	
+		if (slot != null && slot.getHasStack()) {
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+		
+			int containerSlots = inventorySlots.size() - player.inventory.mainInventory.size();
+	
+			if (index < containerSlots) {
+				if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+				return ItemStack.EMPTY;
+			}
+	
+			if (itemstack1.getCount() == 0) {
+				slot.putStack(ItemStack.EMPTY);
+			} else {
+				slot.onSlotChanged();
+			}
+	
+			if (itemstack1.getCount() == itemstack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+			slot.onTake(player, itemstack1);
+		}
+		return itemstack;
 	}
 }

@@ -20,11 +20,11 @@ public class NBTTagHelper {
 	
 	// TileEntity tags;
 	public static final String CURR_PROGRESS_TAG = "currProgress";
-	public static final String CUSTOM_NAME_TAG = "customName";
 	public static final String ID_TAG = "mobfarmId";
 	public static final String FACING = "facing";
 	public static final String HAS_LASSO = "hasLasso";
-	public static final String TOTAL_PROGRESS_TAG = "totalProgress";
+	public static final String NAME = "name";
+	public static final String INVENTORY = "inventory";
 	
 	public static NBTTagCompound getEssentialNBT(ItemStack stack) {
 		

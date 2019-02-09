@@ -28,7 +28,7 @@ public class MobFarmGUI extends GuiContainer{
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String name = this.tileEntity.getDisplayName().getFormattedText();
+		String name = this.tileEntity.getName();
 		this.fontRenderer.drawString(name, xSize/2 - this.fontRenderer.getStringWidth(name)/2, 8, 4210752);
 		if (this.tileEntity.working()) {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -94,9 +94,9 @@ public class MobFarmGUI extends GuiContainer{
 	}
 	
 	private int progressScale(int pixels) {
-		int total = this.tileEntity.getField(1);
+		int total = this.tileEntity.getTotalProgress();
 		if (total == 0) return 0;
-		return this.tileEntity.getField(0) * pixels / total;
+		return this.tileEntity.getCurrProgress() * pixels / total;
 	}
 
 }

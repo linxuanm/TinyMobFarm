@@ -40,17 +40,20 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 import scala.collection.mutable.Stack;
 
-public class MobFarmTileEntity extends TileEntity implements IInventory, ITickable {
+public class MobFarmTileEntity extends TileEntity implements ITickable {
 
 	private NBTTagCompound entityNBT;
 	private int currProgress, totalProgress;
 	
-	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
+	private ItemStackHandler inventory = new ItemStackHandler(1);
 	private String name = "Generator";
 	private EntityLiving mob;
 	private int dir = 0;
@@ -100,35 +103,18 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 			IItemHandler inv = adjacent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing[i[3]]);
 			if (inv == null) continue;
 			
-			// markDirt flag.
-			boolean dirty = false;
+			for (int j = 0; j < items.size(); j++) {
+				items.set(j, ItemHandlerHelper.insertItemStacked(inv, items.get(j), false));
+			}
 			
-			// Prioritize slots with the same item.
-			for (int insert = 0; insert < 2; insert++) {
-				for (int j = 0; j < inv.getSlots(); j++) {
-				
-					while (items.contains(ItemStack.EMPTY)) items.remove(ItemStack.EMPTY);
-					// Just checking.
-					if (items.isEmpty()) return;
-				
-					for (int k = 0; k < items.size(); k++) {
-					
-						// Check for same item.
-						ItemStack tmp = inv.insertItem(j, items.get(k), true);
-						// Can insert.
-						if (tmp.getCount() != items.get(k).getCount() && (!(inv.getStackInSlot(j).getCount() == 0) || insert == 1)) {
-							ItemStack stack = inv.insertItem(j, items.get(k), false);
-							items.set(k, ItemStack.EMPTY);
-						
-							// Add remainder to list.
-							if (stack != null && !stack.isEmpty()) items.set(k, stack);
-							
-							dirty = true;
-						}
-					}
+			adjacent.markDirty();
+			
+			for (int j = 0; j < items.size(); j++) {
+				if (items.get(j).isEmpty()) {
+					items.remove(j);
+					j--;
 				}
 			}
-			if (dirty) adjacent.markDirty();
 		}
 		
 		// Chuck 'em into da world!
@@ -137,10 +123,6 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 			EntityItem biu = new EntityItem(this.world, here.getX() + 0.5D, here.getY() + 1, here.getZ() + 0.5D, i);
 			this.world.spawnEntity(biu);
 		}
-	}
-	
-	public void addDropsToList(NonNullList<ItemStack> drops) {
-		for(ItemStack i: inventory) drops.add(i);
 	}
 	
 	public boolean working() {
@@ -199,13 +181,7 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 	
 	public ItemStack getLasso() {
-		return this.getStackInSlot(0);
-	}
-	
-	@Override
-	public String getName() {
-		if (hasCustomName()) return name;
-		return "container.mobfarm";
+		return this.inventory.getStackInSlot(0);
 	}
 	
 	public void setName(String name) {
@@ -213,29 +189,24 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	}
 
 	@Override
-	public boolean hasCustomName() {
-		return name != null && !name.isEmpty();
-	}
-	
-	@Override
-	public ITextComponent getDisplayName() {
-		if (hasCustomName()) return new TextComponentString(getName());
-		return new TextComponentTranslation(getName());
-	}
-
-	@Override
 	public void update() {
 		updateModel();
-		if (world.isRemote) return;
+		this.currProgress++;
+		if (world.isRemote) {
+			if (currProgress >= totalProgress) {
+				this.currProgress = 0;
+			}
+			return;
+		}
 		
 		if (this.working()) {
 			((WorldServer) this.world).spawnParticle(EnumParticleTypes.PORTAL, this.pos.getX() + 0.5D, this.pos.getY(), this.pos.getZ() + 0.5D, 3, 0.15D, 0, 0.15D, 0, null);
-			currProgress++;
-			if (currProgress >= totalProgress) {
-				currProgress = 0;
+			// System.out.println(String.format("%d / %d", this.currProgress, this.totalProgress));
+			if (this.currProgress >= this.totalProgress) {
+				this.currProgress = 0;
 				
 				// Push items to inventory.
-				ItemStack stack = this.getStackInSlot(0);
+				ItemStack stack = this.getLasso();
 				NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(stack);
 				String locationStr = nbt.getString(NBTTagHelper.LOOT_TABLE_LOCATION);
 				if (locationStr == null || locationStr.isEmpty()) return;
@@ -273,66 +244,26 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	public void handleUpdateTag(NBTTagCompound nbt) {
 		this.readFromNBT(nbt);
 	}
-
-	@Override
-	public int getSizeInventory() {
-		return this.inventory.size();
-	}
-
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack i: inventory) {
-			if (!i.isEmpty()) return true;
-		}
-		return false;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int index) {
-		return inventory.get(index);
-	}
-
-	@Override
-	public ItemStack decrStackSize(int index, int count) {
-		return ItemStackHelper.getAndSplit(inventory, index, count);
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int index) {
-		return ItemStackHelper.getAndRemove(inventory, index);
-	}
-
-	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) {
-		ItemStack prev = getStackInSlot(index);
-		if (!stack.isEmpty() && prev.isEmpty()) inventory.set(index, stack);
-	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		inventory = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(nbt, inventory);
-		if (nbt.hasKey(NBTTagHelper.CUSTOM_NAME_TAG)) setName(nbt.getString(NBTTagHelper.CUSTOM_NAME_TAG));
-		int inId = nbt.getInteger(NBTTagHelper.ID_TAG);
-		currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
+		this.inventory.deserializeNBT(nbt.getCompoundTag(NBTTagHelper.INVENTORY));
+		this.id = nbt.getInteger(NBTTagHelper.ID_TAG);
+		this.currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
 		this.dir = nbt.getInteger(NBTTagHelper.FACING);
-		this.totalProgress = nbt.getInteger(NBTTagHelper.TOTAL_PROGRESS_TAG);
-		if (this.totalProgress == 0) {
-			this.totalProgress = (int) (TinyMobFarmConfig.GENERATOR_SPEED[id] * 20);
-		}
-		this.init(this.getName(), inId);
+		this.totalProgress = (int) (TinyMobFarmConfig.GENERATOR_SPEED[this.id] * 20);
+		this.name = nbt.getString(NBTTagHelper.NAME);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		if (hasCustomName()) nbt.setString(NBTTagHelper.CUSTOM_NAME_TAG, this.name);
 		nbt.setInteger(NBTTagHelper.ID_TAG, this.id);
 		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
 		nbt.setInteger(NBTTagHelper.FACING, this.dir);
-		nbt.setInteger(NBTTagHelper.TOTAL_PROGRESS_TAG, this.totalProgress);
-		ItemStackHelper.saveAllItems(nbt, this.inventory);
+		nbt.setString(NBTTagHelper.NAME, this.name);
+		nbt.setTag(NBTTagHelper.INVENTORY, this.inventory.serializeNBT());
 		return nbt;
 	}
 	
@@ -341,54 +272,15 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 		IBlockState tmp = this.world.getBlockState(this.pos);
 		this.world.notifyBlockUpdate(pos, tmp, tmp, 3);
 		this.world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
-		markDirty();
+		this.markDirty();
 	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 1;
+	
+	public int getTotalProgress() {
+		return this.totalProgress;
 	}
-
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer player) {
-		return true;
-	}
-
-	@Override
-	public void openInventory(EntityPlayer player) {
-		
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer player) {
-		
-	}
-
-	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return NBTTagHelper.containsMob(stack);
-	}
-
-	@Override
-	public int getField(int id) {
-		if (id == 0) return currProgress;
-		return totalProgress;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-		if (id == 0) currProgress = value;
-		else totalProgress = value;
-	}
-
-	@Override
-	public int getFieldCount() {
-		return 2;
-	}
-
-	@Override
-	public void clear() {
-		this.inventory.clear();
+	
+	public int getCurrProgress() {
+		return this.currProgress;
 	}
 	
 	public int getId() {
@@ -401,5 +293,26 @@ public class MobFarmTileEntity extends TileEntity implements IInventory, ITickab
 	
 	public int getDir() {
 		return this.dir;
+	}
+	
+	public ITextComponent getDisplayName() {
+		return new TextComponentString(this.name);
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+		if (facing != null) return false;
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+	}
+	
+	@Nullable
+	@Override
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+		if (facing != null) return null;
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T) this.inventory : super.getCapability(capability, facing);
 	}
 }

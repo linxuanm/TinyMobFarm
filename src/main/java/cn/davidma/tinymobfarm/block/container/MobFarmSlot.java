@@ -4,10 +4,12 @@ import cn.davidma.tinymobfarm.util.NBTTagHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class MobFarmSlot extends Slot {
+public class MobFarmSlot extends SlotItemHandler {
 
-	public MobFarmSlot(IInventory inventory, int index, int x, int y) {
+	public MobFarmSlot(IItemHandler inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 	}
 

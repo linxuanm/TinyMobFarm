@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import cn.davidma.tinymobfarm.Main;
 import cn.davidma.tinymobfarm.handler.CollectionsManager;
 import cn.davidma.tinymobfarm.reference.Info;
@@ -21,6 +23,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -36,15 +39,16 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-public class MobFarmBase extends StandardBlockBase implements ITileEntityProvider {
+public class MobFarmBase extends StandardBlockBase {
 	
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375);
 	private static final AxisAlignedBB COLLISION_BOX = new AxisAlignedBB(0.125, 0, 0.125, 0.875, 0.8125, 0.875);
 	
 	private int id;
 	private String name;
-	private NonNullList<ItemStack> drops;
 
 	public MobFarmBase(int id, String name, Material mat, SoundType sound, float hard, String harv, int harvLvl) {
 		super(name, mat, id);
@@ -77,21 +81,18 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 	
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		drops = NonNullList.<ItemStack>create();
-		
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof MobFarmTileEntity) {
-			((MobFarmTileEntity) te).addDropsToList(drops);
+		IItemHandler inventory = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		if (inventory != null) {
+			for (int i = 0; i < inventory.getSlots(); i++) {
+				ItemStack stack = inventory.getStackInSlot(i);
+				if (!stack.isEmpty()) {
+					EntityItem item = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, stack);
+					world.spawnEntity(item);
+				}
+			}
 		}
 		super.breakBlock(world, pos, state);
-	}
-	
-	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-		super.getDrops(drops, world, pos, state, fortune);
-		for (ItemStack i: this.drops) {
-			drops.add(i);
-		}
 	}
 	
 	@Override
@@ -141,8 +142,9 @@ public class MobFarmBase extends StandardBlockBase implements ITileEntityProvide
 		return layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.CUTOUT;
 	}
 
+	@Nullable
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		MobFarmTileEntity te = new MobFarmTileEntity();
 		te.init(name, id);
 		return te;

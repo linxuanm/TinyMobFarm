@@ -2,6 +2,7 @@ package cn.davidma.tinymobfarm.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -36,17 +37,25 @@ public class LootTableHelper {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 		return location;
 	}
 	
 	public static List<ItemStack> genLoots(ResourceLocation location, World world) {
-		LootTable loottable = world.getLootTableManager().getLootTableFromLocation(location);
-		LootContext.Builder lootContext = (new LootContext.Builder((WorldServer) world));
-		FakePlayer daniel = FakePlayerHelper.getPlayer((WorldServer) world);
-		lootContext.withPlayer(daniel);
-		List<ItemStack> loots = loottable.generateLootForPools(new Random(), lootContext.build());
-		
-		return loots;
+		try {
+			LootTable loottable = world.getLootTableManager().getLootTableFromLocation(location);
+			LootContext.Builder lootContext = (new LootContext.Builder((WorldServer) world));
+			FakePlayer daniel = FakePlayerHelper.getPlayer((WorldServer) world);
+			lootContext.withPlayer(daniel);
+			List<ItemStack> loots = loottable.generateLootForPools(new Random(), lootContext.build());
+			
+			return loots;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<ItemStack>();
+		}
 	}
 }
