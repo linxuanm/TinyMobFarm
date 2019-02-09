@@ -1,6 +1,7 @@
 package cn.davidma.tinymobfarm.block.container;
 
 import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.util.Msg;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -83,6 +84,10 @@ public class MobFarmContainer extends Container {
 		
 		if (slotStack.getCount() == stack.getCount()) return ItemStack.EMPTY;
 		slot.onTake(player, slotStack);
+		
+		if (this.inventorySlots.get(0).getStack().isEmpty()) {
+			Msg.tellPlayer(player, "Empty");
+		}
 		
 		this.tileEntity.update();
 		return stack;
