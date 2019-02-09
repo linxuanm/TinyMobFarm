@@ -23,7 +23,7 @@ public class MobFarmContainer extends Container {
 		addSlotToContainer(new MobFarmSlot(inventory, 0, 80, 25) {
 			@Override
 			public void onSlotChanged() {
-				tileEntity.markDirty();
+				tileEntity.sendUpdate();
 			}
 		});
 		
