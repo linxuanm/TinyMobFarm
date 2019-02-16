@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC",
+		"BMB",
+		"CSC"
+	],
+	"key": {
+		"B": [{
+			"item": "tinymobfarm:emerald_farm"
+		}],
+		"M": [{
+			"item": "minecraft:nether_star"
+		}],
+		"C": [{
+			"item": "minecraft:dragon_breath"
+		}],
+		"S": [{
+			"item": "minecraft:chorus_flower"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:inferno_farm"
+	}
+}

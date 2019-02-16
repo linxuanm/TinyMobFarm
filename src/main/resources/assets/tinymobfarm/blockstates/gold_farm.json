@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:multi-layer",
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [{
+			"custom": {
+				"base": "tinymobfarm:gold_farm#base",
+				"Solid": "tinymobfarm:gold_farm#base",
+				"Cutout": "tinymobfarm:gold_farm#glass"
+			}
+		}],
+		"base": [{
+			"model": "tinymobfarm:gold_farm"
+		}],
+		"glass": [{
+			"model": "tinymobfarm:glass_panel"
+		}],
+		"inventory": [{
+			"custom": {
+				"base": "tinymobfarm:gold_farm#base",
+				"Solid": "tinymobfarm:gold_farm#base",
+				"Cutout": "tinymobfarm:gold_farm#glass"
+			}
+		}]
+	}
+}

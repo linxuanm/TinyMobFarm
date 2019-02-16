@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC",
+		"BMB",
+		"CSC"
+	],
+	"key": {
+		"B": [{
+			"item": "tinymobfarm:diamond_farm"
+		}],
+		"M": [{
+			"item": "minecraft:ghast_tear"
+		}],
+		"C": [{
+			"item": "minecraft:nether_star"
+		}],
+		"S": [{
+			"item": "minecraft:emerald_block"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:emerald_farm"
+	}
+}
