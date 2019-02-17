@@ -1,0 +1,9 @@
+modLoader="javafml"
+loaderVersion="[24,)"
+authors="David Ma"
+
+[[mods]]
+    modId="inventorysorter"
+    version="1.0.5" #mandatory
+    displayName="Tiny Mob Farm"
+    description='''A Minecraft Mod that adds single block mob farms that generates mob drops passively.'''
