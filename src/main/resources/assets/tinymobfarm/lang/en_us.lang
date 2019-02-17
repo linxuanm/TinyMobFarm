@@ -1,6 +1,7 @@
-item.lasso.name=Lasso
-item.debugging_tool.name=Debugging Tool
+# Items.
+item.tinymobfarm.lasso.name=Lasso
 
+# Blocks.
 tile.wood_farm.name=Wooden Mob Farm
 tile.stone_farm.name=Stone Mob Farm
 tile.iron_farm.name=Iron Mob Farm
@@ -10,36 +11,16 @@ tile.emerald_farm.name=Emerald Mob Farm
 tile.inferno_farm.name=Inferno Mob Farm
 tile.ultimate_farm.name=Ultimate Mob Farm
 
+# Creative tab.
 itemGroup.tinymobfarm=Tiny Mob Farm
 
-container.mobfarm=Mob Farm
+# Error.
+tinymobfarm.error.cannot_capture.key=This mob cannot be captured.
+tinymobfarm.error.cannot_capture_boss.key=Cannot capture boss mobs.
 
-tooltip.shift.key=Hold %s<SHIFT>%s for stats
-tooltip.rate.key=Generates loot every %d seconds.
-tooltip.output_adjacent.key=Lasso durability loss per generation cycle:
-tooltip.no_hostile.key=Cannot farm hostile mobs.
-tooltip.no_durability.key=- %d%% chance to loss no durability
-tooltip.default_durability.key=- %d%% chance to loss %d durability
-
-tooltip.release_mob.key=Right click on block to release mob.
-tooltip.mob_name.key=Mob: %s
-tooltip.health.key=Health: %d/%d
-tooltip.hostile.key=Mob is hostile
-tooltip.capture.key=Right click on mob to capture
-
-error.dying_mob.key=Cannot %s a dying mob.
-error.boss.key=Only non-boss mobs can be %s.
-error.cannot.key=Cannot capture this mob.
-error.blacklist.key=This mob is blacklisted.
-
-tip.redstone.key=Disable with redstone.
-tip.eject_par1.key=Items are ejected to
-tip.eject_par2.key=adjacent containers.
-tip.mob_name.key=Mob: %s.
-
-gui.higher_tier.key=This mob need higher farm tiers.
-gui.redstone_disable.key=Disabled by redstone.
-gui.no_lasso.key=Insert a lasso to activate
-
-join.capture.key=capture
-join.captured.key=captured
+# Lasso tooltip.
+tinymobfarm.tooltip.release_mob.key=Right click on block to release mob.
+tinymobfarm.tooltip.mob_name.key=Mob: %s
+tinymobfarm.tooltip.health.key=Health: %d/%d
+tinymobfarm.tooltip.hostile.key=Mob is hostile
+tinymobfarm.tooltip.capture.key=Right click on mob to capture

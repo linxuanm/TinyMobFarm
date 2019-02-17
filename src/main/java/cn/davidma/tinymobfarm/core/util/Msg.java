@@ -9,4 +9,8 @@ public class Msg {
 	public static void tellPlayer(EntityPlayer player, String text) {
 		player.sendMessage(new TextComponentString(I18n.format(text)));
 	}
+	
+	public static TextComponentString tooltip(String text, Object... parameters) {
+		return new TextComponentString(I18n.format(text, parameters));
+	}
 }
