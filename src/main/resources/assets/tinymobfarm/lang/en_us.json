@@ -1,14 +1,14 @@
 {
 	"item.tinymobfarm.lasso": "Lasso",
 
-	"tile.wood_farm.name": "Wooden Mob Farm",
-	"tile.stone_farm.name": "Stone Mob Farm",
-	"tile.iron_farm.name": "Iron Mob Farm",
-	"tile.gold_farm.name": "Golden Mob Farm",
-	"tile.diamond_farm.name": "Diamond Mob Farm",
-	"tile.emerald_farm.name": "Emerald Mob Farm",
-	"tile.inferno_farm.name": "Inferno Mob Farm",
-	"tile.ultimate_farm.name": "Ultimate Mob Farm",
+	"block.tinymobfarm.wood_farm": "Wooden Mob Farm",
+	"block.tinymobfarm.stone_farm": "Stone Mob Farm",
+	"block.tinymobfarm.iron_farm": "Iron Mob Farm",
+	"block.tinymobfarm.gold_farm": "Golden Mob Farm",
+	"block.tinymobfarm.diamond_farm": "Diamond Mob Farm",
+	"block.tinymobfarm.emerald_farm": "Emerald Mob Farm",
+	"block.tinymobfarm.inferno_farm": "Inferno Mob Farm",
+	"block.tinymobfarm.ultimate_farm": "Ultimate Mob Farm",
 
 	"itemGroup.tinymobfarm": "Tiny Mob Farm",
 
