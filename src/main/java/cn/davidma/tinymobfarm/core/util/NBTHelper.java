@@ -1,7 +1,9 @@
 package cn.davidma.tinymobfarm.core.util;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class NBTHelper {
 	
@@ -23,5 +25,12 @@ public class NBTHelper {
 	
 	public static boolean hasMob(ItemStack stack) {
 		return stack.getOrCreateTag().hasKey(MOB);
+	}
+
+	public static NBTTagList createNBTList(INBTBase... tags) {
+		NBTTagList list = new NBTTagList();
+		for (INBTBase i: tags) list.add(i);
+		
+		return list;
 	}
 }

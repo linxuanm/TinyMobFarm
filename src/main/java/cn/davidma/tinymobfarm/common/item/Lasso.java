@@ -3,6 +3,7 @@ package cn.davidma.tinymobfarm.common.item;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.swing.text.html.parser.Entity;
 
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
@@ -15,8 +16,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -44,27 +49,57 @@ public class Lasso extends Item {
 			return true;
 		}
 		
-		// Hand animation.
-		if (player.world.isRemote()) {
-			return true;
-		} else {
+		if (!player.world.isRemote()) {
 			NBTTagCompound mobData = target.serializeNBT();
 			nbt.setTag(NBTHelper.MOB_DATA, mobData);
-			nbt.setString(NBTHelper.MOB_NAME, target.getName().toString());
+			nbt.setString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
 			nbt.setDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
 			nbt.setDouble(NBTHelper.MOB_MAX_HEALTH, target.getMaxHealth());
 			nbt.setBoolean(NBTHelper.MOB_HOSTILE, target.isCreatureType(EnumCreatureType.MONSTER, false));
+			
+			if (player.isCreative()) {
+				ItemStack newLasso = new ItemStack(this);
+				NBTHelper.setBaseTag(newLasso, nbt);
+				player.addItemStackToInventory(newLasso);
+			}
+			
+			player.inventory.markDirty();
 		}
 		
-		player.inventory.markDirty();
 		return true;
 	}
 		
-	/*@Override
+	@Override
 	public EnumActionResult onItemUse(ItemUseContext context) {
+		EntityPlayer player = context.getPlayer();
 		ItemStack stack = context.getItem();
+		EnumFacing facing = context.getFace();
+		BlockPos pos = context.getPos().offset(facing);
+		World world = context.getWorld();
 		
-	}*/
+		if (!NBTHelper.hasMob(stack)) return EnumActionResult.FAIL;
+		
+		if (!player.canPlayerEdit(pos, facing, stack)) return EnumActionResult.FAIL;
+		
+		if (!context.getWorld().isRemote()) {
+			NBTTagCompound nbt = NBTHelper.getBaseTag(stack);
+			NBTTagCompound mobData = nbt.getCompound(NBTHelper.MOB_DATA);
+			
+			NBTTagDouble x = new NBTTagDouble(pos.getX() + 0.5);
+			NBTTagDouble y = new NBTTagDouble(pos.getY());
+			NBTTagDouble z = new NBTTagDouble(pos.getZ() + 0.5);
+			NBTTagList mobPos = NBTHelper.createNBTList(x, y, z);
+			mobData.setTag("Pos", mobPos);
+			
+			Entity mob;
+			
+			if (!player.isCreative()) {
+				stack.removeChildTag(NBTHelper.MOB);
+			}
+		}
+		
+		return EnumActionResult.SUCCESS;
+	}
 	
 	@Override
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {

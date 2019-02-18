@@ -1,0 +1,23 @@
+{
+	"item.tinymobfarm.lasso": "Lasso",
+
+	"tile.wood_farm.name": "Wooden Mob Farm",
+	"tile.stone_farm.name": "Stone Mob Farm",
+	"tile.iron_farm.name": "Iron Mob Farm",
+	"tile.gold_farm.name": "Golden Mob Farm",
+	"tile.diamond_farm.name": "Diamond Mob Farm",
+	"tile.emerald_farm.name": "Emerald Mob Farm",
+	"tile.inferno_farm.name": "Inferno Mob Farm",
+	"tile.ultimate_farm.name": "Ultimate Mob Farm",
+
+	"itemGroup.tinymobfarm": "Tiny Mob Farm",
+
+	"tinymobfarm.error.cannot_capture.key": "This mob cannot be captured.",
+	"tinymobfarm.error.cannot_capture_boss.key": "Cannot capture boss mobs.",
+
+	"tinymobfarm.tooltip.release_mob.key": "Right click on block to release mob.",
+	"tinymobfarm.tooltip.mob_name.key": "Mob: %s",
+	"tinymobfarm.tooltip.health.key": "Health: %d/%d",
+	"tinymobfarm.tooltip.hostile.key": "Mob is hostile.",
+	"tinymobfarm.tooltip.capture.key": "Right click on mob to capture."
+}
