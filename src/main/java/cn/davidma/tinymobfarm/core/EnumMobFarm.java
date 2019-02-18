@@ -2,7 +2,7 @@ package cn.davidma.tinymobfarm.core;
 
 public enum EnumMobFarm {
 
-	WOOD("wood_farm", false),
+	WOOD("wood_farm", false, new int[] {2, 2, 3}),
 	STONE("stone_farm", false),
 	IRON("iron_farm", true),
 	GOLD("gold_farm", true),
@@ -14,7 +14,7 @@ public enum EnumMobFarm {
 	private String registryName;
 	private boolean canFarmHostile;
 	
-	private EnumMobFarm(String registryName, boolean canFarmHostile) {
+	private EnumMobFarm(String registryName, boolean canFarmHostile, int[] damageChance) {
 		this.registryName = registryName;
 		this.canFarmHostile = canFarmHostile;
 	}
