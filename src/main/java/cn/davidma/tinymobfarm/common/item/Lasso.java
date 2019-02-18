@@ -2,14 +2,13 @@ package cn.davidma.tinymobfarm.common.item;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-import javax.swing.text.html.parser.Entity;
-
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,7 +22,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class Lasso extends Item {
@@ -63,6 +61,7 @@ public class Lasso extends Item {
 				player.addItemStackToInventory(newLasso);
 			}
 			
+			target.remove();
 			player.inventory.markDirty();
 		}
 		
@@ -91,11 +90,10 @@ public class Lasso extends Item {
 			NBTTagList mobPos = NBTHelper.createNBTList(x, y, z);
 			mobData.setTag("Pos", mobPos);
 			
-			Entity mob;
+			Entity mob = EntityType.create(mobData, world);
+			if (mob != null) world.spawnEntity(mob);
 			
-			if (!player.isCreative()) {
-				stack.removeChildTag(NBTHelper.MOB);
-			}
+			stack.removeChildTag(NBTHelper.MOB);
 		}
 		
 		return EnumActionResult.SUCCESS;
