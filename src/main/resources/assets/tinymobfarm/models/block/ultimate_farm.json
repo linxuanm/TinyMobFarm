@@ -1,7 +1,7 @@
 {
 	"parent": "tinymobfarm:block/farm_preset",
 	"textures": {
-		"particle": "tinymobfarm:blocks/ultimate",
-		"material": "tinymobfarm:blocks/ultimate"
+		"particle": "tinymobfarm:block/ultimate",
+		"material": "tinymobfarm:block/ultimate"
 	}
 }

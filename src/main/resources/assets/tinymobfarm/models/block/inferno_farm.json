@@ -1,7 +1,7 @@
 {
 	"parent": "tinymobfarm:block/farm_preset",
 	"textures": {
-		"particle": "tinymobfarm:blocks/inferno",
-		"material": "tinymobfarm:blocks/inferno"
+		"particle": "tinymobfarm:block/inferno",
+		"material": "tinymobfarm:block/inferno"
 	}
 }

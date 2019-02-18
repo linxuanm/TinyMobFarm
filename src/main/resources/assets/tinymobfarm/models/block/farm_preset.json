@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"grass": "tinymobfarm:blocks/grass"
+		"grass": "tinymobfarm:block/grass"
 	},
 	"elements": [
 		{

@@ -51,7 +51,9 @@ public class TinyMobFarm {
 		registry.register(new Lasso(new Item.Properties()).setRegistryName(Reference.getLocation("lasso")));
 		
 		for (Block i: mobFarms) {
-			registry.register(new ItemBlock(i, new Item.Properties()));
+			Item mobFarmItemBlock = new ItemBlock(i, new Item.Properties()).setRegistryName(i.getRegistryName());
+			registry.register(mobFarmItemBlock);
+			Item.BLOCK_TO_ITEM.put(i, mobFarmItemBlock);
 		}
 	}
 }

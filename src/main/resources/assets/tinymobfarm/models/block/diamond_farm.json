@@ -1,7 +1,7 @@
 {
 	"parent": "tinymobfarm:block/farm_preset",
 	"textures": {
-		"particle": "tinymobfarm:blocks/diamond",
-		"material": "tinymobfarm:blocks/diamond"
+		"particle": "tinymobfarm:block/diamond",
+		"material": "tinymobfarm:block/diamond"
 	}
 }
