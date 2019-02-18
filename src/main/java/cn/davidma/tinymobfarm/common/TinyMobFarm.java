@@ -1,5 +1,6 @@
 package cn.davidma.tinymobfarm.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.davidma.tinymobfarm.common.block.MobFarm;
@@ -27,11 +28,14 @@ public class TinyMobFarm {
 		instance = this;
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
+		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
 	}
 	
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
+		
+		mobFarms = new ArrayList<Block>();
 		
 		for (EnumMobFarm i: EnumMobFarm.values()) {
 			Block mobFarm = new MobFarm(i).setRegistryName(Reference.getLocation(i.getRegistryName()));
