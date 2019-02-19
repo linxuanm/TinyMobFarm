@@ -1,19 +1,25 @@
 package cn.davidma.tinymobfarm.common.block;
 
+import cn.davidma.tinymobfarm.client.gui.ContainerMobFarm;
+import cn.davidma.tinymobfarm.client.gui.InteractionObjectMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockMobFarm extends Block {
 	
@@ -39,6 +45,17 @@ public class BlockMobFarm extends Block {
 		if (tileEntity instanceof TileEntityMobFarm) {
 			((TileEntityMobFarm) tileEntity).setMobFarmData(this.mobFarmData);
 		}
+	}
+	
+	@Override
+	public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote() && player instanceof EntityPlayerMP) {
+			TileEntity tileEntity = world.getTileEntity(pos);
+			if (tileEntity instanceof TileEntityMobFarm) {
+				NetworkHooks.openGui((EntityPlayerMP) player, new InteractionObjectMobFarm((TileEntityMobFarm) tileEntity));
+			}
+		}
+		return true;
 	}
 	
 	@Override

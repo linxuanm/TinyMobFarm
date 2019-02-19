@@ -3,6 +3,7 @@ package cn.davidma.tinymobfarm.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.davidma.tinymobfarm.client.gui.GuiHandler;
 import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
 import cn.davidma.tinymobfarm.common.item.ItemLasso;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
@@ -16,6 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -39,6 +42,8 @@ public class TinyMobFarm {
 				return new ItemStack(TinyMobFarm.mobFarms.get(0));
 			}
 		};
+		
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::openGui);
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
@@ -72,6 +77,6 @@ public class TinyMobFarm {
 	
 	@SubscribeEvent
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
-		tileEntityMobFarm = TileEntityType.register(Reference.MOD_ID + ".mobFarmTileEntity", TileEntityType.Builder.create(TileEntityMobFarm::new));
+		tileEntityMobFarm = TileEntityType.register(Reference.MOD_ID + ".mob_farm_tile_entity", TileEntityType.Builder.create(TileEntityMobFarm::new));
 	}
 }
