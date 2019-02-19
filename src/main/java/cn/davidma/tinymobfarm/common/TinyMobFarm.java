@@ -3,9 +3,9 @@ package cn.davidma.tinymobfarm.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.davidma.tinymobfarm.common.block.MobFarm;
-import cn.davidma.tinymobfarm.common.item.Lasso;
-import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
+import cn.davidma.tinymobfarm.common.item.ItemLasso;
+import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraft.block.Block;
@@ -29,7 +29,7 @@ public class TinyMobFarm {
 	
 	public static Item lasso;
 	public static List<Block> mobFarms;
-	public static TileEntityType<MobFarmTileEntity> mobFarmTileEntity;
+	public static TileEntityType<TileEntityMobFarm> tileEntityMobFarm;
 	
 	public TinyMobFarm() {
 		instance = this;
@@ -52,7 +52,7 @@ public class TinyMobFarm {
 		mobFarms = new ArrayList<Block>();
 		
 		for (EnumMobFarm i: EnumMobFarm.values()) {
-			Block mobFarm = new MobFarm(i).setRegistryName(Reference.getLocation(i.getRegistryName()));
+			Block mobFarm = new BlockMobFarm(i).setRegistryName(Reference.getLocation(i.getRegistryName()));
 			mobFarms.add(mobFarm);
 			registry.register(mobFarm);
 		}
@@ -62,16 +62,16 @@ public class TinyMobFarm {
 	public void registerItems(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		
-		registry.register(lasso = new Lasso(new Item.Properties()).setRegistryName(Reference.getLocation("lasso")));
+		registry.register(lasso = new ItemLasso(new Item.Properties()).setRegistryName(Reference.getLocation("lasso")));
 		
 		for (Block i: mobFarms) {
-			Item mobFarmItemBlock = new ItemBlock(i, new Item.Properties().group(creativeTab)).setRegistryName(i.getRegistryName());
-			registry.register(mobFarmItemBlock);
+			Item itemBlockMobFarm = new ItemBlock(i, new Item.Properties().group(creativeTab)).setRegistryName(i.getRegistryName());
+			registry.register(itemBlockMobFarm);
 		}
 	}
 	
 	@SubscribeEvent
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
-		mobFarmTileEntity = TileEntityType.register(mobFarms.get(0).getRegistryName().toString(), TileEntityType.Builder.create(MobFarmTileEntity::new));
+		tileEntityMobFarm = TileEntityType.register(Reference.MOD_ID + ".mobFarmTileEntity", TileEntityType.Builder.create(TileEntityMobFarm::new));
 	}
 }

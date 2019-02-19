@@ -25,9 +25,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
-public class Lasso extends Item {
+public class ItemLasso extends Item {
 
-	public Lasso(Properties properties) {
+	public ItemLasso(Properties properties) {
 		super(properties.group(TinyMobFarm.creativeTab));
 	}
 	

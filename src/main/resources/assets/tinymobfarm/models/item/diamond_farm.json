@@ -2,5 +2,8 @@
 	"parent": "tinymobfarm:block/farm_preset",
 	"textures": {
 		"material": "tinymobfarm:block/diamond"
+	},
+	"display": {
+		"rotation": [0, 45, 45]
 	}
 }

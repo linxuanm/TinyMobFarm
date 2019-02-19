@@ -1,6 +1,6 @@
 package cn.davidma.tinymobfarm.common.block;
 
-import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import net.minecraft.block.Block;
@@ -21,13 +21,13 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class MobFarm extends Block {
+public class BlockMobFarm extends Block {
 	
 	private static final VoxelShape BOUNDING_BOX = Block.makeCuboidShape(1, 0, 1, 15, 14, 15);
 
 	private EnumMobFarm mobFarmData;
 	
-	public MobFarm(EnumMobFarm mobFarmData) {
+	public BlockMobFarm(EnumMobFarm mobFarmData) {
 		super(Block.Properties.from(mobFarmData.getBaseBlock()));
 		this.mobFarmData = mobFarmData;
 	}
@@ -38,8 +38,13 @@ public class MobFarm extends Block {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
 		
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity instanceof TileEntityMobFarm) {
+			((TileEntityMobFarm) tileEntity).setMobFarmData(this.mobFarmData);
+		}
 	}
 	
 	@Override
@@ -49,7 +54,7 @@ public class MobFarm extends Block {
 	
 	@Override
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-		return new MobFarmTileEntity();
+		return new TileEntityMobFarm();
 	}
 	
 	@Override
