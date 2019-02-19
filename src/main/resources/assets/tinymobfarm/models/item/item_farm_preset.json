@@ -1,8 +1,5 @@
 {
-	"parent": "tinymobfarm:item/item_farm_preset",
-	"textures": {
-		"material": "tinymobfarm:block/diamond"
-	},
+	"parent": "tinymobfarm:block/farm_preset",
 	"display": {
         "gui": {
             "rotation": [30, 45, 0],

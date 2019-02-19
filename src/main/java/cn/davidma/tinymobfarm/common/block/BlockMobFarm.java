@@ -5,6 +5,7 @@ import cn.davidma.tinymobfarm.client.gui.InteractionObjectMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.util.Msg;
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -12,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -53,7 +55,9 @@ public class BlockMobFarm extends Block {
 		if (!world.isRemote() && player instanceof EntityPlayerMP) {
 			TileEntity tileEntity = world.getTileEntity(pos);
 			if (tileEntity instanceof TileEntityMobFarm) {
-				NetworkHooks.openGui((EntityPlayerMP) player, new InteractionObjectMobFarm((TileEntityMobFarm) tileEntity));
+				NetworkHooks.openGui((EntityPlayerMP) player, new InteractionObjectMobFarm((TileEntityMobFarm) tileEntity), (buffer) -> {
+					buffer.writeBlockPos(pos);
+				});
 			}
 		}
 		return true;

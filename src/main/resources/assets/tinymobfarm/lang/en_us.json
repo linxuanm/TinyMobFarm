@@ -1,6 +1,7 @@
 {
 	"item.tinymobfarm.lasso": "Lasso",
 
+	"block.tinymobfarm.default_mob_farm": "Mob Farm",
 	"block.tinymobfarm.wood_farm": "Wooden Mob Farm",
 	"block.tinymobfarm.stone_farm": "Stone Mob Farm",
 	"block.tinymobfarm.iron_farm": "Iron Mob Farm",

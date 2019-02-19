@@ -1,7 +1,9 @@
 package cn.davidma.tinymobfarm.core;
 
+import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;;
 
 public enum EnumMobFarm {
 
@@ -29,15 +31,15 @@ public enum EnumMobFarm {
 	}
 	
 	public String getUnlocalizedName() {
-		return String.format("tile.%s.name", this.registryName);
+		return String.format("block.%s", this.registryName);
 	}
 	
 	public Block getBaseBlock() {
 		return this.baseBlock;
 	}
 	
-	public boolean canFarmHostile() {
-		return this.canFarmHostile;
+	public boolean isLassoValid(ItemStack lasso) {
+		return NBTHelper.hasMob(lasso) && (this.canFarmHostile || !NBTHelper.hasHostileMob(lasso));
 	}
 	
 	public int getMaxProgress() {

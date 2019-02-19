@@ -1,5 +1,5 @@
 {
-	"parent": "tinymobfarm:block/farm_preset",
+	"parent": "tinymobfarm:item/item_farm_preset",
 	"textures": {
 		"material": "tinymobfarm:block/ultimate"
 	}

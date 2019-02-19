@@ -4,7 +4,9 @@ import javax.annotation.Nullable;
 
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
+import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -14,7 +16,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityMobFarm extends TileEntity implements ITickable {
-
+	
 	private ItemStackHandler inventory = new ItemStackHandler(1);
 	private EnumMobFarm mobFarmData;
 	private int currProgress;
@@ -26,16 +28,25 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	public TileEntityMobFarm() {
 		super(TinyMobFarm.tileEntityMobFarm);
 	}
+	
+	public boolean isWorking() {
+		if (this.mobFarmData == null || this.getLasso().isEmpty()) return false;
+		return this.mobFarmData.isLassoValid(this.getLasso());
+	}
 
 	@Override
 	public void tick() {
-		currProgress++;/*
-		if (!this.world.isRemote()) {
+		currProgress++;
+		if (!this.world.isRemote() && this.mobFarmData != null) {
 			if (currProgress >= this.mobFarmData.getMaxProgress()) {
 				System.out.println("Loot");
 				this.sendUpdate();
 			}
-		}*/
+		}
+	}
+	
+	public ItemStack getLasso() {
+		return this.inventory.getStackInSlot(0);
 	}
 	
 	public void setMobFarmData(EnumMobFarm mobFarmData) {
@@ -45,6 +56,11 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	@Deprecated
 	public ItemStackHandler getInventory() {
 		return this.inventory;
+	}
+	
+	public String getUnlocalizedName() {
+		if (this.mobFarmData == null) return "block." + Reference.MOD_ID + ".default_mob_farm";
+		return this.mobFarmData.getUnlocalizedName();
 	}
 	
 	public void sendUpdate() {

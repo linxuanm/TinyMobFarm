@@ -26,6 +26,12 @@ public class NBTHelper {
 	public static boolean hasMob(ItemStack stack) {
 		return stack.getOrCreateTag().hasKey(MOB);
 	}
+	
+	public static boolean hasHostileMob(ItemStack stack) {
+		if (!hasMob(stack)) return false;
+		NBTTagCompound nbt = NBTHelper.getBaseTag(stack);
+		return nbt.getBoolean(NBTHelper.MOB_HOSTILE);
+	}
 
 	public static NBTTagList createNBTList(INBTBase... tags) {
 		NBTTagList list = new NBTTagList();
