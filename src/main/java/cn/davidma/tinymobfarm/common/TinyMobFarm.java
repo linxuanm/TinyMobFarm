@@ -11,6 +11,8 @@ import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,12 +25,20 @@ public class TinyMobFarm {
 
 	public static TinyMobFarm instance;
 	
+	public static ItemGroup creativeTab;
+	
 	public static Item lasso;
 	public static List<Block> mobFarms;
 	public static TileEntityType<MobFarmTileEntity> mobFarmTileEntity;
 	
 	public TinyMobFarm() {
 		instance = this;
+		creativeTab = new ItemGroup("tiny_mob_farm") {
+			@Override
+			public ItemStack createIcon() {
+				return new ItemStack(TinyMobFarm.mobFarms.get(0));
+			}
+		};
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
@@ -55,7 +65,7 @@ public class TinyMobFarm {
 		registry.register(lasso = new Lasso(new Item.Properties()).setRegistryName(Reference.getLocation("lasso")));
 		
 		for (Block i: mobFarms) {
-			Item mobFarmItemBlock = new ItemBlock(i, new Item.Properties()).setRegistryName(i.getRegistryName());
+			Item mobFarmItemBlock = new ItemBlock(i, new Item.Properties().group(creativeTab)).setRegistryName(i.getRegistryName());
 			registry.register(mobFarmItemBlock);
 		}
 	}

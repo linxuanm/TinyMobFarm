@@ -10,7 +10,7 @@
 	"block.tinymobfarm.inferno_farm": "Inferno Mob Farm",
 	"block.tinymobfarm.ultimate_farm": "Ultimate Mob Farm",
 
-	"itemGroup.tinymobfarm": "Tiny Mob Farm",
+	"itemGroup.tiny_mob_farm": "Tiny Mob Farm",
 
 	"tinymobfarm.error.cannot_capture.key": "This mob cannot be captured.",
 	"tinymobfarm.error.cannot_capture_boss.key": "Cannot capture boss mobs.",

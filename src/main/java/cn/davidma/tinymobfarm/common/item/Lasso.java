@@ -2,6 +2,7 @@ package cn.davidma.tinymobfarm.common.item;
 
 import java.util.List;
 
+import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,7 +28,7 @@ import net.minecraft.world.World;
 public class Lasso extends Item {
 
 	public Lasso(Properties properties) {
-		super(properties);
+		super(properties.group(TinyMobFarm.creativeTab));
 	}
 	
 	@Override

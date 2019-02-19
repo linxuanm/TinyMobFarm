@@ -1,0 +1,6 @@
+{
+	"parent": "tinymobfarm:block/farm_preset",
+	"textures": {
+		"material": "tinymobfarm:block/gold"
+	}
+}

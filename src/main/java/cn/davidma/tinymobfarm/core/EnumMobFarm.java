@@ -11,7 +11,7 @@ public enum EnumMobFarm {
 	GOLD("gold_farm", Blocks.GOLD_BLOCK, true),
 	DIAMOND("diamond_farm", Blocks.DIAMOND_BLOCK, true),
 	EMERALD("emerald_farm", Blocks.EMERALD_BLOCK, true),
-	INFERNAL("infernal_farm", Blocks.OBSIDIAN, true),
+	INFERNAL("inferno_farm", Blocks.OBSIDIAN, true),
 	ULTIMATE("ultimate_farm", Blocks.OBSIDIAN, true);
 	
 	private String registryName;
