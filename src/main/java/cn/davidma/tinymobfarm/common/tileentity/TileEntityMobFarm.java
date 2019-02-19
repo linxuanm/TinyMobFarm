@@ -30,16 +30,16 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	}
 	
 	public boolean isWorking() {
-		if (this.mobFarmData == null || this.getLasso().isEmpty()) return false;
+		if (this.mobFarmData == null || this.getLasso().isEmpty() || this.isPowered()) return false;
 		return this.mobFarmData.isLassoValid(this.getLasso());
 	}
 
 	@Override
 	public void tick() {
-		currProgress++;
+		this.currProgress++;
 		if (!this.world.isRemote() && this.mobFarmData != null) {
-			if (currProgress >= this.mobFarmData.getMaxProgress()) {
-				System.out.println("Loot");
+			if (this.currProgress >= this.mobFarmData.getMaxProgress()) {
+				this.currProgress = 0;
 				this.sendUpdate();
 			}
 		}
@@ -51,6 +51,10 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	
 	public void setMobFarmData(EnumMobFarm mobFarmData) {
 		this.mobFarmData = mobFarmData;
+	}
+	
+	public boolean isPowered() {
+		return this.world.getRedstonePowerFromNeighbors(this.pos) != 0;
 	}
 	
 	@Deprecated

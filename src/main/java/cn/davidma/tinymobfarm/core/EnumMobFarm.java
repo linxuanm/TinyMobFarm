@@ -31,7 +31,7 @@ public enum EnumMobFarm {
 	}
 	
 	public String getUnlocalizedName() {
-		return String.format("block.%s", this.registryName);
+		return String.format("block.%s.%s", Reference.MOD_ID, this.registryName);
 	}
 	
 	public Block getBaseBlock() {

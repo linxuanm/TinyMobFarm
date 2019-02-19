@@ -16,6 +16,10 @@
 	"tinymobfarm.error.cannot_capture.key": "This mob cannot be captured.",
 	"tinymobfarm.error.cannot_capture_boss.key": "Cannot capture boss mobs.",
 
+	"tinymobfarm.gui.higher_tier": "This mob needs higher farm tiers.",
+	"tinymobfarm.gui.redstone_disable": "Disabled by redstone.",
+	"tinymobfarm.gui.no_lasso": "Insert a lasso to activate.",
+
 	"tinymobfarm.tooltip.release_mob.key": "Right click on block to release mob.",
 	"tinymobfarm.tooltip.mob_name.key": "Mob: %s",
 	"tinymobfarm.tooltip.health.key": "Health: %d/%d",

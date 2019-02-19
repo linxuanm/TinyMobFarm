@@ -44,7 +44,9 @@ public class ItemLasso extends Item {
 		
 		// Cannot capture boss.
 		if (!target.isNonBoss()) {
-			Msg.tellPlayer(player, "tinymobfarm.error.cannot_capture_boss.key");
+			if (!player.world.isRemote) {
+				Msg.tellPlayer(player, "tinymobfarm.error.cannot_capture_boss.key");
+			}
 			return true;
 		}
 		

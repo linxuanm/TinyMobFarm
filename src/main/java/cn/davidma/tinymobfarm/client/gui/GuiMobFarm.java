@@ -6,6 +6,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiMobFarm extends GuiContainer {
@@ -42,6 +43,13 @@ public class GuiMobFarm extends GuiContainer {
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.mc.getTextureManager().bindTexture(TEXTURE);
 			this.drawTexturedModalRect(48, 60, 176, 5, 80, 5);
+		} else {
+			String error;
+			if (this.tileEntityMobFarm.getLasso().isEmpty()) error = "tinymobfarm.gui.no_lasso";
+			else if (this.tileEntityMobFarm.isPowered()) error = "tinymobfarm.gui.redstone_disable";
+			else error = "tinymobfarm.gui.higher_tier";
+			error = I18n.format(error);
+			this.fontRenderer.drawString(error, (this.xSize - this.fontRenderer.getStringWidth(error)) / 2, 59, 16733525);
 		}
 	}
 }
