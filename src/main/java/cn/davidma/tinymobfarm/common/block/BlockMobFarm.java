@@ -4,6 +4,7 @@ import cn.davidma.tinymobfarm.client.gui.ContainerMobFarm;
 import cn.davidma.tinymobfarm.client.gui.InteractionObjectMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
+import cn.davidma.tinymobfarm.core.util.Msg;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;

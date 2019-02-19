@@ -29,13 +29,13 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 
 	@Override
 	public void tick() {
-		currProgress++;
+		currProgress++;/*
 		if (!this.world.isRemote()) {
 			if (currProgress >= this.mobFarmData.getMaxProgress()) {
 				System.out.println("Loot");
 				this.sendUpdate();
 			}
-		}
+		}*/
 	}
 	
 	public void setMobFarmData(EnumMobFarm mobFarmData) {
