@@ -39,4 +39,8 @@ public enum EnumMobFarm {
 	public boolean canFarmHostile() {
 		return this.canFarmHostile;
 	}
+	
+	public int getMaxProgress() {
+		return 50 * 20;
+	}
 }

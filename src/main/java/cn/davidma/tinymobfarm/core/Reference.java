@@ -11,6 +11,8 @@ public class Reference {
 	public static final String CLIENT_PROXY = "cn.davidma.tinymobfarm.proxy.ClientProxy";
 	public static final String SERVER_PROXY = "cn.davidma.tinymobfarm.proxy.ServerProxy";
 	
+	public static final int FARM_GUI = 1;
+	
 	public static ResourceLocation getLocation(String name) {
 		return new ResourceLocation(MOD_ID, name);
 	}
