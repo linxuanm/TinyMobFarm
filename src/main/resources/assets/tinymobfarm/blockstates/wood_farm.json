@@ -1,11 +1,6 @@
 {
 	"variants": {
 		"": {
-			"transform": "forge:default-block",
-			"model": "tinymobfarm:block/wood_farm"
-		},
-		"gui": {
-			"transform": "forge:default-block",
 			"model": "tinymobfarm:block/wood_farm"
 		}
 	}

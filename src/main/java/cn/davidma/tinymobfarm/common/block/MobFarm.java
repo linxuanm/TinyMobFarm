@@ -1,11 +1,15 @@
 package cn.davidma.tinymobfarm.common.block;
 
+import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
+import cn.davidma.tinymobfarm.core.util.Msg;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
@@ -20,14 +24,12 @@ import net.minecraft.world.World;
 public class MobFarm extends Block {
 	
 	private static final VoxelShape BOUNDING_BOX = Block.makeCuboidShape(1, 0, 1, 15, 14, 15);
-	public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
 
 	private EnumMobFarm mobFarmData;
 	
 	public MobFarm(EnumMobFarm mobFarmData) {
 		super(Block.Properties.from(mobFarmData.getBaseBlock()));
 		this.mobFarmData = mobFarmData;
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
 	}
 	
 	@Override
@@ -36,15 +38,18 @@ public class MobFarm extends Block {
 	}
 	
 	@Override
-	public IBlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
+		
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
-		if (stack.hasDisplayName()) {
-			TileEntity tileEntity = world.getTileEntity(pos);
-		}
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+	
+	@Override
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
+		return new MobFarmTileEntity();
 	}
 	
 	@Override

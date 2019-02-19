@@ -5,14 +5,14 @@ import net.minecraft.init.Blocks;;
 
 public enum EnumMobFarm {
 
-	WOOD("wood_farm", Blocks.OAK_WOOD, false);
-	/*STONE("stone_farm", Blocks.STONE, false),
+	WOOD("wood_farm", Blocks.OAK_WOOD, false),
+	STONE("stone_farm", Blocks.STONE, false),
 	IRON("iron_farm", Blocks.IRON_BLOCK, true),
 	GOLD("gold_farm", Blocks.GOLD_BLOCK, true),
 	DIAMOND("diamond_farm", Blocks.DIAMOND_BLOCK, true),
 	EMERALD("emerald_farm", Blocks.EMERALD_BLOCK, true),
 	INFERNAL("infernal_farm", Blocks.OBSIDIAN, true),
-	ULTIMATE("ultimate_farm", Blocks.OBSIDIAN, true);*/
+	ULTIMATE("ultimate_farm", Blocks.OBSIDIAN, true);
 	
 	private String registryName;
 	private Block baseBlock;

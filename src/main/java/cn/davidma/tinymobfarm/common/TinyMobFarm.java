@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod(value = Reference.MOD_ID)
+@Mod(Reference.MOD_ID)
 public class TinyMobFarm {
 
 	public static TinyMobFarm instance;
@@ -30,8 +30,8 @@ public class TinyMobFarm {
 	public TinyMobFarm() {
 		instance = this;
 		
-		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
+		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
 	}
 	
@@ -57,12 +57,11 @@ public class TinyMobFarm {
 		for (Block i: mobFarms) {
 			Item mobFarmItemBlock = new ItemBlock(i, new Item.Properties()).setRegistryName(i.getRegistryName());
 			registry.register(mobFarmItemBlock);
-			Item.BLOCK_TO_ITEM.put(i, mobFarmItemBlock);
 		}
 	}
 	
 	@SubscribeEvent
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
-		mobFarmTileEntity = TileEntityType.register(Reference.MOD_ID + "mobFarm", TileEntityType.Builder.create(MobFarmTileEntity::new));
+		mobFarmTileEntity = TileEntityType.register(mobFarms.get(0).getRegistryName().toString(), TileEntityType.Builder.create(MobFarmTileEntity::new));
 	}
 }
