@@ -3,7 +3,7 @@ package cn.davidma.tinymobfarm.common.item;
 import java.util.List;
 
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
-import cn.davidma.tinymobfarm.core.util.EntityHelper;
+import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 public class ItemLasso extends Item {
 
 	public ItemLasso(Properties properties) {
-		super(properties.group(TinyMobFarm.creativeTab));
+		super(properties.group(TinyMobFarm.creativeTab).defaultMaxDamage(Config.LASSO_DURABILITY));
 	}
 	
 	@Override
@@ -53,7 +53,6 @@ public class ItemLasso extends Item {
 		
 		if (!player.world.isRemote()) {
 			NBTTagCompound mobData = target.serializeNBT();
-			Msg.tellPlayer(player, "Loot Table: " + EntityHelper.getLootTableLocation(mobData));
 			nbt.setTag(NBTHelper.MOB_DATA, mobData);
 			nbt.setString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
 			nbt.setDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
@@ -99,6 +98,7 @@ public class ItemLasso extends Item {
 			if (mob != null) world.spawnEntity(mob);
 			
 			stack.removeChildTag(NBTHelper.MOB);
+			stack.damageItem(1, player);
 		}
 		
 		return EnumActionResult.SUCCESS;

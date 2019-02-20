@@ -1,5 +1,6 @@
 package cn.davidma.tinymobfarm.core;
 
+import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -43,6 +44,6 @@ public enum EnumMobFarm {
 	}
 	
 	public int getMaxProgress() {
-		return 50 * 20;
+		return (int) (Config.MOB_FARM_SPEED[this.ordinal()] * 20);
 	}
 }
