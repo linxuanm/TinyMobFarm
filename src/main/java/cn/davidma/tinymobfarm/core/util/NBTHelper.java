@@ -8,12 +8,17 @@ import net.minecraft.nbt.NBTTagList;
 public class NBTHelper {
 	
 	// Lasso.
-	public static String MOB = "capturedMob";
-	public static String MOB_NAME = "mobName";
-	public static String MOB_DATA = "mobData";
-	public static String MOB_HEALTH = "mobHealth";
-	public static String MOB_MAX_HEALTH = "mobMaxHealth";
-	public static String MOB_HOSTILE = "mobHostile";
+	public static final String MOB = "capturedMob";
+	public static final String MOB_NAME = "mobName";
+	public static final String MOB_DATA = "mobData";
+	public static final String MOB_HEALTH = "mobHealth";
+	public static final String MOB_MAX_HEALTH = "mobMaxHealth";
+	public static final String MOB_HOSTILE = "mobHostile";
+	
+	// Tile entity.
+	public static final String MOB_FARM_DATA = "mobFarmData";
+	public static final String CURR_PROGRESS = "currProgress";
+	public static final String INVENTORY = "inventory";
 	
 	public static NBTTagCompound getBaseTag(ItemStack stack) {
 		return stack.getOrCreateChildTag(MOB);

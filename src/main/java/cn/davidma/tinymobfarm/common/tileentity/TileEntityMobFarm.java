@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
+import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,6 +73,23 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 		this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
 		this.world.notifyBlockUpdate(pos, state, state, 3);
 		this.markDirty();
+	}
+	
+	@Override
+	public void read(NBTTagCompound nbt) {
+		super.read(nbt);
+		this.mobFarmData = EnumMobFarm.values()[nbt.getInt(NBTHelper.MOB_FARM_DATA)];
+		this.currProgress = nbt.getInt(NBTHelper.CURR_PROGRESS);
+		this.inventory.deserializeNBT(nbt.getCompound(NBTHelper.INVENTORY));
+	}
+	
+	@Override
+	public NBTTagCompound write(NBTTagCompound nbt) {
+		if (this.mobFarmData == null) return nbt;
+		nbt.setInt(NBTHelper.MOB_FARM_DATA, this.mobFarmData.ordinal());
+		nbt.setInt(NBTHelper.CURR_PROGRESS, this.currProgress);
+		nbt.setTag(NBTHelper.INVENTORY, this.inventory.serializeNBT());
+		return super.write(nbt);
 	}
 	
 	@Nullable

@@ -1,11 +1,8 @@
 package cn.davidma.tinymobfarm.common.block;
 
-import cn.davidma.tinymobfarm.client.gui.ContainerMobFarm;
 import cn.davidma.tinymobfarm.client.gui.InteractionObjectMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
-import cn.davidma.tinymobfarm.core.util.Msg;
-import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
