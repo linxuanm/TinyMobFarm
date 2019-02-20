@@ -3,11 +3,13 @@ package cn.davidma.tinymobfarm.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.davidma.tinymobfarm.client.ClientProxy;
 import cn.davidma.tinymobfarm.client.gui.GuiMobFarm;
 import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
 import cn.davidma.tinymobfarm.common.item.ItemLasso;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
+import cn.davidma.tinymobfarm.core.IProxy;
 import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -22,6 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -32,6 +35,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class TinyMobFarm {
 
 	public static TinyMobFarm instance;
+	public static IProxy proxy = DistExecutor.<IProxy>runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 	
 	public static ItemGroup creativeTab;
 	

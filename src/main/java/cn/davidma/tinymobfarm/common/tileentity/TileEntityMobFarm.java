@@ -7,6 +7,9 @@ import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -20,6 +23,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	
 	private ItemStackHandler inventory = new ItemStackHandler(1);
 	private EnumMobFarm mobFarmData;
+	private EntityLiving model;
 	private int currProgress;
 	
 	public TileEntityMobFarm(TileEntityType<?> tileEntityTypeIn) {
@@ -37,11 +41,33 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 
 	@Override
 	public void tick() {
-		this.currProgress++;
-		if (!this.world.isRemote() && this.mobFarmData != null) {
-			if (this.currProgress >= this.mobFarmData.getMaxProgress()) {
-				this.currProgress = 0;
-				this.sendUpdate();
+		if (this.isWorking()) {
+			this.currProgress++;
+			if (!this.world.isRemote() && this.mobFarmData != null) {
+				if (this.currProgress >= this.mobFarmData.getMaxProgress()) {
+					this.currProgress = 0;
+					this.sendUpdate();
+				}
+			}
+		} else {
+			this.currProgress = 0;
+		}
+	}
+	
+	private void updateModel() {
+		if (this.world.isRemote()) {
+			if (this.getLasso().isEmpty()) {
+				this.model = null;
+			} else {
+				NBTTagCompound nbt = NBTHelper.getBaseTag(this.getLasso());
+				String mobName = nbt.getString(NBTHelper.MOB_NAME);
+				if (this.model == null || !this.model.getName().getUnformattedComponentText().equals(mobName)) {
+					NBTTagCompound entityData = nbt.getCompound(NBTHelper.MOB_DATA);
+					Entity newModel = EntityType.create(entityData, this.world);
+					if (newModel != null && newModel instanceof EntityLiving) {
+						this.model = (EntityLiving) newModel;
+					}
+				}
 			}
 		}
 	}
@@ -63,6 +89,15 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 		return this.inventory;
 	}
 	
+	public double getScaledProgress() {
+		if (this.mobFarmData == null) return 0;
+		return this.currProgress / (double) this.mobFarmData.getMaxProgress();
+	}
+	
+	public EntityLiving getModel() {
+		return this.model;
+	}
+	
 	public String getUnlocalizedName() {
 		if (this.mobFarmData == null) return "block." + Reference.MOD_ID + ".default_mob_farm";
 		return this.mobFarmData.getUnlocalizedName();
@@ -81,6 +116,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 		this.mobFarmData = EnumMobFarm.values()[nbt.getInt(NBTHelper.MOB_FARM_DATA)];
 		this.currProgress = nbt.getInt(NBTHelper.CURR_PROGRESS);
 		this.inventory.deserializeNBT(nbt.getCompound(NBTHelper.INVENTORY));
+		if (this.world.isRemote()) this.updateModel();
 	}
 	
 	@Override

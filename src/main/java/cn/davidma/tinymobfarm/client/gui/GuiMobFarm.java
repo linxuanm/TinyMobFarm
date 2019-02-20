@@ -42,6 +42,7 @@ public class GuiMobFarm extends GuiContainer {
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.mc.getTextureManager().bindTexture(TEXTURE);
 			this.drawTexturedModalRect(48, 60, 176, 5, 80, 5);
+			this.drawTexturedModalRect(48, 60, 176, 0, (int) (this.tileEntityMobFarm.getScaledProgress() * 80), 5);
 		} else {
 			String error;
 			if (this.tileEntityMobFarm.getLasso().isEmpty()) error = "tinymobfarm.gui.no_lasso";
