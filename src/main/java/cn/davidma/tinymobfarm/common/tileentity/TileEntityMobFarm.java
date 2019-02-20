@@ -25,6 +25,8 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	private EnumMobFarm mobFarmData;
 	private EntityLiving model;
 	private int currProgress;
+	private boolean powered;
+	private boolean shouldUpdate;
 	
 	public TileEntityMobFarm(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
@@ -41,6 +43,11 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 
 	@Override
 	public void tick() {
+		if (this.shouldUpdate) {
+			this.updateModel();
+			this.updateRedstone();
+			this.shouldUpdate = false;
+		}
 		if (this.isWorking()) {
 			this.currProgress++;
 			if (!this.world.isRemote() && this.mobFarmData != null) {
@@ -72,6 +79,10 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 		}
 	}
 	
+	public void updateRedstone() {
+		this.powered = this.world.getRedstonePowerFromNeighbors(this.pos) != 0;
+	}
+	
 	public ItemStack getLasso() {
 		return this.inventory.getStackInSlot(0);
 	}
@@ -81,7 +92,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	}
 	
 	public boolean isPowered() {
-		return this.world.getRedstonePowerFromNeighbors(this.pos) != 0;
+		return this.powered;
 	}
 	
 	@Deprecated
@@ -116,7 +127,8 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 		this.mobFarmData = EnumMobFarm.values()[nbt.getInt(NBTHelper.MOB_FARM_DATA)];
 		this.currProgress = nbt.getInt(NBTHelper.CURR_PROGRESS);
 		this.inventory.deserializeNBT(nbt.getCompound(NBTHelper.INVENTORY));
-		if (this.world.isRemote()) this.updateModel();
+		this.shouldUpdate = true;
+		
 	}
 	
 	@Override

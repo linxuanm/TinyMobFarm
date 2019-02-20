@@ -28,6 +28,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -70,6 +71,7 @@ public class TinyMobFarm {
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 	}
 	
 	@SubscribeEvent
@@ -100,5 +102,9 @@ public class TinyMobFarm {
 	@SubscribeEvent
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
 		tileEntityMobFarm = TileEntityType.register(Reference.MOD_ID + ":mob_farm_tile_entity", TileEntityType.Builder.create(TileEntityMobFarm::new));
+	}
+	
+	private void setup(FMLCommonSetupEvent event) {
+		proxy.setup();
 	}
 }
