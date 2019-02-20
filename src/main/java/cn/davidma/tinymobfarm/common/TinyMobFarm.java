@@ -28,6 +28,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -72,6 +73,7 @@ public class TinyMobFarm {
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::crafting);
 	}
 	
 	@SubscribeEvent
@@ -85,6 +87,11 @@ public class TinyMobFarm {
 			mobFarms.add(mobFarm);
 			registry.register(mobFarm);
 		}
+	}
+	
+	@SubscribeEvent
+	public void crafting(ItemCraftedEvent event) {
+		event.setCanceled(true);
 	}
 	
 	@SubscribeEvent

@@ -3,6 +3,7 @@ package cn.davidma.tinymobfarm.common.item;
 import java.util.List;
 
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
+import cn.davidma.tinymobfarm.core.util.EntityHelper;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
