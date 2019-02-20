@@ -53,6 +53,7 @@ public class ItemLasso extends Item {
 		
 		if (!player.world.isRemote()) {
 			NBTTagCompound mobData = target.serializeNBT();
+			Msg.tellPlayer(player, "Loot Table: " + EntityHelper.getLootTableLocation(mobData));
 			nbt.setTag(NBTHelper.MOB_DATA, mobData);
 			nbt.setString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
 			nbt.setDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
