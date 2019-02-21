@@ -75,7 +75,9 @@ public class BlockMobFarm extends Block {
 	public IBlockState updatePostPlacement(IBlockState state, EnumFacing facing, IBlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
 		TileEntity tileEntity = world.getTileEntity(currentPos);
 		if (tileEntity instanceof TileEntityMobFarm) {
-			((TileEntityMobFarm) tileEntity).updateRedstone();
+			TileEntityMobFarm tileEntityMobFarm = (TileEntityMobFarm) tileEntity;
+			tileEntityMobFarm.updateRedstone();
+			tileEntityMobFarm.saveAndSync();
 		}
 		return state;
 	}

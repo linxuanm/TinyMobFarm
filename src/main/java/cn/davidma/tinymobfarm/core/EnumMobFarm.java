@@ -3,6 +3,7 @@ package cn.davidma.tinymobfarm.core;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.Msg;
@@ -65,6 +66,10 @@ public enum EnumMobFarm {
 	
 	public int getMaxProgress() {
 		return (int) (Config.MOB_FARM_SPEED[this.ordinal()] * 20);
+	}
+	
+	public int getRandomDamage(Random rand) {
+		return this.damageChance[rand.nextInt(this.damageChance.length)];
 	}
 	
 	public void addTooltip(List<ITextComponent> tooltip) {

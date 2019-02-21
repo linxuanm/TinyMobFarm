@@ -13,8 +13,8 @@
 
 	"itemGroup.tiny_mob_farm": "Tiny Mob Farm",
 
-	"tinymobfarm.error.cannot_capture.key": "This mob cannot be captured.",
-	"tinymobfarm.error.cannot_capture_boss.key": "Cannot capture boss mobs.",
+	"tinymobfarm.error.cannot_capture_boss": "Cannot capture boss mobs.",
+	"tinymobfarm.error.blacklisted_mob": "This mob is blacklisted.",
 
 	"tinymobfarm.gui.higher_tier": "This mob needs higher farm tiers.",
 	"tinymobfarm.gui.redstone_disable": "Disabled by redstone.",

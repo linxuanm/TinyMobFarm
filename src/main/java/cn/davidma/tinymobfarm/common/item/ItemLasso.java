@@ -5,6 +5,7 @@ import java.util.List;
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
 import cn.davidma.tinymobfarm.core.util.Config;
+import cn.davidma.tinymobfarm.core.util.EntityHelper;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
@@ -48,7 +49,15 @@ public class ItemLasso extends Item {
 		// Cannot capture boss.
 		if (!target.isNonBoss()) {
 			if (!player.world.isRemote) {
-				Msg.tellPlayer(player, "tinymobfarm.error.cannot_capture_boss.key");
+				Msg.tellPlayer(player, "tinymobfarm.error.cannot_capture_boss");
+			}
+			return true;
+		}
+		
+		// Blacklist.
+		if (EntityHelper.isMobBlacklisted((EntityLiving) target)) {
+			if (!player.world.isRemote) {
+				Msg.tellPlayer(player, "tinymobfarm.error.blacklisted_mob");
 			}
 			return true;
 		}
@@ -57,6 +66,7 @@ public class ItemLasso extends Item {
 			NBTTagCompound mobData = target.serializeNBT();
 			nbt.setTag(NBTHelper.MOB_DATA, mobData);
 			nbt.setString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
+			nbt.setString(NBTHelper.MOB_LOOTTABLE_LOCATION, EntityHelper.getLootTableLocation((EntityLiving) target));
 			nbt.setDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
 			nbt.setDouble(NBTHelper.MOB_MAX_HEALTH, target.getMaxHealth());
 			nbt.setBoolean(NBTHelper.MOB_HOSTILE, target.isCreatureType(EnumCreatureType.MONSTER, false));

@@ -14,6 +14,7 @@ public class NBTHelper {
 	public static final String MOB_HEALTH = "mobHealth";
 	public static final String MOB_MAX_HEALTH = "mobMaxHealth";
 	public static final String MOB_HOSTILE = "mobHostile";
+	public static final String MOB_LOOTTABLE_LOCATION = "mobLootTableLocation";
 	
 	// Tile entity.
 	public static final String MOB_FARM_DATA = "mobFarmData";

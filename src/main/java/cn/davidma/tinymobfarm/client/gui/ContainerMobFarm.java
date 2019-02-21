@@ -15,7 +15,7 @@ public class ContainerMobFarm extends Container {
 		this.addSlot(new SlotLassoOnly(itemHandler, 0, 80, 25) {
 			@Override
 			public void onSlotChanged() {
-				tileEntityMobFarm.sendUpdate();
+				tileEntityMobFarm.saveAndSync();
 			}
 		});
 		
