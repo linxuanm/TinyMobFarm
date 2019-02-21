@@ -24,5 +24,12 @@
 	"tinymobfarm.tooltip.mob_name.key": "Mob: %s",
 	"tinymobfarm.tooltip.health.key": "Health: %d/%d",
 	"tinymobfarm.tooltip.hostile.key": "Mob is hostile.",
-	"tinymobfarm.tooltip.capture.key": "Right click on mob to capture."
+	"tinymobfarm.tooltip.capture.key": "Right click on mob to capture.",
+
+	"tinymobfarm.tooltip.hold_shift": "Hold %s<SHIFT>%s for stats.",
+	"tinymobfarm.tooltip.farm_rate": "Generates loot every %d seconds.",
+	"tinymobfarm.tooltip.durability_info": "Lasso durability loss:",
+	"tinymobfarm.tooltip.no_hostile": "Cannot farm hostile mobs.",
+	"tinymobfarm.tooltip.no_durability": "- %d%% chance to loss no durability",
+	"tinymobfarm.tooltip.default_durability": "- %d%% chance to loss %d durability"
 }

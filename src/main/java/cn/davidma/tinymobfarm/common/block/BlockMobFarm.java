@@ -1,8 +1,12 @@
 package cn.davidma.tinymobfarm.common.block;
 
+import java.util.List;
+
 import cn.davidma.tinymobfarm.client.gui.InteractionObjectMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
+import cn.davidma.tinymobfarm.core.Reference;
+import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -17,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -30,7 +35,12 @@ public class BlockMobFarm extends Block {
 	
 	public BlockMobFarm(EnumMobFarm mobFarmData) {
 		super(Block.Properties.from(mobFarmData.getBaseBlock()));
+		this.setRegistryName(Reference.getLocation(mobFarmData.getRegistryName()));
 		this.mobFarmData = mobFarmData;
+	}
+	
+	public Consumer<List<ITextComponent>> getTooltipBuilder() {
+		return this.mobFarmData::addTooltip;
 	}
 	
 	@Override

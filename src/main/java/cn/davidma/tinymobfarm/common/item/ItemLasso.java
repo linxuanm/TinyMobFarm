@@ -3,6 +3,7 @@ package cn.davidma.tinymobfarm.common.item;
 import java.util.List;
 
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
+import cn.davidma.tinymobfarm.core.Reference;
 import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
@@ -30,6 +31,7 @@ public class ItemLasso extends Item {
 
 	public ItemLasso(Properties properties) {
 		super(properties.group(TinyMobFarm.creativeTab).defaultMaxDamage(Config.LASSO_DURABILITY));
+		this.setRegistryName(Reference.getLocation("lasso"));
 	}
 	
 	@Override
