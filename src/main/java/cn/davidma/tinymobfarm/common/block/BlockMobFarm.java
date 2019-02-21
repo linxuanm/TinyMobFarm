@@ -8,13 +8,17 @@ import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -29,6 +33,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BlockMobFarm extends Block {
 	
+	public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
+	
 	private static final VoxelShape BOUNDING_BOX = Block.makeCuboidShape(1, 0, 1, 15, 14, 15);
 
 	private EnumMobFarm mobFarmData;
@@ -36,6 +42,7 @@ public class BlockMobFarm extends Block {
 	public BlockMobFarm(EnumMobFarm mobFarmData) {
 		super(Block.Properties.from(mobFarmData.getBaseBlock()));
 		this.setRegistryName(Reference.getLocation(mobFarmData.getRegistryName()));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
 		this.mobFarmData = mobFarmData;
 	}
 	
@@ -49,12 +56,25 @@ public class BlockMobFarm extends Block {
 	}
 	
 	@Override
+	protected void fillStateContainer(Builder<Block, IBlockState> builder) {
+		builder.add(FACING);
+	}
+	
+	@Override
+	public IBlockState getStateForPlacement(BlockItemUseContext context) {
+		EnumFacing facing = context.getPlacementHorizontalFacing().getOpposite();
+		return this.getDefaultState().with(FACING, facing);
+	}
+	
+	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 		
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof TileEntityMobFarm) {
-			((TileEntityMobFarm) tileEntity).setMobFarmData(this.mobFarmData);
+			TileEntityMobFarm tileEntityMobFarm = (TileEntityMobFarm) tileEntity;
+			tileEntityMobFarm.setMobFarmData(mobFarmData);
+			tileEntityMobFarm.updateRedstone();
 		}
 	}
 	

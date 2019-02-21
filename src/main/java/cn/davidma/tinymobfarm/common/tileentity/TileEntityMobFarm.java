@@ -10,6 +10,7 @@ import cn.davidma.tinymobfarm.core.Reference;
 import cn.davidma.tinymobfarm.core.util.EntityHelper;
 import cn.davidma.tinymobfarm.core.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -37,6 +38,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	private ItemStackHandler inventory = new ItemStackHandler(1);
 	private EnumMobFarm mobFarmData;
 	private EntityLiving model;
+	private EnumFacing modelFacing;
 	private int currProgress;
 	private boolean powered;
 	private boolean shouldUpdate;
@@ -115,8 +117,11 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 				if (this.model == null || !this.model.getName().getUnformattedComponentText().equals(mobName)) {
 					NBTTagCompound entityData = nbt.getCompound(NBTHelper.MOB_DATA);
 					Entity newModel = EntityType.create(entityData, this.world);
+					newModel.setRotationYawHead(0);
+					
 					if (newModel != null && newModel instanceof EntityLiving) {
 						this.model = (EntityLiving) newModel;
+						this.modelFacing = this.world.getBlockState(this.pos).get(BlockHorizontal.HORIZONTAL_FACING);
 					}
 				}
 			}
@@ -156,6 +161,10 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 	
 	public EntityLiving getModel() {
 		return this.model;
+	}
+	
+	public EnumFacing getModelFacing() {
+		return this.modelFacing;
 	}
 	
 	public String getUnlocalizedName() {
