@@ -1,11 +1,10 @@
-package cn.davidma.tinymobfarm.gui;
+package cn.davidma.tinymobfarm.client.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.davidma.tinymobfarm.block.container.MobFarmContainer;
-import cn.davidma.tinymobfarm.reference.Info;
-import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -13,14 +12,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
-public class MobFarmGUI extends GuiContainer{
+public class GuiMobFarm extends GuiContainer{
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Info.MOD_ID+":textures/gui/farm_gui.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID+":textures/gui/farm_gui.png");
 	private InventoryPlayer player;
 	private MobFarmTileEntity tileEntity;
 	
-	public MobFarmGUI(InventoryPlayer player, MobFarmTileEntity tileEntity) {
-		super(new MobFarmContainer(player, tileEntity));
+	public GuiMobFarm(InventoryPlayer player, MobFarmTileEntity tileEntity) {
+		super(new ContainerMobFarm(player, tileEntity));
 		this.player = player;
 		this.tileEntity = tileEntity;
 		
@@ -38,7 +37,7 @@ public class MobFarmGUI extends GuiContainer{
 		} else {
 			String text;
 			if (this.tileEntity.hasLasso()) {
-				if (this.tileEntity.hasHostileMob() && this.tileEntity.getId() < Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) {
+				if (this.tileEntity.hasHostileMob() && this.tileEntity.getId() < Reference.LOWEST_ID_FOR_HOSTILE_SPAWNING) {
 					text = I18n.format("gui.higher_tier.key");
 				} else {
 					text = I18n.format("gui.redstone_disable.key");

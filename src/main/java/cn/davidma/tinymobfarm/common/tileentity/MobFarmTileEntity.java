@@ -1,4 +1,4 @@
-package cn.davidma.tinymobfarm.tileentity;
+package cn.davidma.tinymobfarm.common.tileentity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
-import cn.davidma.tinymobfarm.reference.Info;
-import cn.davidma.tinymobfarm.util.FakePlayerHelper;
-import cn.davidma.tinymobfarm.util.LootTableHelper;
-import cn.davidma.tinymobfarm.util.Msg;
-import cn.davidma.tinymobfarm.util.NBTTagHelper;
+import cn.davidma.tinymobfarm.core.Reference;
+import cn.davidma.tinymobfarm.core.util.EntityHelper;
+import cn.davidma.tinymobfarm.core.util.FakePlayerHelper;
+import cn.davidma.tinymobfarm.core.util.Msg;
+import cn.davidma.tinymobfarm.core.util.NBTHelper;
+import cn.davidma.tinymobfarm.core.ConfigTinyMobFarm;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.entity.Entity;
@@ -67,7 +67,7 @@ public class MobFarmTileEntity extends TileEntity implements ITickable {
 		setName(name);
 		this.id = id;
 		this.currProgress = 0;
-		this.totalProgress = (int) (TinyMobFarmConfig.GENERATOR_SPEED[id] * 20);
+		this.totalProgress = (int) (ConfigTinyMobFarm.GENERATOR_SPEED[id] * 20);
 	}
 	
 	public void pushItemsToInv(List<ItemStack> items) {
@@ -129,7 +129,7 @@ public class MobFarmTileEntity extends TileEntity implements ITickable {
 		// if (this.world.isRemote) System.out.println("Client: " + this.hasLasso());
 		// else System.out.println("Server: " + this.hasLasso());
 		boolean work = this.hasLasso() &&
-			(!this.hasHostileMob() || this.id >= Info.LOWEST_ID_FOR_HOSTILE_SPAWNING) &&
+			(!this.hasHostileMob() || this.id >= Reference.LOWEST_ID_FOR_HOSTILE_SPAWNING) &&
 			!this.getPower();
 		if (!work) this.currProgress = 0;
 		return work;
@@ -142,14 +142,14 @@ public class MobFarmTileEntity extends TileEntity implements ITickable {
 	private void updateModel() {
 		if (!world.isRemote) return;
 		if (this.hasLasso()) {
-			NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(this.getLasso());
-			String lassoMobName = nbt.getString(NBTTagHelper.MOB_NAME);
+			NBTTagCompound nbt = NBTHelper.getEssentialNBT(this.getLasso());
+			String lassoMobName = nbt.getString(NBTHelper.MOB_NAME);
 			
 			// Should never happen.
 			if (lassoMobName == null || lassoMobName.isEmpty()) return;
 			
 			if (this.mob == null || !lassoMobName.equals(this.mob.getName())) {
-				NBTTagCompound entityNBT = nbt.getCompoundTag(NBTTagHelper.ENTITY_INFO);
+				NBTTagCompound entityNBT = nbt.getCompoundTag(NBTHelper.ENTITY_INFO);
 				entityNBT.setInteger("Dimension", world.provider.getDimension());
 				entityNBT.removeTag("Pos");
 				Entity newMob = EntityList.createEntityFromNBT(entityNBT, world);
@@ -166,18 +166,18 @@ public class MobFarmTileEntity extends TileEntity implements ITickable {
 	}
 	
 	public boolean hasHostileMob() {
-		return this.hasLasso() && NBTTagHelper.isHostile(this.getLasso());
+		return this.hasLasso() && NBTHelper.isHostile(this.getLasso());
 	}
 	
 	public String getMobName() {
-		NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(this.getLasso());
-		String mobName = nbt.getString(NBTTagHelper.MOB_NAME);
+		NBTTagCompound nbt = NBTHelper.getEssentialNBT(this.getLasso());
+		String mobName = nbt.getString(NBTHelper.MOB_NAME);
 		return mobName;
 	}
 	
 	public boolean hasLasso() {
 		ItemStack stack = this.getLasso();
-		return !stack.isEmpty() && NBTTagHelper.containsMob(stack);
+		return !stack.isEmpty() && NBTHelper.containsMob(stack);
 	}
 	
 	public ItemStack getLasso() {
@@ -207,16 +207,16 @@ public class MobFarmTileEntity extends TileEntity implements ITickable {
 				
 				// Push items to inventory.
 				ItemStack stack = this.getLasso();
-				NBTTagCompound nbt = NBTTagHelper.getEssentialNBT(stack);
-				String locationStr = nbt.getString(NBTTagHelper.LOOT_TABLE_LOCATION);
+				NBTTagCompound nbt = NBTHelper.getEssentialNBT(stack);
+				String locationStr = nbt.getString(NBTHelper.LOOT_TABLE_LOCATION);
 				if (locationStr == null || locationStr.isEmpty()) return;
 				ResourceLocation location = new ResourceLocation(locationStr);
-				List<ItemStack> loots = LootTableHelper.genLoots(location, this.world);
+				List<ItemStack> loots = EntityHelper.genLoots(location, this.world);
 				pushItemsToInv(loots);
 				
 				// Damage the lasso.
 				Random rand = new Random();
-				int amount = Info.DURABILITY_COST_FROM_FARM_ID(this.id, rand);
+				int amount = Reference.DURABILITY_COST_FROM_FARM_ID(this.id, rand);
 				stack.damageItem(amount, FakePlayerHelper.getPlayer((WorldServer) this.world));
 				
 				this.sendUpdate();
@@ -248,22 +248,22 @@ public class MobFarmTileEntity extends TileEntity implements ITickable {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.inventory.deserializeNBT(nbt.getCompoundTag(NBTTagHelper.INVENTORY));
-		this.id = nbt.getInteger(NBTTagHelper.ID_TAG);
-		this.currProgress = nbt.getInteger(NBTTagHelper.CURR_PROGRESS_TAG);
-		this.dir = nbt.getInteger(NBTTagHelper.FACING);
-		this.totalProgress = (int) (TinyMobFarmConfig.GENERATOR_SPEED[this.id] * 20);
-		this.name = nbt.getString(NBTTagHelper.NAME);
+		this.inventory.deserializeNBT(nbt.getCompoundTag(NBTHelper.INVENTORY));
+		this.id = nbt.getInteger(NBTHelper.ID_TAG);
+		this.currProgress = nbt.getInteger(NBTHelper.CURR_PROGRESS_TAG);
+		this.dir = nbt.getInteger(NBTHelper.FACING);
+		this.totalProgress = (int) (ConfigTinyMobFarm.GENERATOR_SPEED[this.id] * 20);
+		this.name = nbt.getString(NBTHelper.NAME);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setInteger(NBTTagHelper.ID_TAG, this.id);
-		nbt.setInteger(NBTTagHelper.CURR_PROGRESS_TAG, this.currProgress);
-		nbt.setInteger(NBTTagHelper.FACING, this.dir);
-		nbt.setString(NBTTagHelper.NAME, this.name);
-		nbt.setTag(NBTTagHelper.INVENTORY, this.inventory.serializeNBT());
+		nbt.setInteger(NBTHelper.ID_TAG, this.id);
+		nbt.setInteger(NBTHelper.CURR_PROGRESS_TAG, this.currProgress);
+		nbt.setInteger(NBTHelper.FACING, this.dir);
+		nbt.setString(NBTHelper.NAME, this.name);
+		nbt.setTag(NBTHelper.INVENTORY, this.inventory.serializeNBT());
 		return nbt;
 	}
 	

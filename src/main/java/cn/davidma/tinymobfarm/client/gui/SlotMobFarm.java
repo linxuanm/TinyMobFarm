@@ -1,21 +1,21 @@
-package cn.davidma.tinymobfarm.block.container;
+package cn.davidma.tinymobfarm.client.gui;
 
-import cn.davidma.tinymobfarm.util.NBTTagHelper;
+import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class MobFarmSlot extends SlotItemHandler {
+public class SlotMobFarm extends SlotItemHandler {
 
-	public MobFarmSlot(IItemHandler inventory, int index, int x, int y) {
+	public SlotMobFarm(IItemHandler inventory, int index, int x, int y) {
 		super(inventory, index, x, y);
 	}
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return NBTTagHelper.containsMob(NBTTagHelper.getEssentialNBT(stack));
+		return NBTHelper.containsMob(NBTHelper.getEssentialNBT(stack));
 	}
 	
 	@Override

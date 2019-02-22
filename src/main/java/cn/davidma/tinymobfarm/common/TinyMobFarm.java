@@ -1,9 +1,8 @@
-package cn.davidma.tinymobfarm;
+package cn.davidma.tinymobfarm.common;
 
-import cn.davidma.tinymobfarm.handler.GUIHandler;
-import cn.davidma.tinymobfarm.proxy.CommonProxy;
-import cn.davidma.tinymobfarm.reference.Info;
-import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.client.gui.HandlerGui;
+import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,13 +14,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid=Info.MOD_ID, name=Info.NAME, version=Info.VERSION)
-public class Main {
+@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION)
+public class TinyMobFarm {
 	
 	@Instance
-	public static Main instance;
+	public static TinyMobFarm instance;
 	
-	@SidedProxy(clientSide=Info.CLIENT_PROXY, serverSide=Info.COMMON_PROXY)
+	@SidedProxy(clientSide=Reference.CLIENT_PROXY, serverSide=Reference.COMMON_PROXY)
 	public static CommonProxy proxy;
 	
 	@EventHandler
@@ -31,8 +30,8 @@ public class Main {
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent event) {
-		GameRegistry.registerTileEntity(MobFarmTileEntity.class, Info.MOD_ID + "_GeneratorTileEntity");
-		NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new GUIHandler());
+		GameRegistry.registerTileEntity(MobFarmTileEntity.class, Reference.MOD_ID + "_GeneratorTileEntity");
+		NetworkRegistry.INSTANCE.registerGuiHandler(TinyMobFarm.instance, new HandlerGui());
 		proxy.registerTESR();
 	}
 	

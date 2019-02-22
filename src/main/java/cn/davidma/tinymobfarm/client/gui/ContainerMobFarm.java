@@ -1,7 +1,7 @@
-package cn.davidma.tinymobfarm.block.container;
+package cn.davidma.tinymobfarm.client.gui;
 
-import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
-import cn.davidma.tinymobfarm.util.Msg;
+import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.core.util.Msg;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -16,11 +16,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class MobFarmContainer extends Container {
+public class ContainerMobFarm extends Container {
 
-	public MobFarmContainer(InventoryPlayer playerInv, MobFarmTileEntity tileEntity) {
+	public ContainerMobFarm(InventoryPlayer playerInv, MobFarmTileEntity tileEntity) {
 		IItemHandler inventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		addSlotToContainer(new MobFarmSlot(inventory, 0, 80, 25) {
+		addSlotToContainer(new SlotMobFarm(inventory, 0, 80, 25) {
 			@Override
 			public void onSlotChanged() {
 				tileEntity.sendUpdate();

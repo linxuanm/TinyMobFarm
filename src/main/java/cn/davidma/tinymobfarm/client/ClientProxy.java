@@ -1,7 +1,8 @@
-package cn.davidma.tinymobfarm.proxy;
+package cn.davidma.tinymobfarm.client;
 
-import cn.davidma.tinymobfarm.tesr.MobFarmTESR;
-import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.client.render.RenderMobFarm;
+import cn.davidma.tinymobfarm.common.CommonProxy;
+import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -14,6 +15,6 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public void registerTESR() {
-		ClientRegistry.bindTileEntitySpecialRenderer(MobFarmTileEntity.class, new MobFarmTESR());
+		ClientRegistry.bindTileEntitySpecialRenderer(MobFarmTileEntity.class, new RenderMobFarm());
 	}
 }

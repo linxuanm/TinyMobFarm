@@ -1,4 +1,4 @@
-package cn.davidma.tinymobfarm.proxy;
+package cn.davidma.tinymobfarm.common;
 
 import net.minecraft.item.Item;
 

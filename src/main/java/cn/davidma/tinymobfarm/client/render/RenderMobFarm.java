@@ -1,9 +1,9 @@
-package cn.davidma.tinymobfarm.tesr;
+package cn.davidma.tinymobfarm.client.render;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.davidma.tinymobfarm.reference.TinyMobFarmConfig;
-import cn.davidma.tinymobfarm.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.core.ConfigTinyMobFarm;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -18,12 +18,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MobFarmTESR extends TileEntitySpecialRenderer<MobFarmTileEntity> {
+public class RenderMobFarm extends TileEntitySpecialRenderer<MobFarmTileEntity> {
 	
 	@Override
 	public void render(MobFarmTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
-		if (TinyMobFarmConfig.DISABLE_MOB_MODEL) return;
+		if (ConfigTinyMobFarm.DISABLE_MOB_MODEL) return;
 		if (!te.hasLasso()) return;
 		
 		World world = te.getWorld();
@@ -34,7 +34,7 @@ public class MobFarmTESR extends TileEntitySpecialRenderer<MobFarmTileEntity> {
 		
 		GL11.glPushMatrix();
 		GL11.glTranslated(x + 0.5, y + 0.125, z + 0.5);
-		double scale = TinyMobFarmConfig.MOB_MODEL_SCALE;
+		double scale = ConfigTinyMobFarm.MOB_MODEL_SCALE;
 		GL11.glScaled(scale / maxLen, scale / maxLen, scale / maxLen);
 		GL11.glRotated((te.getDir() * -90 + 180), 0, 1, 0);
 		
