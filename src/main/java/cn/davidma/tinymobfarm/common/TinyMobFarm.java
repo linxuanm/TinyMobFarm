@@ -1,9 +1,12 @@
 package cn.davidma.tinymobfarm.common;
 
 import cn.davidma.tinymobfarm.client.gui.HandlerGui;
-import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
+import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
+import cn.davidma.tinymobfarm.core.IProxy;
 import cn.davidma.tinymobfarm.core.Reference;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -14,29 +17,31 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION)
+@Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
 public class TinyMobFarm {
 	
 	@Instance
 	public static TinyMobFarm instance;
 	
-	@SidedProxy(clientSide=Reference.CLIENT_PROXY, serverSide=Reference.COMMON_PROXY)
-	public static CommonProxy proxy;
+	@SidedProxy(clientSide=Reference.CLIENT_PROXY, serverSide=Reference.SERVER_PROXY)
+	public static IProxy proxy;
+	
+	public static Item lasso;
 	
 	@EventHandler
-	public static void PreInit(FMLPreInitializationEvent event) {
-		
+	public static void preInit(FMLPreInitializationEvent event) {
+		proxy.preInit();
 	}
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent event) {
-		GameRegistry.registerTileEntity(MobFarmTileEntity.class, Reference.MOD_ID + "_GeneratorTileEntity");
+		GameRegistry.registerTileEntity(TileEntityMobFarm.class, new ResourceLocation(Reference.MOD_ID + ":mob_farm_tile_entity"));
 		NetworkRegistry.INSTANCE.registerGuiHandler(TinyMobFarm.instance, new HandlerGui());
-		proxy.registerTESR();
+		proxy.init();
 	}
 	
 	@EventHandler
-	public static void PostInit(FMLPostInitializationEvent event) {
-
+	public static void postInit(FMLPostInitializationEvent event) {
+		proxy.postInit();
 	}
 }

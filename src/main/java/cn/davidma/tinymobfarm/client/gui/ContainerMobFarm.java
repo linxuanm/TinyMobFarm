@@ -1,41 +1,31 @@
 package cn.davidma.tinymobfarm.client.gui;
 
-import cn.davidma.tinymobfarm.common.tileentity.MobFarmTileEntity;
-import cn.davidma.tinymobfarm.core.util.Msg;
+import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerMobFarm extends Container {
 
-	public ContainerMobFarm(InventoryPlayer playerInv, MobFarmTileEntity tileEntity) {
-		IItemHandler inventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		addSlotToContainer(new SlotMobFarm(inventory, 0, 80, 25) {
+	public ContainerMobFarm(InventoryPlayer playerInv, TileEntityMobFarm tileEntityMobFarm) {
+		IItemHandler itemHandler = tileEntityMobFarm.getInventory();
+		this.addSlotToContainer(new SlotLassoOnly(itemHandler, 0, 80, 25) {
 			@Override
 			public void onSlotChanged() {
-				tileEntity.sendUpdate();
+				tileEntityMobFarm.saveAndSync();
 			}
 		});
 		
-		// Player hotbar slots.
 		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(playerInv, i, i*18 + 8, 142));
+			this.addSlotToContainer(new Slot(playerInv, i, i * 18 + 8, 142));
 		}
 		
-		// PLayer inventory slots.
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 3; j++) {
-				addSlotToContainer(new Slot(playerInv, i + j*9 + 9, i*18 + 8, j*18 + 84));
+				this.addSlotToContainer(new Slot(playerInv, i + j * 9 + 9, i * 18 + 8, j * 18 + 84));
 			}
 		}
 	}
@@ -44,7 +34,7 @@ public class ContainerMobFarm extends Container {
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return true;
 	}
-
+	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;

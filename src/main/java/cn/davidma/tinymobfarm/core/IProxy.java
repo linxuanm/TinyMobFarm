@@ -1,14 +1,14 @@
 package cn.davidma.tinymobfarm.core;
 
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.item.Item;
 
 public interface IProxy {
 
-	public void preInit(FMLPreInitializationEvent event);
+	public void preInit();
 	
-	public void init(FMLInitializationEvent event);
+	public void init();
 	
-	public void postInit(FMLPostInitializationEvent event);
+	public void postInit();
+	
+	public void registerModel(Item item, int meta, String id);
 }
