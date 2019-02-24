@@ -1,0 +1,46 @@
+//Translated by Yaroslavik
+item.lasso.name=Лассо
+item.debugging_tool.name=Инструмент отладки
+
+tile.wood_farm.name=Деревянная моб ферма
+tile.stone_farm.name=Каменная моб ферма
+tile.iron_farm.name=Железная моб ферма
+tile.gold_farm.name=Золотая моб ферма
+tile.diamond_farm.name=Алмазная моб ферма
+tile.emerald_farm.name=Изумрудная моб ферма
+tile.inferno_farm.name=Адская моб ферма
+tile.ultimate_farm.name=Продвинутая моб ферма
+
+itemGroup.tinymobfarm=Tiny Mob Farm
+
+container.mobfarm=Моб ферма
+
+tooltip.shift.key=Удерживайте %s<SHIFT>%s для получения информации
+tooltip.rate.key=Создаёт лут каждые %d секунд.
+tooltip.output_adjacent.key=Прочность лассо уменьшается с каждым циклом генерации
+tooltip.no_hostile.key=Не может фармить враждебных мобов
+tooltip.no_durability.key=- %d%% шанс не потерять прочность
+tooltip.default_durability.key=- %d%% шанс потерять %d ед. прочности
+
+tooltip.release_mob.key=Щелкните правой кнопкой мыши по блоку, чтобы освободить моба.
+tooltip.mob_name.key=Моб: %s
+tooltip.health.key=Здоровье: %d/%d
+tooltip.hostile.key=Моб враждебен
+tooltip.capture.key=Щелкните правой кнопкой мыши на моба, чтобы поймать
+
+error.dying_mob.key=Невозможно. %s мертвый.
+error.boss.key=Только мобы (не боссы) могут быть %s
+error.cannot.key=Не удается поймать этого моба.
+error.blacklist.key=Этот моб в черном листе
+
+tip.redstone.key=Отключается красным сигналом.
+tip.eject_par1.key=Предметы помещаются в
+tip.eject_par2.key=соседние инвентари.
+tip.mob_name.key=Моб: %s.
+
+gui.higher_tier.key=Этому существу нужен более высокий уровень фермы.
+gui.redstone_disable.key=Отключено красным сигналом.
+gui.no_lasso.key=Разместите лассо, чтобы активировать
+
+join.capture.key=поймать
+join.captured.key=пойман
