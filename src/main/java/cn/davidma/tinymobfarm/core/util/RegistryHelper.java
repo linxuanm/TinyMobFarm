@@ -14,7 +14,6 @@ public class RegistryHelper {
 
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
-		System.out.println(123);
 		event.getRegistry().register(TinyMobFarm.lasso = new ItemLasso());
 	}
 	

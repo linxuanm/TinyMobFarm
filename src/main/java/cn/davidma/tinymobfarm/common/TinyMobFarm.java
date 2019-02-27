@@ -5,6 +5,7 @@ import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.IProxy;
 import cn.davidma.tinymobfarm.core.Reference;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +26,8 @@ public class TinyMobFarm {
 	
 	@SidedProxy(clientSide=Reference.CLIENT_PROXY, serverSide=Reference.SERVER_PROXY)
 	public static IProxy proxy;
+	
+	public static CreativeTabs creativeTabTinyMobFarm = new CreativeTabTinyMobFarm();
 	
 	public static Item lasso;
 	

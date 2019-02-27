@@ -2,6 +2,7 @@ package cn.davidma.tinymobfarm.common.item;
 
 import java.util.List;
 
+import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.ConfigTinyMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
 import cn.davidma.tinymobfarm.core.util.EntityHelper;
@@ -35,6 +36,7 @@ public class ItemLasso extends Item {
 		this.setUnlocalizedName(this.getRegistryName().toString());
 		this.setMaxStackSize(1);
 		this.setMaxDamage(ConfigTinyMobFarm.LASSO_DURABILITY);
+		this.setCreativeTab(TinyMobFarm.creativeTabTinyMobFarm);
 	}
 	
 	@Override
