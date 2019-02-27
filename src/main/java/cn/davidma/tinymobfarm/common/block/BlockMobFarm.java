@@ -35,12 +35,11 @@ public class BlockMobFarm extends Block {
 
 	private EnumMobFarm mobFarmData;
 	
-	@SuppressWarnings("deprecation")
 	public BlockMobFarm(EnumMobFarm mobFarmData) {
-		super(mobFarmData.getBaseBlock().getMaterial(null));
-		Block baseBlock = mobFarmData.getBaseBlock();
-		this.setHardness(baseBlock.getBlockHardness(null, null, null));
-		this.setSoundType(mobFarmData.getBaseBlock().getSoundType());
+		super(mobFarmData.getMaterial());
+		this.setHardness(mobFarmData.getHardness());
+		this.setHarvestLevel("pickaxe", 2);
+		this.setResistance(300);
 		
 		this.setRegistryName(mobFarmData.getRegistryName());
 		this.setUnlocalizedName(this.getRegistryName().toString());
@@ -88,6 +87,16 @@ public class BlockMobFarm extends Block {
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity instanceof TileEntityMobFarm) {
+			TileEntityMobFarm tileEntityMobFarm = (TileEntityMobFarm) tileEntity;
+			tileEntityMobFarm.updateRedstone();
+			tileEntityMobFarm.saveAndSync();
+		}
 	}
 	
 	@Override
