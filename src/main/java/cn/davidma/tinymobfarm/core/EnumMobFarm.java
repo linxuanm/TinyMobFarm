@@ -6,31 +6,33 @@ import java.util.Map;
 import java.util.Random;
 
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
-import net.minecraft.block.material.Material;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;;
 
 public enum EnumMobFarm {
 
-	WOOD("wood_farm", Material.WOOD, false, new int[] {2, 3, 3}),
-	STONE("stone_farm", Material.ROCK, false, new int[] {1, 2, 3}),
-	IRON("iron_farm", Material.IRON, true, new int[] {1, 2}),
-	GOLD("gold_farm", Material.IRON, true, new int[] {1, 1, 2}),
-	DIAMOND("diamond_farm", Material.IRON, true, new int[] {1}),
-	EMERALD("emerald_farm", Material.IRON, true, new int[] {0, 1, 1}),
-	INFERNAL("inferno_farm", Material.ROCK, true, new int[] {0, 0, 1}),
-	ULTIMATE("ultimate_farm", Material.ROCK, true, new int[] {0});
+	WOOD("wood_farm", Blocks.PLANKS, false, new int[] {2, 3, 3}),
+	STONE("stone_farm", Blocks.STONE, false, new int[] {1, 2, 3}),
+	IRON("iron_farm", Blocks.IRON_BLOCK, true, new int[] {1, 2}),
+	GOLD("gold_farm", Blocks.GOLD_BLOCK, true, new int[] {1, 1, 2}),
+	DIAMOND("diamond_farm", Blocks.DIAMOND_BLOCK, true, new int[] {1}),
+	EMERALD("emerald_farm", Blocks.EMERALD_BLOCK, true, new int[] {0, 1, 1}),
+	INFERNAL("inferno_farm", Blocks.OBSIDIAN, true, new int[] {0, 0, 1}),
+	ULTIMATE("ultimate_farm", Blocks.OBSIDIAN, true, new int[] {0});
 	
 	private String registryName;
-	private Material material;
+	private Block baseBlock;
 	private boolean canFarmHostile;
 	private int[] damageChance;
 	private Map<Integer, Integer> normalizedChance;
 	
-	private EnumMobFarm(String registryName, Material material, boolean canFarmHostile, int[] damageChance) {
+	private EnumMobFarm(String registryName, Block baseBlock, boolean canFarmHostile, int[] damageChance) {
 		this.registryName = registryName;
-		this.material = material;
+		this.baseBlock = baseBlock;
 		this.canFarmHostile = canFarmHostile;
 		this.damageChance = damageChance;
 		
@@ -53,8 +55,8 @@ public enum EnumMobFarm {
 		return String.format("tile.%s.%s.name", Reference.MOD_ID, this.registryName);
 	}
 	
-	public Material getMaterial() {
-		return this.material;
+	public Block getBaseBlock() {
+		return this.baseBlock;
 	}
 	
 	public boolean isLassoValid(ItemStack lasso) {

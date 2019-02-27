@@ -8,8 +8,10 @@ import cn.davidma.tinymobfarm.core.Reference;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -33,9 +35,15 @@ public class BlockMobFarm extends Block {
 
 	private EnumMobFarm mobFarmData;
 	
+	@SuppressWarnings("deprecation")
 	public BlockMobFarm(EnumMobFarm mobFarmData) {
-		super(mobFarmData.getMaterial());
+		super(mobFarmData.getBaseBlock().getMaterial(null));
+		Block baseBlock = mobFarmData.getBaseBlock();
+		this.setHardness(baseBlock.getBlockHardness(null, null, null));
+		this.setSoundType(mobFarmData.getBaseBlock().getSoundType());
+		
 		this.setRegistryName(mobFarmData.getRegistryName());
+		this.setUnlocalizedName(this.getRegistryName().toString());
 		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 		this.mobFarmData = mobFarmData;
 	}
@@ -52,6 +60,11 @@ public class BlockMobFarm extends Block {
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] {FACING});
 	}
 	
 	@Override

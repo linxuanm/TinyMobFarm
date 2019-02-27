@@ -1,12 +1,16 @@
 package cn.davidma.tinymobfarm.common;
 
+import java.util.List;
+
 import cn.davidma.tinymobfarm.client.gui.HandlerGui;
+import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.IProxy;
 import cn.davidma.tinymobfarm.core.Reference;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -30,6 +34,8 @@ public class TinyMobFarm {
 	public static CreativeTabs creativeTabTinyMobFarm = new CreativeTabTinyMobFarm();
 	
 	public static Item lasso;
+	public static List<BlockMobFarm> blockMobFarms;
+	public static List<ItemBlock> itemBlockMobFarms;
 	
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
