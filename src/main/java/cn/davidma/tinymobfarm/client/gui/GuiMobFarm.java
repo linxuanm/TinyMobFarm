@@ -5,7 +5,6 @@ import java.util.List;
 
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
-import cn.davidma.tinymobfarm.core.util.NBTHelper;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
