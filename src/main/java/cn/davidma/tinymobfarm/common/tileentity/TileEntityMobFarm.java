@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
 import cn.davidma.tinymobfarm.core.util.EntityHelper;
@@ -112,6 +113,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 					
 					if (newModel != null && newModel instanceof EntityLiving) {
 						this.model = (EntityLiving) newModel;
+						this.modelFacing = this.world.getBlockState(this.pos).getValue(BlockMobFarm.FACING);
 					}
 				}
 			}

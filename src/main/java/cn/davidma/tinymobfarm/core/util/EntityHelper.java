@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.davidma.tinymobfarm.core.ConfigTinyMobFarm;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -17,6 +18,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntityHelper {
+	
+	private static Method getLootTable;
 
 	public static String getRegistryName(EntityLiving entityLiving) {
 		return EntityRegistry.getEntry(entityLiving.getClass()).getRegistryName().toString();
@@ -36,7 +39,9 @@ public class EntityHelper {
 		ResourceLocation location = null;
 		
 		try {
-			Method getLootTable = ReflectionHelper.findMethod(EntityLiving.class, "getLootTable", "func_184647_J", new Class[0]);
+			if (getLootTable == null) {
+				getLootTable = ReflectionHelper.findMethod(EntityLiving.class, "getLootTable", "func_184647_J", new Class[0]);
+			}
 			Object lootTableLocation = getLootTable.invoke(entityLiving);
 			if (lootTableLocation instanceof ResourceLocation) {
 				location = (ResourceLocation) lootTableLocation;
