@@ -5,7 +5,6 @@ import java.util.List;
 
 import cn.davidma.tinymobfarm.core.ConfigTinyMobFarm;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;

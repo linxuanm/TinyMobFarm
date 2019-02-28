@@ -1,29 +1,15 @@
 {
 	"forge_marker": 1,
 	"defaults": {
-		"model": "forge:multi-layer",
 		"transform": "forge:default-block"
 	},
 	"variants": {
-		"normal": [{
-			"custom": {
-				"base": "tinymobfarm:inferno_farm#base",
-				"Solid": "tinymobfarm:inferno_farm#base",
-				"Cutout": "tinymobfarm:inferno_farm#glass"
-			}
-		}],
-		"base": [{
+		"facing=north": {"model": "tinymobfarm:inferno_farm"},
+		"facing=south": {"model": "tinymobfarm:inferno_farm"},
+		"facing=east": {"model": "tinymobfarm:inferno_farm"},
+		"facing=west": {"model": "tinymobfarm:inferno_farm"},
+		"inventory": {
 			"model": "tinymobfarm:inferno_farm"
-		}],
-		"glass": [{
-			"model": "tinymobfarm:glass_panel"
-		}],
-		"inventory": [{
-			"custom": {
-				"base": "tinymobfarm:inferno_farm#base",
-				"Solid": "tinymobfarm:inferno_farm#base",
-				"Cutout": "tinymobfarm:inferno_farm#glass"
-			}
-		}]
+		}
 	}
 }
