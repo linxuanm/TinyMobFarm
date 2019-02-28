@@ -64,6 +64,8 @@ public class ItemLasso extends Item {
 		
 		if (!player.world.isRemote()) {
 			NBTTagCompound mobData = target.serializeNBT();
+			mobData.setTag("Rotation", NBTHelper.createNBTList(new NBTTagDouble(0), new NBTTagDouble(0)));
+			
 			nbt.setTag(NBTHelper.MOB_DATA, mobData);
 			nbt.setString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
 			nbt.setString(NBTHelper.MOB_LOOTTABLE_LOCATION, EntityHelper.getLootTableLocation((EntityLiving) target));

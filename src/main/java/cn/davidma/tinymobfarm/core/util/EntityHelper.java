@@ -19,6 +19,8 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class EntityHelper {
 
+	private static Method getLootTable;
+	
 	public static String getRegistryName(EntityLiving entityLiving) {
 		EntityType<?> entityType = entityLiving.getType();
 		return entityType.getRegistryName().toString();
@@ -37,7 +39,8 @@ public class EntityHelper {
 	public static String getLootTableLocation(EntityLiving entityLiving) {
 		ResourceLocation location = null;
 		
-		Method getLootTable = ObfuscationReflectionHelper.findMethod(entityLiving.getClass(), "getLootTable", new Class[0]);
+		if (getLootTable == null) getLootTable = ObfuscationReflectionHelper.findMethod(EntityLiving.class, "func_184647_J", new Class[0]);
+		
 		try {
 			Object lootTableLocation = getLootTable.invoke(entityLiving);
 			if (lootTableLocation instanceof ResourceLocation) {

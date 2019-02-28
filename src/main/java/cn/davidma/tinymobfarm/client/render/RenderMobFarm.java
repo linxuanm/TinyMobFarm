@@ -22,6 +22,7 @@ public class RenderMobFarm extends TileEntityRenderer<TileEntityMobFarm> {
 			GlStateManager.pushMatrix();
 			GlStateManager.translated(x + 0.5, y + 0.125, z + 0.5);
 			GlStateManager.scaled(modelScale, modelScale, modelScale);
+			GlStateManager.rotatef(0, 0, 0, 0);
 			GlStateManager.rotatef(modelHorizontalAngle, 0, 1, 0);
 			Minecraft.getInstance().getRenderManager().renderEntity(model, 0, 0, 0, 0, partialTicks, false);
 			GlStateManager.popMatrix();
