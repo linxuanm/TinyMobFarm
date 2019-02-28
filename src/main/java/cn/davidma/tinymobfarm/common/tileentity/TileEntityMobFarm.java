@@ -109,7 +109,6 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 				if (this.model == null || !this.model.getName().equals(mobName)) {
 					NBTTagCompound entityData = nbt.getCompoundTag(NBTHelper.MOB_DATA);
 					Entity newModel = EntityList.createEntityFromNBT(entityData, this.world);
-					newModel.setRotationYawHead(0);
 					
 					if (newModel != null && newModel instanceof EntityLiving) {
 						this.model = (EntityLiving) newModel;

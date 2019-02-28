@@ -68,6 +68,7 @@ public class ItemLasso extends Item {
 		
 		if (!player.world.isRemote) {
 			NBTTagCompound mobData = target.serializeNBT();
+			mobData.removeTag("Rotation");
 			nbt.setTag(NBTHelper.MOB_DATA, mobData);
 			nbt.setString(NBTHelper.MOB_NAME, target.getName());
 			nbt.setString(NBTHelper.MOB_LOOTTABLE_LOCATION, EntityHelper.getLootTableLocation((EntityLiving) target));
@@ -131,12 +132,12 @@ public class ItemLasso extends Item {
 			double health = nbt.getDouble(NBTHelper.MOB_HEALTH);
 			double maxHealth = nbt.getDouble(NBTHelper.MOB_MAX_HEALTH);
 			
-			tooltip.add(I18n.format("tinymobfarm.tooltip.release_mob.key"));
-			tooltip.add(I18n.format("tinymobfarm.tooltip.mob_name.key", name));
-			tooltip.add(I18n.format("tinymobfarm.tooltip.health.key", health, maxHealth));
-			if (nbt.getBoolean(NBTHelper.MOB_HOSTILE)) tooltip.add(I18n.format("tinymobfarm.tooltip.hostile.key"));
+			tooltip.add(I18n.format("tinymobfarm.tooltip.release_mob"));
+			tooltip.add(I18n.format("tinymobfarm.tooltip.mob_name", name));
+			tooltip.add(I18n.format("tinymobfarm.tooltip.health", health, maxHealth));
+			if (nbt.getBoolean(NBTHelper.MOB_HOSTILE)) tooltip.add(I18n.format("tinymobfarm.tooltip.hostile"));
 		} else {
-			tooltip.add(I18n.format("tinymobfarm.tooltip.capture.key"));
+			tooltip.add(I18n.format("tinymobfarm.tooltip.capture"));
 		}
 	}
 	

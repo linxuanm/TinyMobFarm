@@ -2,6 +2,7 @@ package cn.davidma.tinymobfarm.common.block;
 
 import java.util.List;
 
+import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
@@ -43,6 +44,7 @@ public class BlockMobFarm extends Block {
 		
 		this.setRegistryName(mobFarmData.getRegistryName());
 		this.setUnlocalizedName(this.getRegistryName().toString());
+		this.setCreativeTab(TinyMobFarm.creativeTabTinyMobFarm);
 		this.setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 		this.mobFarmData = mobFarmData;
 	}

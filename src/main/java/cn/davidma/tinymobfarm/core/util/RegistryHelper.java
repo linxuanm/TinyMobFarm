@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
+import cn.davidma.tinymobfarm.common.item.ItemBlockMobFarm;
 import cn.davidma.tinymobfarm.common.item.ItemLasso;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 
@@ -39,7 +40,7 @@ public class RegistryHelper {
 		
 		registry.register(TinyMobFarm.lasso = new ItemLasso());
 		for (BlockMobFarm i: TinyMobFarm.blockMobFarms) {
-			ItemBlock itemBlockMobFarm = (ItemBlock) new ItemBlock(i).setRegistryName(i.getRegistryName().toString());
+			ItemBlock itemBlockMobFarm = new ItemBlockMobFarm(i);
 			registry.register(itemBlockMobFarm);
 			TinyMobFarm.itemBlockMobFarms.add(itemBlockMobFarm);
 		}

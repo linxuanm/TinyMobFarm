@@ -1,7 +1,12 @@
 package cn.davidma.tinymobfarm.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
+import cn.davidma.tinymobfarm.core.util.NBTHelper;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -24,6 +29,7 @@ public class GuiMobFarm extends GuiContainer {
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
+		this.drawTip(mouseX, mouseY);
 	}
 
 	@Override
@@ -50,6 +56,23 @@ public class GuiMobFarm extends GuiContainer {
 			else error = "tinymobfarm.gui.higher_tier";
 			error = I18n.format(error);
 			this.fontRenderer.drawString(error, (this.xSize - this.fontRenderer.getStringWidth(error)) / 2, 59, 16733525);
+		}
+	}
+	
+	private void drawTip(int mouseX, int mouseY) {
+		int btnX = this.guiLeft + 2, btnY = this.guiTop + 2;
+		int btnWidth = 8, btnHeight = 8;
+		
+		if (mouseX > btnX && mouseY > btnY && mouseX < btnX + btnWidth && mouseY < btnY + btnHeight) {
+			List<String> info = new ArrayList<String>();
+			
+			info.add(I18n.format("tinymobfarm.tip.redstone"));
+			info.add("");
+			info.add(I18n.format("tinymobfarm.tip.output_part_1"));
+			info.add(I18n.format("tinymobfarm.tip.output_part_2"));
+			
+			
+			this.drawHoveringText(info, mouseX, mouseY);
 		}
 	}
 }

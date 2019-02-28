@@ -1,45 +1,37 @@
-item.lasso.name=套索
-item.debugging_tool.name=调试工具（别碰！）
+item.tinymobfarm:lasso.name=套索
 
-tile.wood_farm.name=木质刷怪场
-tile.stone_farm.name=石质刷怪场
-tile.iron_farm.name=铁质刷怪场
-tile.gold_farm.name=金质刷怪场
-tile.diamond_farm.name=钻石刷怪场
-tile.emerald_farm.name=绿宝石刷怪场
-tile.inferno_farm.name=熔岩刷怪场
-tile.ultimate_farm.name=末影刷怪场
+tile.tinymobfarm:default_mob_farm.name=刷怪场
+tile.tinymobfarm:wood_farm.name=木质刷怪场
+tile.tinymobfarm:stone_farm.name=石质刷怪场
+tile.tinymobfarm:iron_farm.name=铁质刷怪场
+tile.tinymobfarm:gold_farm.name=金质刷怪场
+tile.tinymobfarm:diamond_farm.name=钻石刷怪场
+tile.tinymobfarm:emerald_farm.name=绿宝石刷怪场
+tile.tinymobfarm:inferno_farm.name=熔岩刷怪场
+tile.tinymobfarm:ultimate_farm.name=末影刷怪场
 
 itemGroup.tinymobfarm=迷你刷怪场
 
-container.mobfarm=刷怪场
+tinymobfarm.error.cannot_capture_boss=无法捕捉Boss类生物
+tinymobfarm.error.blacklisted_mob=该生物在黑名单里
 
-tooltip.shift.key=按%s<SHIFT>%s键来查看信息
-tooltip.rate.key=每%d秒生成一次战利品。
-tooltip.output_adjacent.key=每次对套索的损害:
-tooltip.no_hostile.key=无法刷具有攻击性的生物。
-tooltip.no_durability.key=- %d%%的几率不造成损害
-tooltip.default_durability.key=- %d%%的几率造成%d点损害
+tinymobfarm.gui.higher_tier=该生物需要更高等级的刷怪场
+tinymobfarm.gui.redstone_disable=接收到红石信号，已关闭
+tinymobfarm.gui.no_lasso=请放入装有生物的套索
 
-tooltip.release_mob.key=对方块右键来放出生物
-tooltip.mob_name.key=生物种类：%s
-tooltip.health.key=生物血量：%d/%d
-tooltip.hostile.key=生物具有攻击性
-tooltip.capture.key=对生物右键来捕捉生物
+tinymobfarm.tooltip.release_mob=对方块右键来放出生物
+tinymobfarm.tooltip.mob_name=生物名：%s
+tinymobfarm.tooltip.health=血量：%d/%d
+tinymobfarm.tooltip.hostile=该生物具有攻击性
+tinymobfarm.tooltip.capture=对生物右键来捕捉
 
-error.dying_mob.key=无法%s一个死去的生物。
-error.boss.key=Boss类生物无法%s。
-error.cannot.key=无法捕捉该生物。
-error.blacklist.key=该生物在黑名单里。
+tinymobfarm.tooltip.hold_shift=按%s<SHIFT>%s查看信息
+tinymobfarm.tooltip.farm_rate=每%d秒生成一次战利品
+tinymobfarm.tooltip.durability_info=对套索造成的磨损：
+tinymobfarm.tooltip.no_hostile=无法刷有攻击性的生物
+tinymobfarm.tooltip.no_durability=- %d%%几率不损失耐久
+tinymobfarm.tooltip.default_durability=- %d%%几率损失%d点耐久
 
-tip.redstone.key=用红石信号关闭刷怪场。
-tip.eject_par1.key=刷怪场生产的物品会被
-tip.eject_par2.key=加入到相邻的箱子里。
-tip.mob_name.key=生物种类：%s。
-
-gui.higher_tier.key=刷怪场等级太低，无法刷具有攻击性的生物
-gui.redstone_disable.key=接收到红石信号，已关闭
-gui.no_lasso.key=请放入装着生物的套索
-
-join.capture.key=捕捉
-join.captured.key=被捕捉
+tinymobfarm.tip.redstone=用红石信号关闭刷怪场。
+tinymobfarm.tip.output_part_1=刷怪场生产的物品会被
+tinymobfarm.tip.output_part_2=加入到相邻的箱子里。

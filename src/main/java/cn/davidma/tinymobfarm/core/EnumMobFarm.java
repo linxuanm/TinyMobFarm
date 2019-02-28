@@ -53,7 +53,7 @@ public enum EnumMobFarm {
 	}
 	
 	public String getUnlocalizedName() {
-		return String.format("tile.%s.%s.name", Reference.MOD_ID, this.registryName);
+		return String.format("tile.%s:%s.name", Reference.MOD_ID, this.registryName);
 	}
 	
 	public Material getMaterial() {
@@ -78,7 +78,7 @@ public enum EnumMobFarm {
 	
 	public void addTooltip(List<String> tooltip) {
 		if (!this.canFarmHostile) {
-			tooltip.add(I18n.format(TextFormatting.RED + "tinymobfarm.tooltip.no_hostile"));
+			tooltip.add(TextFormatting.RED + I18n.format("tinymobfarm.tooltip.no_hostile"));
 		}
 		tooltip.add(I18n.format("tinymobfarm.tooltip.farm_rate", ConfigTinyMobFarm.MOB_FARM_SPEED[this.ordinal()]));
 		tooltip.add(I18n.format("tinymobfarm.tooltip.durability_info"));
