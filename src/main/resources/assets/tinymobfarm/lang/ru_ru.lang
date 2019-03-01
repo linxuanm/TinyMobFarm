@@ -1,0 +1,38 @@
+// Translated by Yaroslavik
+item.tinymobfarm:lasso.name=Лассо
+
+tile.tinymobfarm:default_mob_farm.name=моб ферма
+tile.tinymobfarm:wood_farm.name=Деревянная моб ферма
+tile.tinymobfarm:stone_farm.name=Каменная моб ферма
+tile.tinymobfarm:iron_farm.name=Железная моб ферма
+tile.tinymobfarm:gold_farm.name=Золотая моб ферма
+tile.tinymobfarm:diamond_farm.name=Алмазная моб ферма
+tile.tinymobfarm:emerald_farm.name=Изумрудная моб ферма
+tile.tinymobfarm:inferno_farm.name=Адская моб ферма
+tile.tinymobfarm:ultimate_farm.name=Продвинутая моб ферма
+
+itemGroup.tinymobfarm=Tiny Mob Farm
+
+tinymobfarm.error.cannot_capture_boss=无法捕捉Boss类生物
+tinymobfarm.error.blacklisted_mob=该生物在黑名单里
+
+tinymobfarm.gui.higher_tier=Этому существу нужен более высокий уровень фермы.
+tinymobfarm.gui.redstone_disable=Отключено красным сигналом.
+tinymobfarm.gui.no_lasso=Разместите лассо, чтобы активировать
+
+tinymobfarm.tooltip.release_mob=Щелкните правой кнопкой мыши по блоку, чтобы освободить моба.
+tinymobfarm.tooltip.mob_name=Моб: %s
+tinymobfarm.tooltip.health=Здоровье: %d/%d
+tinymobfarm.tooltip.hostile=Моб враждебен
+tinymobfarm.tooltip.capture=Щелкните правой кнопкой мыши на моба, чтобы поймать
+
+tinymobfarm.tooltip.hold_shift=Удерживайте %s<SHIFT>%s для получения информации
+tinymobfarm.tooltip.farm_rate=Создаёт лут каждые %d секунд
+tinymobfarm.tooltip.durability_info=повреждение лассо:
+tinymobfarm.tooltip.no_hostile=Не может фармить враждебных мобов
+tinymobfarm.tooltip.no_durability=- %d%% шанс не потерять прочность
+tinymobfarm.tooltip.default_durability=- %d%% шанс потерять %d ед. прочности
+
+tinymobfarm.tip.redstone=Отключается красным сигналом.
+tinymobfarm.tip.output_part_1=Предметы помещаются в
+tinymobfarm.tip.output_part_2=соседние инвентари.
