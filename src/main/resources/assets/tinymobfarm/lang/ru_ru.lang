@@ -13,8 +13,8 @@ tile.tinymobfarm:ultimate_farm.name=Продвинутая моб ферма
 
 itemGroup.tinymobfarm=Tiny Mob Farm
 
-tinymobfarm.error.cannot_capture_boss=无法捕捉Boss类生物
-tinymobfarm.error.blacklisted_mob=该生物在黑名单里
+tinymobfarm.error.cannot_capture_boss=Этот моб в черном листе
+tinymobfarm.error.blacklisted_mob=Этот моб в черном листе
 
 tinymobfarm.gui.higher_tier=Этому существу нужен более высокий уровень фермы.
 tinymobfarm.gui.redstone_disable=Отключено красным сигналом.
