@@ -1,6 +1,5 @@
 package cn.davidma.tinymobfarm.core.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -39,14 +38,13 @@ public class EntityHelper {
 	public static String getLootTableLocation(EntityLiving entityLiving) {
 		ResourceLocation location = null;
 		
-		if (getLootTable == null) getLootTable = ObfuscationReflectionHelper.findMethod(EntityLiving.class, "func_184647_J", new Class[0]);
-		
 		try {
+			if (getLootTable == null) getLootTable = ObfuscationReflectionHelper.findMethod(EntityLiving.class, "func_184647_J", new Class[0]);
 			Object lootTableLocation = getLootTable.invoke(entityLiving);
 			if (lootTableLocation instanceof ResourceLocation) {
 				location = (ResourceLocation) lootTableLocation;
 			}
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

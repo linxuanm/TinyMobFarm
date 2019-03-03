@@ -31,8 +31,13 @@ import net.minecraft.world.World;
 public class ItemLasso extends Item {
 
 	public ItemLasso(Properties properties) {
-		super(properties.group(TinyMobFarm.creativeTab).defaultMaxDamage(Config.LASSO_DURABILITY));
+		super(properties.group(TinyMobFarm.creativeTab));
 		this.setRegistryName(Reference.getLocation("lasso"));
+	}
+	
+	@Override
+	public int getMaxDamage(ItemStack stack) {
+		return Config.LASSO_DURABILITY;
 	}
 	
 	@Override

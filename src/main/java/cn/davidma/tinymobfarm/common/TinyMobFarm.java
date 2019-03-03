@@ -72,7 +72,6 @@ public class TinyMobFarm {
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::crafting);
 	}
 	
 	@SubscribeEvent
