@@ -13,9 +13,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@EventBusSubscriber(modid = Reference.MOD_ID, value = {Dist.CLIENT})
+@EventBusSubscriber(modid = Reference.MOD_ID, value = {Dist.CLIENT}, bus = Bus.MOD)
 public class ClientEventHandler {
 	
 	@SubscribeEvent
