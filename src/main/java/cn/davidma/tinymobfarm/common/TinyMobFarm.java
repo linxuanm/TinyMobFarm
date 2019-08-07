@@ -53,21 +53,6 @@ public class TinyMobFarm {
 			}
 		};
 		
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> {
-			return (openContainer) -> {
-				ResourceLocation location = openContainer.getId();
-				if (location.toString().equals(Reference.MOD_ID + ":mob_farm_gui")) {
-					EntityPlayerSP player = Minecraft.getInstance().player;
-					BlockPos pos = openContainer.getAdditionalData().readBlockPos();
-					TileEntity tileEntity = player.world.getTileEntity(pos);
-					if (tileEntity instanceof TileEntityMobFarm) {
-						return new GuiMobFarm(player.inventory, (TileEntityMobFarm) tileEntity);
-					}
-				}
-				return null;
-			};
-		});
-		
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
