@@ -1,0 +1,19 @@
+package cn.davidma.tinymobfarm.core.util;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+
+public class Msg {
+
+	public static void tellPlayer(PlayerEntity player, String text) {
+		player.sendMessage(new StringTextComponent(I18n.format(text)));
+	}
+	
+	public static StringTextComponent tooltip(String text, Object... parameters) {
+		StringTextComponent msg = new StringTextComponent(I18n.format(text, parameters));
+		msg.applyTextStyle(TextFormatting.GRAY);
+		return msg;
+	}
+}

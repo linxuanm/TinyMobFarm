@@ -1,0 +1,31 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SRS",
+		"GMB",
+		"SWS"
+	],
+	"key": {
+		"S": [{
+			"item": "minecraft:bookshelf"
+		}],
+		"M": [{
+			"item": "minecraft:glass"
+		}],
+		"R": [{
+			"item": "minecraft:rotten_flesh"
+		}],
+		"B": [{
+			"item": "minecraft:bone"
+		}],
+		"G": [{
+			"item": "minecraft:gunpowder"
+		}],
+		"W": [{
+			"item": "minecraft:string"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:wood_farm"
+	}
+}
