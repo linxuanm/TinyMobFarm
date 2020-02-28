@@ -233,7 +233,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, INamedCo
 
 	@Override
 	public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-		return new ContainerMobFarm(windowId, inv);
+		return new ContainerMobFarm(windowId, inv, this);
 	}
 
 	@Override

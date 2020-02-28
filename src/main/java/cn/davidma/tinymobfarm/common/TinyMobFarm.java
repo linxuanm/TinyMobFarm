@@ -48,6 +48,7 @@ public class TinyMobFarm {
 			}
 		};
 		
+		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(ContainerType.class, this::registerContainers);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, this::registerBlocks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
@@ -59,6 +60,7 @@ public class TinyMobFarm {
 		IForgeRegistry<ContainerType<?>> registry = event.getRegistry();
 		
 		containerTypeMobFarm = new ContainerType<ContainerMobFarm>(ContainerMobFarm::new);
+		containerTypeMobFarm.setRegistryName(Reference.MOD_ID, "mob_farm_container");
 		
 		registry.register(containerTypeMobFarm);
 	}
@@ -92,6 +94,8 @@ public class TinyMobFarm {
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
 		tileEntityMobFarm = TileEntityType.Builder.<TileEntityMobFarm>create(TileEntityMobFarm::new, TinyMobFarm.mobFarms.stream().toArray(Block[]::new)).build(null);
 		tileEntityMobFarm.setRegistryName(Reference.MOD_ID, "mob_farm_tile_entity");
+		
+		event.getRegistry().register(tileEntityMobFarm);
 	}
 	
 	private void setup(FMLCommonSetupEvent event) {

@@ -14,8 +14,20 @@ import net.minecraftforge.items.IItemHandler;
 
 public class ContainerMobFarm extends Container {
 	
+	private TileEntityMobFarm tileEntityMobFarm;
+	
 	public ContainerMobFarm(int windowId, PlayerInventory inv) {
 		super(TinyMobFarm.containerTypeMobFarm, windowId);
+		
+		for (int i = 0; i < 9; i++) {
+			this.addSlot(new Slot(inv, i, i * 18 + 8, 142));
+		}
+		
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 3; j++) {
+				this.addSlot(new Slot(inv, i + j * 9 + 9, i * 18 + 8, j * 18 + 84));
+			}
+		}
 	}
 	
 	public ContainerMobFarm(int windowId, PlayerInventory inv, PacketBuffer buffer) {
@@ -23,12 +35,17 @@ public class ContainerMobFarm extends Container {
 		BlockPos pos = buffer.readBlockPos();
 		TileEntity tileEntity = inv.player.getEntityWorld().getTileEntity(pos);
 		if (tileEntity instanceof TileEntityMobFarm) {
-			this.setup(inv, (TileEntityMobFarm) tileEntity);
+			TileEntityMobFarm tileEntityMobFarm = (TileEntityMobFarm) tileEntity;
+			this.tileEntityMobFarm = tileEntityMobFarm;
+			
+			this.setup(inv, tileEntityMobFarm);
 		}
 	}
 	
 	public ContainerMobFarm(int windowId, PlayerInventory inv, TileEntityMobFarm farm) {
 		this(windowId, inv);
+		
+		this.tileEntityMobFarm = farm;
 		
 		this.setup(inv, farm);
 	}
@@ -71,6 +88,10 @@ public class ContainerMobFarm extends Container {
 		return itemstack;
 	}
 	
+	public TileEntityMobFarm getTileEntityMobFarm() {
+		return this.tileEntityMobFarm;
+	}
+	
 	private void setup(PlayerInventory inv, TileEntityMobFarm farm) {
 		IItemHandler itemHandler = farm.getInventory();
 		this.addSlot(new SlotLassoOnly(itemHandler, 0, 80, 25) {
@@ -79,15 +100,5 @@ public class ContainerMobFarm extends Container {
 				farm.saveAndSync();
 			}
 		});
-		
-		for (int i = 0; i < 9; i++) {
-			this.addSlot(new Slot(inv, i, i * 18 + 8, 142));
-		}
-		
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 3; j++) {
-				this.addSlot(new Slot(inv, i + j * 9 + 9, i * 18 + 8, j * 18 + 84));
-			}
-		}
 	}
 }

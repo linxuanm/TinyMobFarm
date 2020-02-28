@@ -18,6 +18,7 @@ public class GuiMobFarm extends ContainerScreen<ContainerMobFarm> {
 	
 	public GuiMobFarm(ContainerMobFarm container, PlayerInventory inv, ITextComponent text) {
 		super(container, inv, text);
+		this.tileEntityMobFarm = container.getTileEntityMobFarm();
 	}
 	
 	@Override
