@@ -3,6 +3,9 @@ package cn.davidma.tinymobfarm.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cn.davidma.tinymobfarm.client.ClientProxy;
 import cn.davidma.tinymobfarm.client.gui.ContainerMobFarm;
 import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
@@ -18,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -30,6 +34,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class TinyMobFarm {
 
 	public static TinyMobFarm instance;
+	public static Logger logger = LogManager.getLogger();
 	public static IProxy proxy = DistExecutor.<IProxy>runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 	
 	public static ItemGroup creativeTab;
@@ -59,7 +64,7 @@ public class TinyMobFarm {
 	public void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
 		IForgeRegistry<ContainerType<?>> registry = event.getRegistry();
 		
-		containerTypeMobFarm = new ContainerType<ContainerMobFarm>(ContainerMobFarm::new);
+		containerTypeMobFarm = IForgeContainerType.create(ContainerMobFarm::new);
 		containerTypeMobFarm.setRegistryName(Reference.MOD_ID, "mob_farm_container");
 		
 		registry.register(containerTypeMobFarm);

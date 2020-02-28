@@ -13,7 +13,6 @@ import cn.davidma.tinymobfarm.core.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -26,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -40,7 +40,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityMobFarm extends TileEntity implements ITickable, INamedContainerProvider {
+public class TileEntityMobFarm extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 	
 	private ItemStackHandler inventory = new ItemStackHandler(1);
 	private EnumMobFarm mobFarmData;

@@ -1,6 +1,5 @@
 package cn.davidma.tinymobfarm.core.util;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import net.minecraft.entity.EntityType;
@@ -15,12 +14,9 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class EntityHelper {
-
-	private static Method getLootTable;
 	
 	public static String getRegistryName(LivingEntity LivingEntity) {
 		EntityType<?> entityType = LivingEntity.getType();
@@ -37,20 +33,8 @@ public class EntityHelper {
 		return false;
 	}
 	
-	public static String getLootTableLocation(LivingEntity LivingEntity) {
-		ResourceLocation location = null;
-		
-		try {
-			if (getLootTable == null) getLootTable = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_184647_J", new Class[0]);
-			Object lootTableLocation = getLootTable.invoke(LivingEntity);
-			if (lootTableLocation instanceof ResourceLocation) {
-				location = (ResourceLocation) lootTableLocation;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return location == null ? "" : location.toString();
+	public static String getLootTableLocation(LivingEntity livingEntity) {
+		return livingEntity.func_213346_cF().toString();
 	}
 	
 	public static List<ItemStack> generateLoot(ResourceLocation lootTableLocation, World world) {

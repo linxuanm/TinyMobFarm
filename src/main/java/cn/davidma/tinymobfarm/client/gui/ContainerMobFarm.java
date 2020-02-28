@@ -9,15 +9,28 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerMobFarm extends Container {
 	
 	private TileEntityMobFarm tileEntityMobFarm;
 	
-	public ContainerMobFarm(int windowId, PlayerInventory inv) {
+	public ContainerMobFarm(int windowId, PlayerInventory inv, PacketBuffer buffer) {
+		this(windowId, inv, getMobFarm(inv, buffer));
+	}
+	
+	public ContainerMobFarm(int windowId, PlayerInventory inv, TileEntityMobFarm farm) {
 		super(TinyMobFarm.containerTypeMobFarm, windowId);
+		
+		this.tileEntityMobFarm = farm;
+		
+		IItemHandler itemHandler = farm.getInventory();
+		this.addSlot(new SlotLassoOnly(itemHandler, 0, 80, 25) {
+			@Override
+			public void onSlotChanged() {
+				farm.saveAndSync();
+			}
+		});
 		
 		for (int i = 0; i < 9; i++) {
 			this.addSlot(new Slot(inv, i, i * 18 + 8, 142));
@@ -28,26 +41,6 @@ public class ContainerMobFarm extends Container {
 				this.addSlot(new Slot(inv, i + j * 9 + 9, i * 18 + 8, j * 18 + 84));
 			}
 		}
-	}
-	
-	public ContainerMobFarm(int windowId, PlayerInventory inv, PacketBuffer buffer) {
-		this(windowId, inv);
-		BlockPos pos = buffer.readBlockPos();
-		TileEntity tileEntity = inv.player.getEntityWorld().getTileEntity(pos);
-		if (tileEntity instanceof TileEntityMobFarm) {
-			TileEntityMobFarm tileEntityMobFarm = (TileEntityMobFarm) tileEntity;
-			this.tileEntityMobFarm = tileEntityMobFarm;
-			
-			this.setup(inv, tileEntityMobFarm);
-		}
-	}
-	
-	public ContainerMobFarm(int windowId, PlayerInventory inv, TileEntityMobFarm farm) {
-		this(windowId, inv);
-		
-		this.tileEntityMobFarm = farm;
-		
-		this.setup(inv, farm);
 	}
 	
 	@Override
@@ -88,17 +81,13 @@ public class ContainerMobFarm extends Container {
 		return itemstack;
 	}
 	
-	public TileEntityMobFarm getTileEntityMobFarm() {
+	public TileEntityMobFarm getCachedFarm() {
 		return this.tileEntityMobFarm;
 	}
 	
-	private void setup(PlayerInventory inv, TileEntityMobFarm farm) {
-		IItemHandler itemHandler = farm.getInventory();
-		this.addSlot(new SlotLassoOnly(itemHandler, 0, 80, 25) {
-			@Override
-			public void onSlotChanged() {
-				farm.saveAndSync();
-			}
-		});
+	public static TileEntityMobFarm getMobFarm(PlayerInventory inv, PacketBuffer buffer) {
+		TileEntity tileEntity = inv.player.world.getTileEntity(buffer.readBlockPos());
+		if (tileEntity instanceof TileEntityMobFarm) return (TileEntityMobFarm) tileEntity;
+		throw new IllegalStateException("Tile entity is not in valid state!");
 	}
 }
