@@ -1,42 +1,45 @@
 package cn.davidma.tinymobfarm.client.gui;
 
+import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerMobFarm extends Container {
-
-	public ContainerMobFarm(InventoryPlayer playerInv, TileEntityMobFarm tileEntityMobFarm) {
-		IItemHandler itemHandler = tileEntityMobFarm.getInventory();
-		this.addSlot(new SlotLassoOnly(itemHandler, 0, 80, 25) {
-			@Override
-			public void onSlotChanged() {
-				tileEntityMobFarm.saveAndSync();
-			}
-		});
-		
-		for (int i = 0; i < 9; i++) {
-			this.addSlot(new Slot(playerInv, i, i * 18 + 8, 142));
-		}
-		
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 3; j++) {
-				this.addSlot(new Slot(playerInv, i + j * 9 + 9, i * 18 + 8, j * 18 + 84));
-			}
+	
+	public ContainerMobFarm(int windowId, PlayerInventory inv) {
+		super(TinyMobFarm.containerTypeMobFarm, windowId);
+	}
+	
+	public ContainerMobFarm(int windowId, PlayerInventory inv, PacketBuffer buffer) {
+		this(windowId, inv);
+		BlockPos pos = buffer.readBlockPos();
+		TileEntity tileEntity = inv.player.getEntityWorld().getTileEntity(pos);
+		if (tileEntity instanceof TileEntityMobFarm) {
+			this.setup(inv, (TileEntityMobFarm) tileEntity);
 		}
 	}
 	
+	public ContainerMobFarm(int windowId, PlayerInventory inv, TileEntityMobFarm farm) {
+		this(windowId, inv);
+		
+		this.setup(inv, farm);
+	}
+	
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn) {
+	public boolean canInteractWith(PlayerEntity player) {
 		return true;
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 	
@@ -66,5 +69,25 @@ public class ContainerMobFarm extends Container {
 			slot.onTake(player, itemstack1);
 		}
 		return itemstack;
+	}
+	
+	private void setup(PlayerInventory inv, TileEntityMobFarm farm) {
+		IItemHandler itemHandler = farm.getInventory();
+		this.addSlot(new SlotLassoOnly(itemHandler, 0, 80, 25) {
+			@Override
+			public void onSlotChanged() {
+				farm.saveAndSync();
+			}
+		});
+		
+		for (int i = 0; i < 9; i++) {
+			this.addSlot(new Slot(inv, i, i * 18 + 8, 142));
+		}
+		
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 3; j++) {
+				this.addSlot(new Slot(inv, i + j * 9 + 9, i * 18 + 8, j * 18 + 84));
+			}
+		}
 	}
 }

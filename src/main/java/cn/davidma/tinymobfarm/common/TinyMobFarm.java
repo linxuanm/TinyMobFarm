@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.davidma.tinymobfarm.client.ClientProxy;
-import cn.davidma.tinymobfarm.client.gui.GuiMobFarm;
+import cn.davidma.tinymobfarm.client.gui.ContainerMobFarm;
 import cn.davidma.tinymobfarm.common.block.BlockMobFarm;
 import cn.davidma.tinymobfarm.common.item.ItemBlockMobFarm;
 import cn.davidma.tinymobfarm.common.item.ItemLasso;
@@ -13,19 +13,14 @@ import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.IProxy;
 import cn.davidma.tinymobfarm.core.Reference;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -42,6 +37,7 @@ public class TinyMobFarm {
 	public static Item lasso;
 	public static List<BlockMobFarm> mobFarms;
 	public static TileEntityType<TileEntityMobFarm> tileEntityMobFarm;
+	public static ContainerType<ContainerMobFarm> containerTypeMobFarm;
 	
 	public TinyMobFarm() {
 		instance = this;
@@ -56,6 +52,15 @@ public class TinyMobFarm {
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, this::registerTileEntities);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+	}
+	
+	@SubscribeEvent
+	public void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
+		IForgeRegistry<ContainerType<?>> registry = event.getRegistry();
+		
+		containerTypeMobFarm = new ContainerType<ContainerMobFarm>(ContainerMobFarm::new);
+		
+		registry.register(containerTypeMobFarm);
 	}
 	
 	@SubscribeEvent
@@ -85,7 +90,8 @@ public class TinyMobFarm {
 	
 	@SubscribeEvent
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event) {
-		tileEntityMobFarm = TileEntityType.register(Reference.MOD_ID + ":mob_farm_tile_entity", TileEntityType.Builder.create(TileEntityMobFarm::new));
+		tileEntityMobFarm = TileEntityType.Builder.<TileEntityMobFarm>create(TileEntityMobFarm::new, TinyMobFarm.mobFarms.stream().toArray(Block[]::new)).build(null);
+		tileEntityMobFarm.setRegistryName(Reference.MOD_ID, "mob_farm_tile_entity");
 	}
 	
 	private void setup(FMLCommonSetupEvent event) {

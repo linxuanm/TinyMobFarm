@@ -10,20 +10,19 @@ import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagDouble;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.DoubleNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -46,10 +45,10 @@ public class ItemLasso extends Item {
 	}
 	
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
-		if (NBTHelper.hasMob(stack) || !target.isAlive() || !(target instanceof EntityLiving)) return false;
+	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+		if (NBTHelper.hasMob(stack) || !target.isAlive() || !(target instanceof LivingEntity)) return false;
 		
-		NBTTagCompound nbt = NBTHelper.getBaseTag(stack);
+		CompoundNBT nbt = NBTHelper.getBaseTag(stack);
 		
 		// Cannot capture boss.
 		if (!target.isNonBoss()) {
@@ -60,7 +59,7 @@ public class ItemLasso extends Item {
 		}
 		
 		// Blacklist.
-		if (EntityHelper.isMobBlacklisted((EntityLiving) target)) {
+		if (EntityHelper.isMobBlacklisted((LivingEntity) target)) {
 			if (!player.world.isRemote) {
 				Msg.tellPlayer(player, "tinymobfarm.error.blacklisted_mob");
 			}
@@ -68,15 +67,15 @@ public class ItemLasso extends Item {
 		}
 		
 		if (!player.world.isRemote()) {
-			NBTTagCompound mobData = target.serializeNBT();
-			mobData.setTag("Rotation", NBTHelper.createNBTList(new NBTTagDouble(0), new NBTTagDouble(0)));
+			CompoundNBT mobData = target.serializeNBT();
+			mobData.put("Rotation", NBTHelper.createNBTList(new DoubleNBT(0), new DoubleNBT(0)));
 			
-			nbt.setTag(NBTHelper.MOB_DATA, mobData);
-			nbt.setString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
-			nbt.setString(NBTHelper.MOB_LOOTTABLE_LOCATION, EntityHelper.getLootTableLocation((EntityLiving) target));
-			nbt.setDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
-			nbt.setDouble(NBTHelper.MOB_MAX_HEALTH, target.getMaxHealth());
-			nbt.setBoolean(NBTHelper.MOB_HOSTILE, target.isCreatureType(EnumCreatureType.MONSTER, false));
+			nbt.put(NBTHelper.MOB_DATA, mobData);
+			nbt.putString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
+			nbt.putString(NBTHelper.MOB_LOOTTABLE_LOCATION, EntityHelper.getLootTableLocation((LivingEntity) target));
+			nbt.putDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
+			nbt.putDouble(NBTHelper.MOB_MAX_HEALTH, target.getMaxHealth());
+			nbt.putBoolean(NBTHelper.MOB_HOSTILE, target instanceof MonsterEntity);
 			
 			if (player.isCreative()) {
 				ItemStack newLasso = new ItemStack(this);
@@ -92,41 +91,43 @@ public class ItemLasso extends Item {
 	}
 		
 	@Override
-	public EnumActionResult onItemUse(ItemUseContext context) {
-		EntityPlayer player = context.getPlayer();
+	public ActionResultType onItemUse(ItemUseContext context) {
+		PlayerEntity player = context.getPlayer();
 		ItemStack stack = context.getItem();
-		EnumFacing facing = context.getFace();
+		Direction facing = context.getFace();
 		BlockPos pos = context.getPos().offset(facing);
 		World world = context.getWorld();
 		
-		if (!NBTHelper.hasMob(stack)) return EnumActionResult.FAIL;
+		if (!NBTHelper.hasMob(stack)) return ActionResultType.FAIL;
 		
-		if (!player.canPlayerEdit(pos, facing, stack)) return EnumActionResult.FAIL;
+		if (!player.canPlayerEdit(pos, facing, stack)) return ActionResultType.FAIL;
 		
 		if (!context.getWorld().isRemote()) {
-			NBTTagCompound nbt = NBTHelper.getBaseTag(stack);
-			NBTTagCompound mobData = nbt.getCompound(NBTHelper.MOB_DATA);
+			CompoundNBT nbt = NBTHelper.getBaseTag(stack);
+			CompoundNBT mobData = nbt.getCompound(NBTHelper.MOB_DATA);
 			
-			NBTTagDouble x = new NBTTagDouble(pos.getX() + 0.5);
-			NBTTagDouble y = new NBTTagDouble(pos.getY());
-			NBTTagDouble z = new NBTTagDouble(pos.getZ() + 0.5);
-			NBTTagList mobPos = NBTHelper.createNBTList(x, y, z);
-			mobData.setTag("Pos", mobPos);
+			DoubleNBT x = new DoubleNBT(pos.getX() + 0.5);
+			DoubleNBT y = new DoubleNBT(pos.getY());
+			DoubleNBT z = new DoubleNBT(pos.getZ() + 0.5);
+			ListNBT mobPos = NBTHelper.createNBTList(x, y, z);
+			mobData.put("Pos", mobPos);
 			
-			Entity mob = EntityType.create(mobData, world);
-			if (mob != null) world.spawnEntity(mob);
+			Entity mob = EntityType.func_220335_a(mobData, world, entity -> {
+				return entity;
+			});
+			if (mob != null) world.addEntity(mob);
 			
 			stack.removeChildTag(NBTHelper.MOB);
-			stack.damageItem(1, player);
+			stack.damageItem(1, player, wutTheFak -> {});
 		}
 		
-		return EnumActionResult.SUCCESS;
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		if (NBTHelper.hasMob(stack)) {
-			NBTTagCompound nbt = NBTHelper.getBaseTag(stack);
+			CompoundNBT nbt = NBTHelper.getBaseTag(stack);
 			String name = nbt.getString(NBTHelper.MOB_NAME);
 			double health = nbt.getDouble(NBTHelper.MOB_HEALTH);
 			double maxHealth = nbt.getDouble(NBTHelper.MOB_MAX_HEALTH);
