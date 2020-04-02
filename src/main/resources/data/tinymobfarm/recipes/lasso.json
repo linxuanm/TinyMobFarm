@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" S ",
+		"DLD",
+		" S "
+	],
+	"key": {
+		"L": [{
+			"item": "minecraft:lead"
+		}],
+		"D": [{
+			"item": "minecraft:diamond"
+		}],
+		"S": [{
+			"item": "minecraft:slime_ball"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:lasso"
+	}
+}

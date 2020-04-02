@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC",
+		"BMB",
+		"CSC"
+	],
+	"key": {
+		"B": [{
+			"item": "tinymobfarm:iron_farm"
+		}],
+		"M": [{
+			"item": "minecraft:blaze_rod"
+		}],
+		"C": [{
+			"item": "minecraft:ender_eye"
+		}],
+		"S": [{
+			"item": "minecraft:gold_block"
+		}]
+	},
+	"result": {
+		"item": "tinymobfarm:gold_farm"
+	}
+}

@@ -1,0 +1,57 @@
+package cn.davidma.tinymobfarm.client.gui;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import cn.davidma.tinymobfarm.common.tileentity.TileEntityMobFarm;
+import cn.davidma.tinymobfarm.core.Reference;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+
+public class GuiMobFarm extends ContainerScreen<ContainerMobFarm> {
+
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID + ":textures/gui/farm_gui.png");
+	
+	private TileEntityMobFarm tileEntityMobFarm;
+	
+	public GuiMobFarm(ContainerMobFarm container, PlayerInventory inv, ITextComponent text) {
+		super(container, inv, text);
+		this.tileEntityMobFarm = container.getCachedFarm();
+	}
+	
+	@Override
+	public void render(int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground();
+		super.render(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bindTexture(TEXTURE);
+		this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		String name = I18n.format(this.tileEntityMobFarm.getUnlocalizedName());
+		this.font.drawString(name, (this.xSize - this.font.getStringWidth(name)) / 2, 8, 4210752);
+		
+		if (this.tileEntityMobFarm.isWorking()) {
+			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			this.minecraft.getTextureManager().bindTexture(TEXTURE);
+			this.blit(48, 60, 176, 5, 80, 5);
+			this.blit(48, 60, 176, 0, (int) (this.tileEntityMobFarm.getScaledProgress() * 80), 5);
+		} else {
+			String error;
+			if (this.tileEntityMobFarm.getLasso().isEmpty()) error = "tinymobfarm.gui.no_lasso";
+			else if (this.tileEntityMobFarm.isPowered()) error = "tinymobfarm.gui.redstone_disable";
+			else error = "tinymobfarm.gui.higher_tier";
+			error = I18n.format(error);
+			this.font.drawString(error, (this.xSize - this.font.getStringWidth(error)) / 2, 59, 16733525);
+		}
+	}
+}
