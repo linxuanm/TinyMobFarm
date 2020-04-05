@@ -4,4 +4,5 @@
 A Minecraft Mod that adds single block mob farms that generates mob drops passively.
 
 ## Credits
-- [Yaroslavik](https://github.com/yaroslav4167) for Russian translation.
+- [Yaroslavik](https://github.com/yaroslav4167) for Russian translation (1.12.2).
+- [fantom2010](https://github.com/fantom2010) for Russian translation (1.15.2).
