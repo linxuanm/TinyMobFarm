@@ -28,7 +28,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -95,6 +94,7 @@ public class BlockMobFarm extends Block {
 		return ActionResultType.SUCCESS;
 	}
 	
+	/*
 	@Override
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
 		TileEntity tileEntity = world.getTileEntity(currentPos);
@@ -104,6 +104,17 @@ public class BlockMobFarm extends Block {
 			tileEntityMobFarm.saveAndSync();
 		}
 		return state;
+	}
+	*/
+	
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if (tileEntity instanceof TileEntityMobFarm) {
+			TileEntityMobFarm tileEntityMobFarm = (TileEntityMobFarm) tileEntity;
+			tileEntityMobFarm.updateRedstone();
+			tileEntityMobFarm.saveAndSync();
+		}
 	}
 	
 	@Override
