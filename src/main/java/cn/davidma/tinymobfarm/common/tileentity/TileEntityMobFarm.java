@@ -8,6 +8,7 @@ import cn.davidma.tinymobfarm.client.gui.ContainerMobFarm;
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.EnumMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
+import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.EntityHelper;
 import cn.davidma.tinymobfarm.core.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
@@ -106,6 +107,8 @@ public class TileEntityMobFarm extends TileEntity implements ITickableTileEntity
 				if (drops.isEmpty()) return;
 			}
 		}
+		
+		if (Config.DISABLE_WHEN_CHEST_FULL) return;
 		
 		for (ItemStack stack: drops) {
 			ItemEntity entityItem = new ItemEntity(this.world, this.pos.getX() + 0.5, this.pos.getY() + 1, this.pos.getZ() + 0.5, stack);

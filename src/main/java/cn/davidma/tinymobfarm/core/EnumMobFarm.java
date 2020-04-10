@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.Block;
@@ -24,6 +23,8 @@ public enum EnumMobFarm {
 	EMERALD("emerald_farm", Blocks.EMERALD_BLOCK, true, new int[] {0, 1, 1}),
 	INFERNAL("inferno_farm", Blocks.OBSIDIAN, true, new int[] {0, 0, 1}),
 	ULTIMATE("ultimate_farm", Blocks.OBSIDIAN, true, new int[] {0});
+	
+	private static final double[] MOB_FARM_SPEED = {50.0, 40.0, 30.0, 20.0, 10.0, 5.0, 2.5, 0.5};
 	
 	private String registryName;
 	private Block baseBlock;
@@ -65,7 +66,7 @@ public enum EnumMobFarm {
 	}
 	
 	public int getMaxProgress() {
-		return (int) (Config.MOB_FARM_SPEED[this.ordinal()] * 20);
+		return (int) (MOB_FARM_SPEED[this.ordinal()] * 20);
 	}
 	
 	public int getRandomDamage(Random rand) {
@@ -76,7 +77,7 @@ public enum EnumMobFarm {
 		if (!this.canFarmHostile) {
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.no_hostile").applyTextStyle(TextFormatting.RED));
 		}
-		tooltip.add(Msg.tooltip("tinymobfarm.tooltip.farm_rate", Config.MOB_FARM_SPEED[this.ordinal()]));
+		tooltip.add(Msg.tooltip("tinymobfarm.tooltip.farm_rate", MOB_FARM_SPEED[this.ordinal()]));
 		tooltip.add(Msg.tooltip("tinymobfarm.tooltip.durability_info"));
 		for (int i: this.normalizedChance.keySet()) {
 			if (i == 0) tooltip.add(Msg.tooltip("tinymobfarm.tooltip.no_durability", this.normalizedChance.get(i)));
