@@ -4,6 +4,6 @@ authors="davidmaamoaix"
 
 [[mods]]
 modId="tinymobfarm"
-version="1.0.6"
+version="1.0.7"
 displayName="Tiny Mob Farm"
 description='A Minecraft Mod that adds single block mob farms that generates mob drops passively.'
