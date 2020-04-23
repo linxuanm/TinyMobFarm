@@ -42,7 +42,7 @@ public class Config {
 			
 			this.lassoDurability = builder
 					.comment("The durability of lasso. -1 for infinite.")
-					.defineInRange("lassoDurability", 128, -1, Integer.MAX_VALUE);
+					.defineInRange("lassoDurability", 128, -2, Integer.MAX_VALUE);
 			
 			this.blacklist = builder
 					.comment("Mobs to be blacklisted. e.g. 'minecraft:cow' for cows.")
