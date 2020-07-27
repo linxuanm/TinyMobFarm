@@ -9,7 +9,9 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class FakePlayerHelper {
 
-	private static final GameProfile GAME_PROFILE = new GameProfile(UUID.randomUUID(), "[TinyMobFarm_DanielTheEgg]");
+	public static final String FAKE_NAME = "[TinyMobFarm_DanielTheEgg]";
+	
+	private static final GameProfile GAME_PROFILE = new GameProfile(UUID.randomUUID(), FAKE_NAME);
 	private static FakePlayer fakePlayer;
 	
 	public static FakePlayer getPlayer(ServerWorld world) {

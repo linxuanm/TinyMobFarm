@@ -12,6 +12,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -46,7 +47,7 @@ public class ItemLasso extends Item {
 	
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
-		if (NBTHelper.hasMob(stack) || !target.isAlive() || !(target instanceof LivingEntity)) return false;
+		if (NBTHelper.hasMob(stack) || !target.isAlive() || !(target instanceof MobEntity)) return false;
 		
 		CompoundNBT nbt = NBTHelper.getBaseTag(stack);
 		

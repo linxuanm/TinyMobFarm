@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameter;
 import net.minecraft.world.storage.loot.LootParameterSet;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
@@ -37,12 +38,14 @@ public class EntityHelper {
 		return livingEntity.func_213346_cF().toString();
 	}
 	
-	public static List<ItemStack> generateLoot(ResourceLocation lootTableLocation, World world) {
+	public static List<ItemStack> generateLoot(ResourceLocation lootTableLocation, World world, int loot) {
 		LootTableManager lootTableManager = ServerLifecycleHooks.getCurrentServer().getLootTableManager();
 		LootTable lootTable = lootTableManager.getLootTableFromLocation(lootTableLocation);
 		LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);
 		FakePlayer daniel = FakePlayerHelper.getPlayer((ServerWorld) world);
+		
 		builder.withParameter(LootParameters.LAST_DAMAGE_PLAYER, daniel);
+		
 		LootParameterSet.Builder setBuilder = new LootParameterSet.Builder();
 		setBuilder.required(LootParameters.LAST_DAMAGE_PLAYER);
 		return lootTable.generate(builder.build(setBuilder.build()));

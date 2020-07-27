@@ -14,6 +14,8 @@ import cn.davidma.tinymobfarm.core.util.FakePlayerHelper;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -90,7 +92,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickableTileEntity
 		String lootTableLocation = NBTHelper.getBaseTag(lasso).getString(NBTHelper.MOB_LOOTTABLE_LOCATION);
 		if (lootTableLocation.isEmpty()) return;
 		
-		List<ItemStack> drops = EntityHelper.generateLoot(new ResourceLocation(lootTableLocation), this.world);
+		List<ItemStack> drops = EntityHelper.generateLoot(new ResourceLocation(lootTableLocation), this.world, EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, lasso));
 		for (Direction facing: Direction.values()) {
 			TileEntity tileEntity = this.world.getTileEntity(this.pos.offset(facing));
 			if (tileEntity != null) {
