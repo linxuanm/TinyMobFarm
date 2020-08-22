@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "tinymobfarm:block/diamond_farm"
+		}
+	}
+}

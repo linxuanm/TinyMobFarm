@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"name": "tinymobfarm:wood_farm",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "tinymobfarm:wood_farm"
+				}
+			],
+			"conditions":[
+				{
+					"condition": "minecraft:survives_explosion"
+				}
+			]
+
+		}
+	]
+}
