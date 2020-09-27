@@ -8,6 +8,7 @@ import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.EntityHelper;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -143,7 +144,7 @@ public class ItemLasso extends Item {
 			double maxHealth = nbt.getDouble(NBTHelper.MOB_MAX_HEALTH);
 			
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.release_mob.key"));
-			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.mob_name.key", name));
+			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.mob_name.key", I18n.format(name)));
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.health.key", health, maxHealth));
 			if (nbt.getBoolean(NBTHelper.MOB_HOSTILE)) tooltip.add(Msg.tooltip("tinymobfarm.tooltip.hostile.key"));
 		} else {
