@@ -24,8 +24,10 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class ItemLasso extends Item {
@@ -73,7 +75,13 @@ public class ItemLasso extends Item {
 					DoubleNBT.valueOf(0), DoubleNBT.valueOf(0)));
 			
 			nbt.put(NBTHelper.MOB_DATA, mobData);
-			nbt.putString(NBTHelper.MOB_NAME, target.getName().getUnformattedComponentText());
+			
+			ITextComponent name = target.getName();
+			if (name instanceof TranslationTextComponent) {
+				nbt.putString(NBTHelper.MOB_NAME, ((TranslationTextComponent) name).getKey());
+			} else {
+				nbt.putString(NBTHelper.MOB_NAME, name.getUnformattedComponentText());
+			}
 			nbt.putString(NBTHelper.MOB_LOOTTABLE_LOCATION, EntityHelper.getLootTableLocation((LivingEntity) target));
 			nbt.putDouble(NBTHelper.MOB_HEALTH, Math.round(target.getHealth() * 10) / 10.0);
 			nbt.putDouble(NBTHelper.MOB_MAX_HEALTH, target.getMaxHealth());
