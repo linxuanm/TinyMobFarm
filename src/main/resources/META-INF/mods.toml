@@ -5,6 +5,6 @@ license="All rights reserved"
 
 [[mods]]
 modId="tinymobfarm"
-version="1.1.0"
+version="1.1.1"
 displayName="Tiny Mob Farm"
 description='A Minecraft Mod that adds single block mob farms that generates mob drops passively.'
