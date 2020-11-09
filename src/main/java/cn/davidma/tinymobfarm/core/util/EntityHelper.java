@@ -18,13 +18,13 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class EntityHelper {
 	
-	public static String getRegistryName(LivingEntity LivingEntity) {
-		EntityType<?> entityType = LivingEntity.getType();
-		return entityType.getRegistryName().toString();
+	public static boolean isMobBlacklisted(LivingEntity livingEntity) {
+		EntityType<?> entityType = livingEntity.getType();
+		return isMobBlacklisted(entityType);
 	}
-	
-	public static boolean isMobBlacklisted(LivingEntity LivingEntity) {
-		String mobName = getRegistryName(LivingEntity);
+
+	public static boolean isMobBlacklisted(EntityType<?> entityType) {
+		String mobName = entityType.getRegistryName().toString();
 		for (String i: Config.MOB_BLACKLIST) {
 			if (mobName.equalsIgnoreCase(i)) {
 				return true;
