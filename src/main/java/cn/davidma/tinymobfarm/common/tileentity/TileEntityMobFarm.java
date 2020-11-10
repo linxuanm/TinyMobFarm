@@ -89,8 +89,11 @@ public class TileEntityMobFarm extends TileEntity implements ITickableTileEntity
 	
 	private void generateDrops() {
 		ItemStack lasso = this.getLasso();
-		String lootTableLocation = NBTHelper.getBaseTag(lasso).getString(NBTHelper.MOB_LOOTTABLE_LOCATION);
+		CompoundNBT nbt = NBTHelper.getBaseTag(lasso);
+		String lootTableLocation = nbt.getString(NBTHelper.MOB_LOOTTABLE_LOCATION);
 		if (lootTableLocation.isEmpty()) return;
+		CompoundNBT mobData = nbt.getCompound(NBTHelper.MOB_DATA);
+		if (EntityType.readEntityType(mobData).filter(EntityHelper::isMobBlacklisted).isPresent()) return;
 		
 		List<ItemStack> drops = EntityHelper.generateLoot(new ResourceLocation(lootTableLocation), this.world, EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, lasso));
 		for (Direction facing: Direction.values()) {

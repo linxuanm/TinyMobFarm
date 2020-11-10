@@ -22,14 +22,16 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.DoubleNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class ItemLasso extends Item {
 
@@ -116,25 +118,33 @@ public class ItemLasso extends Item {
 		if (!context.getWorld().isRemote()) {
 			CompoundNBT nbt = NBTHelper.getBaseTag(stack);
 			CompoundNBT mobData = nbt.getCompound(NBTHelper.MOB_DATA);
-			
-			DoubleNBT x = DoubleNBT.valueOf(pos.getX() + 0.5);
-			DoubleNBT y = DoubleNBT.valueOf(pos.getY());
-			DoubleNBT z = DoubleNBT.valueOf(pos.getZ() + 0.5);
-			ListNBT mobPos = NBTHelper.createNBTList(x, y, z);
-			mobData.put("Pos", mobPos);
-			
-			Entity mob = EntityType.func_220335_a(mobData, world, entity -> {
-				return entity;
-			});
-			if (mob != null) world.addEntity(mob);
-			
+
+			EntityType.readEntityType(mobData)
+				.filter(entityType -> !EntityHelper.isMobBlacklisted(entityType))
+				.map(entityType -> entityType.create(world))
+				.filter(entity -> entity instanceof MobEntity && canPlayerSetNbt(world, entity, player))
+				.ifPresent(mob -> {
+					DoubleNBT x = DoubleNBT.valueOf(pos.getX() + 0.5);
+					DoubleNBT y = DoubleNBT.valueOf(pos.getY());
+					DoubleNBT z = DoubleNBT.valueOf(pos.getZ() + 0.5);
+					ListNBT mobPos = NBTHelper.createNBTList(x, y, z);
+					mobData.put("Pos", mobPos);
+					mob.read(mobData);
+					world.addEntity(mob);
+				});
+
 			stack.removeChildTag(NBTHelper.MOB);
 			stack.damageItem(1, player, wutTheFak -> {});
 		}
 		
 		return ActionResultType.SUCCESS;
 	}
-	
+
+	private boolean canPlayerSetNbt(World world, Entity entity, @Nullable PlayerEntity player) {
+		MinecraftServer server = world.getServer();
+		return server == null || !entity.ignoreItemEntityData() || player != null && server.getPlayerList().canSendCommands(player.getGameProfile());
+	}
+
 	@Override
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		if (NBTHelper.hasMob(stack)) {
@@ -142,7 +152,7 @@ public class ItemLasso extends Item {
 			String name = nbt.getString(NBTHelper.MOB_NAME);
 			double health = nbt.getDouble(NBTHelper.MOB_HEALTH);
 			double maxHealth = nbt.getDouble(NBTHelper.MOB_MAX_HEALTH);
-			
+
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.release_mob.key"));
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.mob_name.key", I18n.format(name)));
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.health.key", health, maxHealth));
@@ -151,7 +161,7 @@ public class ItemLasso extends Item {
 			tooltip.add(Msg.tooltip("tinymobfarm.tooltip.capture.key"));
 		}
 	}
-	
+
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return NBTHelper.hasMob(stack);
