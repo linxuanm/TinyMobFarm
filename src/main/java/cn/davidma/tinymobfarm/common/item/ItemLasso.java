@@ -124,12 +124,8 @@ public class ItemLasso extends Item {
 				.map(entityType -> entityType.create(world))
 				.filter(entity -> entity instanceof MobEntity && canPlayerSetNbt(world, entity, player))
 				.ifPresent(mob -> {
-					DoubleNBT x = DoubleNBT.valueOf(pos.getX() + 0.5);
-					DoubleNBT y = DoubleNBT.valueOf(pos.getY());
-					DoubleNBT z = DoubleNBT.valueOf(pos.getZ() + 0.5);
-					ListNBT mobPos = NBTHelper.createNBTList(x, y, z);
-					mobData.put("Pos", mobPos);
 					mob.read(mobData);
+					mob.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 					world.addEntity(mob);
 				});
 
