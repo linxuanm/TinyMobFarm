@@ -1,0 +1,87 @@
+[02:18:22] [main/INFO]: Extra: []
+[02:18:22] [main/INFO]: Running with arguments: [--userProperties, {}, --assetsDir, C:/Users/drums/.gradle/caches/minecraft/assets, --assetIndex, 1.12, --accessToken{REDACTED}, --version, 1.12.2, --tweakClass, net.minecraftforge.fml.common.launcher.FMLTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[02:18:22] [main/INFO]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
+[02:18:22] [main/INFO]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
+[02:18:22] [main/INFO]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[02:18:22] [main/INFO]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLTweaker
+[02:18:22] [main/INFO]: Forge Mod Loader version 14.23.5.2768 for Minecraft 1.12.2 loading
+[02:18:22] [main/INFO]: Java is OpenJDK 64-Bit Server VM, version 1.8.0_282, running on Windows 10:amd64:10.0, installed at C:\Users\drums\.jdks\corretto-1.8.0_282\jre
+[02:18:22] [main/ERROR]: Apache Maven library folder was not in the format expected. Using default libraries directory.
+[02:18:22] [main/ERROR]: Full: C:\Users\drums\.gradle\caches\modules-2\files-2.1\org.apache.maven\maven-artifact\3.5.3\7dc72b6d6d8a6dced3d294ed54c2cc3515ade9f4\maven-artifact-3.5.3.jar
+[02:18:22] [main/ERROR]: Trimmed: c:/users/drums/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/
+[02:18:22] [main/INFO]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[02:18:22] [main/INFO]: Detected deobfuscated environment, loading log configs for colored console logs.
+[02:18:23] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLCorePlugin (net.minecraftforge.fml.relauncher.FMLCorePlugin), we are in deobf and it's a forge core plugininecraftFormatting
+[02:18:23] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLForgePlugin (net.minecraftforge.classloading.FMLForgePlugin), we are in deobf and it's a forge core plugininecraftFormatting
+[02:18:23] [main/INFO] [FML]: Searching E:\TinyMobFarm\run\.\mods for modsinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweakerinecraftFormatting
+[02:18:23] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.fml.relauncher.FMLCorePlugininecraftFormatting
+[02:18:23] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugininecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapperinecraftFormatting
+[02:18:23] [main/ERROR] [FML]: FML appears to be missing any signature data. This is not a good thinginecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapperinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweakerinecraftFormatting
+[02:18:23] [main/INFO] [LaunchWrapper]: Launching wrapped minecraft {net.minecraft.client.main.Main}inecraftFormatting
+[02:18:24] [main/INFO] [net.minecraft.client.Minecraft]: Setting user: Player750inecraftFormatting
+[02:18:25] [main/INFO] [net.minecraft.client.Minecraft]: LWJGL Version: 2.9.4inecraftFormatting
+[02:18:26] [main/INFO] [FML]: Could not load splash.properties, will create a default oneinecraftFormatting
+[02:18:26] [main/INFO] [FML]: -- System Details --
+Details:
+	Minecraft Version: 1.12.2
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_282, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 673068104 bytes (641 MB) / 776470528 bytes (740 MB) up to 7624720384 bytes (7271 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: 
+	Loaded coremods (and transformers): 
+	GL info: ' Vendor: 'NVIDIA Corporation' Version: '4.6.0 NVIDIA 461.40' Renderer: 'GeForce RTX 2060/PCIe/SSE2'inecraftFormatting
+[02:18:26] [main/INFO] [FML]: MinecraftForge v14.23.5.2768 InitializedinecraftFormatting
+[02:18:26] [main/INFO] [FML]: Starts to replace vanilla recipe ingredients with ore ingredients.inecraftFormatting
+[02:18:27] [main/INFO] [FML]: Replaced 1036 ore ingredientsinecraftFormatting
+[02:18:27] [main/INFO] [FML]: Searching E:\TinyMobFarm\run\.\mods for modsinecraftFormatting
+[02:18:28] [main/INFO] [FML]: Forge Mod Loader has identified 5 mods to loadinecraftFormatting
+[02:18:28] [main/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, tinymobfarm] at CLIENTinecraftFormatting
+[02:18:28] [main/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, tinymobfarm] at SERVERinecraftFormatting
+[02:18:28] [main/INFO] [net.minecraft.client.resources.SimpleReloadableResourceManager]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Tiny Mob FarminecraftFormatting
+[02:18:28] [main/INFO] [FML]: Processing ObjectHolder annotationsinecraftFormatting
+[02:18:28] [main/INFO] [FML]: Found 1168 ObjectHolder annotationsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Identifying ItemStackHolder annotationsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Found 0 ItemStackHolder annotationsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Configured a dormant chunk cache size of 0inecraftFormatting
+[02:18:29] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.jsoninecraftFormatting
+[02:18:29] [main/INFO] [FML]: Applying holder lookupsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Holder lookups appliedinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Applying holder lookupsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Holder lookups appliedinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Applying holder lookupsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Holder lookups appliedinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Applying holder lookupsinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Holder lookups appliedinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Injecting itemstacksinecraftFormatting
+[02:18:29] [main/INFO] [FML]: Itemstack injection completeinecraftFormatting
+[02:18:29] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Found status: OUTDATED Target: 14.23.5.2854inecraftFormatting
+[02:18:29] [Thread-3/INFO] [FML]: Using sync timing. 200 frames of Display.update took 935222499 nanosinecraftFormatting
+[02:18:31] [Sound Library Loader/INFO] [net.minecraft.client.audio.SoundManager]: Starting up SoundSystem...inecraftFormatting
+[02:18:31] [Thread-5/INFO] [net.minecraft.client.audio.SoundManager]: Initializing LWJGL OpenALinecraftFormatting
+[02:18:31] [Thread-5/INFO] [net.minecraft.client.audio.SoundManager]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)inecraftFormatting
+[02:18:31] [Thread-5/INFO] [net.minecraft.client.audio.SoundManager]: OpenAL initialized.inecraftFormatting
+[02:18:32] [Sound Library Loader/INFO] [net.minecraft.client.audio.SoundManager]: Sound engine startedinecraftFormatting
+[02:18:35] [main/INFO] [FML]: Max texture size: 16384inecraftFormatting
+[02:18:36] [main/INFO] [net.minecraft.client.renderer.texture.TextureMap]: Created: 512x512 textures-atlasinecraftFormatting
+[02:18:37] [main/INFO] [FML]: Applying holder lookupsinecraftFormatting
+[02:18:37] [main/INFO] [FML]: Holder lookups appliedinecraftFormatting
+[02:18:37] [main/INFO] [FML]: Injecting itemstacksinecraftFormatting
+[02:18:37] [main/INFO] [FML]: Itemstack injection completeinecraftFormatting
+[02:18:37] [main/INFO] [FML]: Forge Mod Loader has successfully loaded 5 modsinecraftFormatting
+[02:18:37] [main/INFO] [com.mojang.text2speech.NarratorWindows]: Narrator library for x64 successfully loadedinecraftFormatting
+[02:18:39] [Realms Notification Availability checker #1/INFO] [com.mojang.realmsclient.client.RealmsClient]: Could not authorize you against Realms server: Invalid session idinecraftFormatting
