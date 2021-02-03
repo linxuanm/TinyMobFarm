@@ -23,6 +23,8 @@ run
 crash-reports
 logs
 .github
+debug.log
+latest.log
 
 # Files from Forge MDK
 forge*changelog.txt
