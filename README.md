@@ -2,6 +2,7 @@
 [![](http://cf.way2muchnoise.eu/short_tiny-mob-farm.svg)](https://minecraft.curseforge.com/projects/tiny-mob-farm) [![](http://cf.way2muchnoise.eu/versions/tiny-mob-farm.svg)](https://minecraft.curseforge.com/projects/tiny-mob-farm)
 
 The next best server friendly passive loot acquisition mob farming!
+
 TMF dds multiple single block mob farms that generates mob drops passively.
 
 ## Credits
