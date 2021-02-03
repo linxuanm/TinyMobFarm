@@ -3,7 +3,7 @@
 
 The next best server friendly passive loot acquisition mob farming!
 
-TMF dds multiple single block mob farms that generates mob drops passively.
+TMF adds multiple single block mob farms that generates mob drops passively.
 
 ## Credits
 - [Yaroslavik](https://github.com/yaroslav4167) for Russian translation (1.12.2).
