@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "tinymobfarm:block/gold_farm"
+		}
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"item.tinymobfarm.lasso": "Лассо-ловушка",
+
+	"block.tinymobfarm.default_mob_farm": "Mобоферма",
+	"block.tinymobfarm.wood_farm": "Деревянная Мобоферма",
+	"block.tinymobfarm.stone_farm": "Каменная Мобоферма",
+	"block.tinymobfarm.iron_farm": "Железная Мобоферма",
+	"block.tinymobfarm.gold_farm": "Золотая Мобоферма",
+	"block.tinymobfarm.diamond_farm": "Алмазная Мобоферма",
+	"block.tinymobfarm.emerald_farm": "Изумрудная Мобоферма",
+	"block.tinymobfarm.inferno_farm": "Адская Мобоферма",
+	"block.tinymobfarm.ultimate_farm": "Мобоферма Края",
+
+	"itemGroup.tiny_mob_farm": "Мини-Мобофермы",
+
+	"tinymobfarm.error.cannot_capture_boss": "Не удается захватить мобов боссов.",
+	"tinymobfarm.error.blacklisted_mob": "Этот моб занесен в черный список.",
+
+	"tinymobfarm.gui.higher_tier": "Этому мобу нужна ферма более высокого уровня.",
+	"tinymobfarm.gui.redstone_disable": "Отключен редстоунсигналом",
+	"tinymobfarm.gui.no_lasso": "Вставьте лассо для активации.",
+
+	"tinymobfarm.tooltip.release_mob.key": "Щелкните правой кнопкой мыши на блоке, чтобы освободить моба.",
+	"tinymobfarm.tooltip.mob_name.key": "Moб: %s",
+	"tinymobfarm.tooltip.health.key": "Здоровье: %d/%d",
+	"tinymobfarm.tooltip.hostile.key": "Моб враждебен.",
+	"tinymobfarm.tooltip.capture.key": "Щелкните правой кнопкой мыши по мобу, чтобы захватить.",
+
+	"tinymobfarm.tooltip.hold_shift": "Удерживайте %s<SHIFT>%s для статистики.",
+	"tinymobfarm.tooltip.farm_rate": "Создает добычу каждые %d секунд.",
+	"tinymobfarm.tooltip.durability_info": "Потеря прочности лассо:",
+	"tinymobfarm.tooltip.no_hostile": "Не может фармить враждебных мобов.",
+	"tinymobfarm.tooltip.no_durability": "- %d%% шанс не потерять прочность",
+	"tinymobfarm.tooltip.default_durability": "- %d%% вероятность потери %d прочность"
+}
