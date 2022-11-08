@@ -4,7 +4,6 @@ import java.util.List;
 
 import cn.davidma.tinymobfarm.common.TinyMobFarm;
 import cn.davidma.tinymobfarm.core.Reference;
-import cn.davidma.tinymobfarm.core.util.Config;
 import cn.davidma.tinymobfarm.core.util.EntityHelper;
 import cn.davidma.tinymobfarm.core.util.Msg;
 import cn.davidma.tinymobfarm.core.util.NBTHelper;
@@ -33,7 +32,7 @@ import net.minecraft.world.World;
 public class ItemLasso extends Item {
 
 	public ItemLasso(Properties properties) {
-		super(properties.tab(TinyMobFarm.creativeTab).defaultDurability(Config.LASSO_DURABILITY));
+		super(properties.tab(TinyMobFarm.creativeTab).defaultDurability(128));
 		this.setRegistryName(Reference.getLocation("lasso"));
 	}
 	
